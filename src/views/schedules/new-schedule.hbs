@@ -1,0 +1,427 @@
+<style>
+    body {
+        background-color: #0093E9;
+        background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 50%, #aae69a 100%);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+    }
+</style>
+<div class="container">
+    <div class="col-9 mx-auto mt-5 ">
+        {{!-- inicio de la tarjeta --}}
+        <div class="card shadow pb-3 mb-5 bg-white rounded">
+            <div class="card-header text-center">
+                <h3>Nuevo Pendiente <i class="fas fa-calendar-plus"></i></h3>
+            </div>
+            <div class="card-body">
+                {{!-- INICIO DE FORMULARIO PARA GENERAR NUEVO PENDIENTE --}}
+                <form action="/notes/new-order" method="POST" class="needs-validation" novalidate>
+                    <div class="mb-4">
+                        <h5>DATOS DE LA ENTREGA</h5>
+                    </div>
+
+                    <div class="form-group mb-5 ">
+                        <small class="text-muted">Selecciona los pedidos que desees agregar a este pendiente</small><br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Pedido 1
+                            </label>
+                            <input class="form-check-input ml-3" type="checkbox" value="" id="defaultCheck2">
+                            <label class="form-check-label" for="defaultCheck2">
+                                pedido 2
+                            </label>
+                            <input class="form-check-input ml-3" type="checkbox" value="" id="defaultCheck3">
+                            <label class="form-check-label" for="defaultCheck3">
+                                pedido 3
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-row align-items-center">
+                        <div class="form-group col-4">
+                            {{!-- para la fecha --}}
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" for="date">Fecha</span>
+                                </div>
+                                <input type="date" min="2020-12-15" name="date" class="form-control" id="date" required>
+                                <div class="invalid-feedback">
+                                    Fecha no válida
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-4">
+                            {{!-- para el horario --}}
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" for="time">Horaio</span>
+                                </div>
+                                <input type="time" name="time" class="form-control" id="time" required>
+                                <div class="invalid-feedback">
+                                    Horario no válido
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 ml-3">
+                            {{!-- para el monto --}}
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" for="amount">Monto $</span>
+                                </div>
+                                <input type="number" name="amount" class="form-control" id="amount" required>
+                                <div class="invalid-feedback">
+                                    Monto pendiente no válido
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row align-items-center justify-content-around mb-4">
+                        {{!-- para la linea --}}
+                        <div class="form-group col-auto">
+                            <label for="line">Línea</label>
+                            <select class="custom-select" name="line" id="line" required onchange="Stations();">
+                                <option selected disabled value="">Líneas del metro de la CDMX</option>
+                                <option value="A">Línea A</option>
+                                <option value="B">Línea B</option>
+                                <option value="1">Línea 1</option>
+                                <option value="2">Línea 2</option>
+                                <option value="3">Línea 3</option>
+                                <option value="4">Línea 4</option>
+                                <option value="5">Línea 5</option>
+                                <option value="6">Línea 6</option>
+                                <option value="7">Línea 7</option>
+                                <option value="8">Línea 8</option>
+                                <option value="9">Línea 9</option>
+                                <option value="12">Línea 12</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Línea del metro de entrega
+                            </div>
+                        </div>
+                        {{!-- para la estacion --}}
+                        <div class="form-group col-auto">
+                            <label for="station">Estación</label>
+                            <select class="custom-select" name="station" id="station" required>
+                                <option selected disabled value="">Estación del metro de la CDMX</option>
+                                {{!-- se van a insertar los datos segun sea la linea elegida --}}
+                            </select>
+                            <div class="invalid-feedback">
+                                Estación de metro de entrega
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="my-1" for="product">Comentario(s)</label>
+                            <textarea class="form-control" name="description" aria-describedby="helpcoments"
+                                required></textarea>
+                            <div class="invalid-feedback">
+                                Descripción no válida
+                            </div>
+                            <small id="helpcoments" class="form-text text-muted">
+                                Agrega información adicional sobre tu entrega ej: nombre de la persona a la que le vas a
+                                entregar
+                            </small>
+                        </div>
+                    </div>
+
+                    {{!-- boton submit --}}
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-block" type="submit">
+                            Agregar pendiente a mi agenda <i class="fas fa-calendar-check"></i>
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <br>
+        <br>
+    </div>
+
+</div>
+
+
+{{!-- FUncion para validar los campos con bootstrap --}}
+<script>
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+{{!-- Funcion para cambia las opciones de las estaciones de acuerdo a la linea elegida --}}
+<script>
+    function Stations() {
+        //obtenemos el valor de la linea que se elige
+        var line = document.getElementById("line").value;
+
+        if (line == "1") {
+            document.getElementById("station").innerHTML = `
+        <option selected disabled value="">Estación del metro de la CDMX</option>
+        <option>Observatorio</option>
+        <option>Tacubaya</option>
+        <option>Juanacatlán</option>
+        <option>Chapultepec</option>
+        <option>Sevilla</option>
+        <option>Insurgentes</option>
+        <option>Cuauhtémoc</option>
+        <option>Balderas</option>
+        <option>Salto del Agua</option>
+        <option>Isabel la Católica</option>
+        <option>Pino Suárez</option>
+        <option>Merced</option>
+        <option>Candelaria</option>
+        <option>San Lázaro</option>
+        <option>Moctezuma</option>
+        <option>Balbuena</option>
+        <option>Boulevard Puerto Aéreo</option>
+        <option>Gómez Farías</option>
+        <option>Zaragoza</option>
+        <option>Pantitlán</option>
+        `;
+        } else
+            if (line == "2") {
+                document.getElementById("station").innerHTML = `
+        <option selected disabled value="">Estación del metro de la CDMX</option>
+        <option>Cuatro Caminos</option>
+        <option>Panteones</option>
+        <option>Tacuba</option>
+        <option>Cuitláhuac</option>
+        <option>Popotla</option>
+        <option>Colegio Militar</option>
+        <option>Normal</option>
+        <option>San Cosme</option>
+        <option>Revolución</option>
+        <option>Hidalgo</option>
+        <option>Bellas Artes</option>
+        <option>Allende</option>
+        <option>Zócalo/Tenochtitlan</option>
+        <option>Pino Suárez</option>
+        <option>San Antonio Abad</option>
+        <option>Chabacano</option>
+        <option>Viaducto</option>
+        <option>Xola</option>
+        <option>Villa de Cortés</option>
+        <option>Nativitas</option>
+        <option>Portales</option>
+        <option>Ermita</option>
+        <option>General Anaya</option>
+        <option>Tasqueña</option>
+        `;
+            }
+        if (line == "3") {
+            document.getElementById("station").innerHTML = `
+        <option selected disabled value="">Estación del metro de la CDMX</option>
+        <option>Indios Verdes</option>
+        <option>Deportivo 18 de Marzo</option>
+        <option>Potrero</option>
+        <option>La Raza</option>
+        <option>Tlatelolco</option>
+        <option>Guerrero</option>
+        <option>Hidalgo</option>
+        <option>Juárez</option>
+        <option>Balderas</option>
+        <option>Niños Héroes</option>
+        <option>Hospital General</option>
+        <option>Centro Médico</option>
+        <option>Etiopía-Plaza de la Transparencia</option>
+        <option>Eugenia</option>
+        <option>División del Norte</option>
+        <option>Zapata</option>
+        <option>Coyoacán</option>
+        <option>Viveros-Derechos Humanos</option>
+        <option>Miguel Ángel de Quevedo</option>
+        <option>Copilco</option>
+        <option>Universidad</option>
+        `;
+        } else
+            if (line == "4") {
+                document.getElementById("station").innerHTML = `
+        <option selected disabled value="">Estación del metro de la CDMX</option>
+        <option>Martín Carrera</option>
+        <option>Talismán</option>
+        <option>Bondojito</option>
+        <option>Consulado</option>
+        <option>Canal del Norte</option>
+        <option>Morelos</option>
+        <option>Candelaria-Palacio Legislativo</option>
+        <option>Fray Servando</option>
+        <option>Jamaica</option>
+        <option>Santa Anita</option>
+        `;
+            }
+        if (line == "5") {
+            document.getElementById("station").innerHTML = `
+        <option selected disabled value="">Estación del metro de la CDMX</option>
+        <option>Pantitlán</option>
+        <option>Hangares</option>
+        <option>Terminal Aérea</option>
+        <option>Oceanía</option>
+        <option>Aragón</option>
+        <option>Eduardo Molina</option>
+        <option>Consulado</option>
+        <option>Valle Gómez</option>
+        <option>Misterios</option>
+        <option>La Raza</option>
+        <option>Autobuses del Norte</option>
+        <option>Instituto del Petróleo</option>
+        <option>Politécnico</option>
+        `;
+        } else
+            if (line == "6") {
+                document.getElementById("station").innerHTML = `
+        <option selected disabled value="">Estación del metro de la CDMX</option>
+        <option>El Rosario</option>
+        <option>Tezozómoc</option>
+        <option>UAM-Azcapotzalco</option>
+        <option>Ferrería/Arena Ciudad de México</option>
+        <option>Norte 45</option>
+        <option>Vallejo</option>
+        <option>Instituto del Petróleo</option>
+        <option>Lindavista</option>
+        <option>Deportivo 18 de Marzo</option>
+        <option>La Villa-Basílica</option>
+        <option>Martín Carrera</option>
+        `;
+            }
+        if (line == "7") {
+            document.getElementById("station").innerHTML = `
+        <option selected disabled value="">Estación del metro de la CDMX</option>
+        <option>El Rosario</option>
+        <option>Aquiles Serdán</option>
+        <option>Camarones</option>
+        <option>Refinería</option>
+        <option>Tacuba</option>
+        <option>San Joaquín</option>
+        <option>Polanco</option>
+        <option>Auditorio</option>
+        <option>Constituyentes</option>
+        <option>Tacubaya</option>
+        <option>San Pedro de los Pinos</option>
+        <option>San Antonio</option>
+        <option>Mixcoac</option>
+        <option>Barranca del Muerto</option>
+        `;
+        } else
+            if (line == "8") {
+                document.getElementById("station").innerHTML = `
+        <option selected disabled value="">Estación del metro de la CDMX</option>
+        <option>Garibaldi-Lagunilla</option>
+        <option>Bellas Artes</option>
+        <option>San Juan de Letrán</option>
+        <option>Salto del Agua</option>
+        <option>Doctores</option>
+        <option>Obrera</option>
+        <option>Chabacano</option>
+        <option>La Viga</option>
+        <option>Santa Anita</option>
+        <option>Coyuya</option>
+        <option>Iztacalco</option>
+        <option>Apatlaco</option>
+        <option>Aculco</option>
+        <option>Escuadrón 201</option>
+        <option>Atlalilco</option>
+        <option>Iztapalapa</option>
+        <option>Cerro de la Estrella</option>
+        <option>UAM-I</option>
+        <option>Constitución de 1917</option>
+        `;
+            }
+        if (line == "9") {
+            document.getElementById("station").innerHTML = `
+        <option selected disabled value="">Estación del metro de la CDMX</option>
+        <option>Tacubaya</option>
+        <option>Patriotismo</option>
+        <option>Chilpancingo</option>
+        <option>Centro Médico</option>
+        <option>Lázaro Cárdenas</option>
+        <option>Chabacano</option>
+        <option>Jamaica</option>
+        <option>Mixiuhca</option>
+        <option>Velódromo</option>
+        <option>Ciudad Deportiva</option>
+        <option>Puebla</option>
+        <option>Pantitlán</option>
+        `;
+        } else
+            if (line == "12") {
+                document.getElementById("station").innerHTML = `
+        <option selected disabled value="">Estación del metro de la CDMX</option>
+        <option>Mixcoac</option>
+        <option>Insurgentes Sur</option>
+        <option>Hospital 20 de Noviembre</option>
+        <option>Zapata</option>
+        <option>Parque de los venados</option>
+        <option>Eje central</option>
+        <option>Ermita</option>
+        <option>Mexicaltzingo</option>
+        <option>Atlalilco</option>
+        <option>Culhuacán</option>
+        <option>San Andrés Tomatlán</option>
+        <option>Lomas Estrella</option>
+        <option>Calle 11</option>
+        <option>Periférico Oriente</option>
+        <option>Tezonco</option>
+        <option>Olivos</option>
+        <option>Nopalera</option>
+        <option>Zapotitlán</option>
+        <option>Tlaltenco</option>
+        <option>Tláhuac</option>
+        `;
+            }
+        if (line == "A") {
+            document.getElementById("station").innerHTML = `
+        <option selected disabled value="">Estación del metro de la CDMX</option>
+        <option>Pantitlán</option>
+        <option>Agrícola Oriental</option>
+        <option>Canal de San Juan</option>
+        <option>Tepalcates</option>
+        <option>Guelatao</option>
+        <option>Peñón Viejo</option>
+        <option>Acatitla</option>
+        <option>Santa Marta</option>
+        <option>Los Reyes</option>
+        <option>La Paz</option>
+        `;
+        } else
+            if (line == "B") {
+                document.getElementById("station").innerHTML = `
+        <option selected disabled value="">Estación del metro de la CDMX</option>
+        <option>Ciudad Azteca</option>
+        <option>Plaza Aragón</option>
+        <option>Olímpica</option>
+        <option>Ecatepec</option>
+        <option>Múzquiz</option>
+        <option>Río de los Remedios</option>
+        <option>Impulsora</option>
+        <option>Nezahualcóyotl</option>
+        <option>Villa de Aragón</option>
+        <option>Bosque de Aragón</option>
+        <option>Deportivo Oceanía</option>
+        <option>Oceanía</option>
+        <option>Romero Rubio</option>
+        <option>Ricardo Flores Magón</option>
+        <option>San Lázaro</option>
+        <option>Morelos</option>
+        <option>Tepito</option>
+        <option>Lagunilla</option>
+        <option>Garibaldi-Lagunilla</option>
+        <option>Guerrero</option>
+        <option>Buenavista</option>
+        `;
+            }
+
+    }
+</script>

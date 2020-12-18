@@ -1,0 +1,32 @@
+{{!-- IMPORTANTE, se debe instalar una version antigua de handlebars4.5.0  --}}
+
+<div class="row">
+  {{!-- Creamos un bucle para recorrer los datos de nuestra base de datos --}}
+  {{#each orders}}
+  <div class="col-6 ml-5 mt-5">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title d-flex justify-content-between align-items-center">
+          {{ product }} <a href="/product/edit/{{_id}}"><i class="fas fa-edit"></i></a>
+        </h4>
+        <p>{{ description }} </p>
+        <!-- formlario para eliminar -->
+        <form action="/orders/delete/{{_id}}?_method=DELETE" method="POST">
+          {{!-- Utilizamos el methodoverride para poder eliminar el pedido de acuerdo a su id --}}
+          <input type="hidden" name="_method" value="DELETE">
+          <button type="submit" class="btn btn-danger btn-block btn-sm">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  <div class="card mx-auto">
+    <div class="card-body">
+      {{!-- Saludamos al usuario uwu --}}
+      <h1>Hola {{user.name}}!</h1>
+      <p clsss="lead">No tienes pedidos creados</p>
+      <a href="/notes/add" class="btn btn-success btn-block">Crea tu primer pedido ahora!</a>
+    </div>
+  </div>
+  {{/each}}
+</div>

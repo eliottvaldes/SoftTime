@@ -1,0 +1,131 @@
+
+    <style>
+        .fa-lock {
+            font-size: 20px;
+            color: salmon;
+        }
+        .fa-user-circle{
+            font-size: 70px; 
+            color: rgb(75, 167, 144);
+        }
+        .fa-id-card-alt{
+            font-size: 20px;
+            color: salmon;
+        }
+        body {
+            background-image: url('/src/public/img/2.png');    
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 105%;
+        }
+    </style>
+
+<div class="row row-cols-2 mt-5">
+  <div class="col-3">
+
+  </div>
+  <div class="col-3 mr-5">
+
+  </div>
+  <div class="col-5 mx-auto">
+    <div class="card mt-4 shadow-lg mb-5 bg-white rounded">
+      <div class="card-header text-center">
+        <h1 class="h4">
+          REGISTRAR VENDEDOR <i class="fas fa-plus-circle "></i>
+        </h1>
+      </div>
+      <div class="card-body">
+        <form action="/users/signup" method="POST" class="needs-validation" novalidate>
+          <div class="input-group mb-3 mr-sm-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Nombre</div>
+            </div>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Ej: Edith" required>
+            <div class="invalid-feedback">Por favor ingresa el nombre </div>
+          </div>
+          <div class="input-group mb-3 mr-sm-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Apellidos</div>
+            </div>
+            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Ej: Reyes Savedra"
+              required>
+            <div class="invalid-feedback">Por favor ingresa los apellidos</div>
+          </div>
+          <div class="input-group mb-3 mr-sm-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Username</div>
+            </div>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Edith_Savedra" required>
+            <div class="invalid-feedback">Por favor ingresa el username</div>
+            <small id="" class="form-text text-muted">
+              Este será el nombre de usuario requerido para iniciar sesión
+            </small>
+          </div>
+          <div class="input-group mb-3 mr-sm-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Teléfono</div>
+            </div>
+            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Ej: 55-5555-5555"
+              pattern="[5-6]{2}-[0-9]{4}-[0-9]{4}" required>
+            <div class="invalid-feedback">Por favor ingresa el numero telefonico</div>
+            <small id="" class="form-text text-muted">
+              Los digitos del telefono deben estar separados por un '<strong> - </strong>'
+            </small>
+          </div>
+
+          <div class="input-group mb-3 mr-sm-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Email</div>
+            </div>
+            <input type="email" class="form-control" id="email" name="email" placeholder="ejemplo@gmail.com" required>
+            <div class="invalid-feedback">Por favor ingresa el email</div>
+          </div>
+          <div class="input-group mb-3 mr-sm-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Password</div>
+            </div>
+            <input type="password" class="form-control" id="password" name="password" placeholder="m&#C0n7ra$3ña%."
+              required>
+            <div class="invalid-feedback">Por favor ingresa la contraseña</div>
+            <small id="" class="form-text text-muted">
+              Esta será la contraseña requerida para iniciar sesión
+            </small>
+          </div>
+          <div class="input-group mb-2 mr-sm-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Password</div>
+            </div>
+            <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+              placeholder="Confirmar contraseña" required>
+            <div class="invalid-feedback">Por favor ingresa la confirmación de contraseña</div>
+          </div>
+
+
+          <br>
+          <button class="rounded-pill btn btn-primary btn-block">
+            REGISTRAR! <i class="fas fa-user-check"></i>
+          </button>
+          <br>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    'use strict';
+    window.addEventListener('load', function () {
+      var forms = document.getElementsByClassName('needs-validation');
+      var validation = Array.prototype.filter.call(forms, function (form) {
+        form.addEventListener('submit', function (event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>

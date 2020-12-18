@@ -1,0 +1,121 @@
+<style>
+  body {
+    background-color: #4158D0;
+    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+  }
+</style>
+<div class="container">
+  <div class="col-9 mx-auto mt-5 ">
+    {{!-- inicio de la tarjeta --}}
+    <div class="card shadow pb-3 mb-3 bg-white rounded">
+      <div class="card-header text-center">
+        <h3>Nuevo Pedido <i class="fas fa-plus-circle"></i></h3>
+      </div>
+      <div class="card-body">
+        {{!-- INICIO DE FORMULARIO PARA GENERAR NUEVO PEDIDO --}}
+        <form action="/orders/new-order" method="POST" class="needs-validation" novalidate>
+          <div>
+            <h5>DATOS DEL PRODUCTO</h5>
+          </div>
+          {{!-- Para elegir el tipo de producto dentro del catálogo ya establecido --}}
+          <div class="form-group">
+            <label class="my-1" for="product">Producto</label>
+            <select class="custom-select" name="product" id="product" required>
+              <option selected disabled value="">Selecciona el tipo de producto</option>
+              <option disabled>-----------------------------------</option>
+              <option disabled class="font-weight-bold">PRINCIPALES</option>
+              <option>Papel Picado</option>>
+              <option>Esferas 90mm</option>>
+              <option>Figura de Animal</option>
+              <option disabled class="font-weight-bold">PLUMONES</option>
+              <option disabled class="font-italic">MARCA CRAYOLA</option>
+              <option>SuperTips</option>
+              <option>Alternative Glitter</option>
+              <option>Alternative Metalics</option>
+              <option>Alternative Permanent</option>
+              <option disabled class="font-italic">MARCA STABILO</option>
+              <option>Boss</option>
+              <option>Swing Cool</option>
+              <option>Point 88</option>
+              <option>Rotuladores</option>
+              <option disabled class="font-italic">OTRAS MARCAS</option>
+              <option>Brush Economics</option>
+              <option>Tombow Professionals</option>
+              <option>Artline Stix</option>
+              <option disabled class="font-weight-bold">ORGANIZADORES PARA PLUMONES</option>
+              <option>Organizador Madera</option>
+              <option>Organizador Acrílico</option>
+              <option disabled class="font-weight-bold">LIBRETAS</option>
+              <option>Profesional</option>
+              <option>Francesa</option>
+              <option>Italiana</option>
+              <option>Pasta Impresa</option>
+              <option disabled class="font-weight-bold">OTROS</option>
+              <option>Rompecabezas</option>
+              <option>Llavero</option>
+              <option disabled></option>
+              <option disabled></option>
+            </select>
+            <div class="invalid-feedback">
+              Selecciona el producto del que desees generar el pedido
+            </div>
+          </div>
+          {{!-- Para ingresar la descripción del producto --}}
+          <div class="form-group">
+            <label for="product">Descripción</label>
+            <textarea class="form-control" name="description" aria-describedby="helpdescription" required></textarea>
+            <div class="invalid-feedback">
+              Descripción no válida
+            </div>
+            <small id="helpdescription" class="form-text text-muted">
+              Agrega la descripción del producto. En caso de que sea un producto personalizable indica las
+              caracteristicas
+              que debe tener
+            </small>
+          </div>
+          <div class="custom-file mb-5">
+            <input type="file" accept="image/png, image/jpg, image/jpeg" class="custom-file-input" id="img" aria-describedby="helpimg" >
+            <label class="custom-file-label" for="img">Imagen del producto</label>
+            <small id="helpimg" class="form-text text-muted">
+              Solo debes subir la imagen en caso de que existan modelos preestablecidos del producto Ej: Papel picado, Esferas, etc.
+            </small>
+            <div class="invalid-feedback">No has seleccionado alguna imagen</div>
+          </div>       
+          {{!-- boton submit --}}
+          <div class="form-group mt-3">
+            <button class="btn btn-primary btn-block" type="submit">
+              Crear nuevo pedido <i class="fas fa-save"></i>
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+    <br>
+    <br>
+  </div>
+
+</div>
+
+
+{{!-- FUncion para validar los campos con bootstrap --}}
+<script>
+  (function () {
+    'use strict';
+    window.addEventListener('load', function () {
+      var forms = document.getElementsByClassName('needs-validation');
+      var validation = Array.prototype.filter.call(forms, function (form) {
+        form.addEventListener('submit', function (event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>
