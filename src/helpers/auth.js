@@ -1,3 +1,4 @@
+//creamos un arreglo para hacer distintas validaciones
 const helpers = {};
 
 helpers.checkSession = (req, res, next) => {

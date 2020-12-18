@@ -11,7 +11,7 @@ const {
   deleteOrder
 } = require("../controllers/orders.controller");
 
-// requerimos la funcion para mostrar si está autenticado
+// requerimos la funcion para mostrar si está autenticado y cuenta con sesión activa
 const { checkSession } = require("../helpers/auth");
 
 // ruta para renderizar formulario de pedido nuevo

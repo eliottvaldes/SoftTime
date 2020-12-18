@@ -4,6 +4,7 @@ const config = require("./config");
 //se utiliza para tener más seguridad a la hora de usar la conexion a la base de datos ya que .env almacena variables de entorno
 //const MONGODB_URL = process.env.MONGODB_URL;
 
+//conexion a la base de datos de mongo cloud
 const MONGODB_URL = `mongodb+srv://Eliot:contrasenaeliot@cluster0.bzxx8.mongodb.net/mydata?retryWrites=true&w=majority`;
 mongoose
   .connect(MONGODB_URL, {

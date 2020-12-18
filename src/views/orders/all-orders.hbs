@@ -7,7 +7,7 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title d-flex justify-content-between align-items-center">
-          {{ product }} <a href="/product/edit/{{_id}}"><i class="fas fa-edit"></i></a>
+          {{ product }} <a href="/orders/edit/{{_id}}"><i class="fas fa-edit"></i></a>
         </h4>
         <p>{{ description }} </p>
         <!-- formlario para eliminar -->
@@ -25,7 +25,7 @@
       {{!-- Saludamos al usuario uwu --}}
       <h1>Hola {{user.name}}!</h1>
       <p clsss="lead">No tienes pedidos creados</p>
-      <a href="/notes/add" class="btn btn-success btn-block">Crea tu primer pedido ahora!</a>
+      <a href="/orders/add" class="btn btn-success btn-block">Crea tu primer pedido ahora!</a>
     </div>
   </div>
   {{/each}}

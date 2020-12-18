@@ -8,19 +8,19 @@ const passport = require("passport");
 const morgan = require("morgan");
 const connectMongo = require("connect-mongo");
 const mongoose = require("mongoose");
-
-//const { createAdminUser } = require("./libs/createUser");
+const { createAdminUser } = require("./libs/createUser");
 
 
 
 //------------INICIALIZACIONES
 const app = express();
 require("./config/passport");
-//createAdminUser();
+//creamos un superusuarioadminsitrador de sistema
+createAdminUser();
 
 //------------CONFIGURACIONES
 //para que el puerto se asigne automaticamente al subirlo a un host
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.PORT || 3001);
 app.set("views", path.join(__dirname, "views"));
  
 //para el motor de plantillas handlebars

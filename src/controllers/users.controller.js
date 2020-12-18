@@ -1,9 +1,11 @@
+// QUEDA PENDIENTE CAMBIAR LAS RUTAS PARA CREAR UN NUEVO USUARIO YA QUE ESA FUNCIONALIDAD SOLO LA TIENE EL ADMONISTRADOR
+
 const usersCtrl = {};
 
-// Models
+// Creamos la constante de el modelo de la base de datos
 const User = require('../models/Users');
 
-// Modules
+// requerimos el modulo passport para las sesiones
 const passport = require("passport");
 
 
