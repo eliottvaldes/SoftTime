@@ -16,27 +16,54 @@ usersCtrl.renderSignUpForm = (req, res) => {
 
 //funcion encargada de guardar los datos de registro
 usersCtrl.singup = async (req, res) => {
+  //arreglo de errores de validación
   let errors = [];
-  const { name, email, password, confirm_password } = req.body;
+  const { name, lastname, username, phone, email, password, confirm_password } = req.body;
+
+  //valdando nombre
+  if (name.length < 4) {
+    errors.push({ text: "Ingresa un nombre con longitud mayor a 4 caracteres" });
+  }
+  //validando apelllido
+  if (lastname.length < 6) {
+    errors.push({ text: "Ingresa un apellido válido. La longitud mimina es de 5 caracteres" });
+  }
+  //validando username
+  if (password.length < 8) {
+    errors.push({ text: "La longitud minima de la contraseña es de 8 caracteres" });
+  }
+  var valphone = (/([a-zA-Z])/ig);
+  //validar numero telefonico
+  if(phone.match(valphone)){
+    errors.push({ text: "Numero telefonico inválido" });  
+  }
+  //validar contraseña y su confirmación
   if (password != confirm_password) {
-    errors.push({ text: "Passwords do not match." });
+    errors.push({ text: "Las contraseña no coinciden, verificalas" });
   }
-  if (password.length < 4) {
-    errors.push({ text: "Passwords must be at least 4 characters." });
+  //validar longitud de la contraseña
+  if (password.length < 8) {
+    errors.push({ text: "La longitud minima de la contraseña es de 8 caracteres" });
   }
+
+  //en caso de que SI existan errores
   if (errors.length > 0) {
+    //renderizamos la misma pagina pero mostrarndo los errores y los datos previamente ingresados
     res.render("users/signup", {
       errors,
       name,
+      lastname,
+      username,
+      phone,
       email,
       password,
       confirm_password
     });
   } else {
     // Look for email coincidence
-    const emailUser = await User.findOne({ email: email });
-    if (emailUser) {
-      req.flash("error_msg", "The Email is already in use.");
+    const usernameUser = await User.findOne({ username: username });
+    if (usernameUser) {
+      req.flash("error_msg", "El nombre de usuario que ingresaste ya está en uso. Prueba con uno diferente");
       res.redirect("/users/signup");
     } else {
       // Saving a New User
