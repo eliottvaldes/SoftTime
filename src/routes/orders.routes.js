@@ -11,25 +11,25 @@ const {
   deleteOrder
 } = require("../controllers/orders.controller");
 
-// Helpers
-const { isAuthenticated } = require("../helpers/auth");
+// requerimos la funcion para mostrar si está autenticado
+const { checkSession } = require("../helpers/auth");
 
 // ruta para renderizar formulario de pedido nuevo
-router.get("/orders/add", renderOrderForm);
+router.get("/orders/add", checkSession, renderOrderForm);
 
-router.post("/orders/new-order", createNewOrder);
+router.post("/orders/new-order", checkSession, createNewOrder);
 
 // ruta para renderizar la vista de todos los pedidos creados
-router.get("/orders", renderOrders);
+router.get("/orders", checkSession, renderOrders);
 
 // ruta para renderizar un formulario para editar el formulario pedidos se usa el parametro id para indicar el id del pedido que se va a modificar
-router.get("/orders/edit/:id", isAuthenticated, renderEditForm);
+router.get("/orders/edit/:id", checkSession, renderEditForm);
 // Usamos metodo put debido a que se usa para hacer referencia paraa actualizar
-router.put("/orders/edit-order/:id", isAuthenticated, updateOrder);
+router.put("/orders/edit-order/:id", checkSession, updateOrder);
 
 // ruta para eliminar pedidos
 // se usa el metodo delete para poder eliminarlo usando el :id y el modulo overrride
-router.delete("/orders/delete/:id", isAuthenticated, deleteOrder);
+router.delete("/orders/delete/:id", checkSession, deleteOrder);
 
 
 //exportamos modulo para acceso global a las rutas

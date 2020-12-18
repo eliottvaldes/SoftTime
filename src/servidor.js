@@ -15,7 +15,7 @@ const mongoose = require("mongoose");
 
 //------------INICIALIZACIONES
 const app = express();
-//require("./config/passport");
+require("./config/passport");
 //createAdminUser();
 
 //------------CONFIGURACIONES
@@ -58,7 +58,9 @@ app.use(
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
   })
 );
+//iniciando passport
 app.use(passport.initialize());
+//iniciando las sesiones
 app.use(passport.session());
 // para los mensajes
 app.use(flash());
@@ -68,10 +70,12 @@ app.use(flash());
 //------------VARIABLES GLOBALES
 
 app.use((req,res,next)=>{
-  //creamos una variable global para almacenar los mensajes para poder mostrarlos
+  //creamos variables global para almacenar los mensajes para poder mostrarlos
   res.locals.success_msg = req.flash("success_msg");
   res.locals.error_msg = req.flash("error_msg");
+  //mensaje de error de sesiones
   res.locals.error = req.flash("error");
+  //variable para saber si el usuario ya está autenticado
   res.locals.user = req.user || null;
   next();
 });

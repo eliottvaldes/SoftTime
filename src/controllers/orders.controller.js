@@ -31,6 +31,7 @@ ordersCtrl.createNewOrder = async (req, res) => {
   } else {
     // en caso de que no haya errores, crea la nueva orden en la base de datos
     const newOrder = new Order({ product, description });
+    //requerimos el id del usuario activo en la sesion
     newOrder.user = req.user.id;
     //se asigna un await en la funcion async debido a que tarda tiempo en procesar la solicitud a la base de datos
     await newOrder.save();
@@ -43,10 +44,10 @@ ordersCtrl.createNewOrder = async (req, res) => {
 
 //metodo encargado de consulta para la base de datos
 ordersCtrl.renderOrders = async (req, res) => {
-  // guardamos en una variable el arreglo de los pedidos utilizando el .find()
+  // guardamos en una variable el arreglo de los pedidos utilizando el .find() de acuerdo al id del usuario activo de la sesion
   const orders = await Order.find({ user: req.user.id })
-    .sort({ date: "desc" })
-    .lean();
+    .sort({ date: "desc" }).lean();
+    //Ordenamos de acuerdo a la fecha de creacion
     //renderizamos el archivo donde estan todas las notas
   res.render("orders/all-orders", { orders });
 };
@@ -55,8 +56,9 @@ ordersCtrl.renderOrders = async (req, res) => {
 ordersCtrl.renderEditForm = async (req, res) => {
   //hacemos la consulta a la base de datos para obtener los datos
   const order = await Order.findById(req.params.id).lean();
+  // si la nota cuenta con parametro id diferente el id de la sesion actual le mandamos un mensaje de no validacion
   if (order.user != req.user.id) {
-    req.flash("error_msg", "Not Authorized");
+    req.flash("error_msg", "Por favor inicia sesión desde tu cuenta");
     return res.redirect("/orders");
   }
   res.render("orders/edit-order", { order });

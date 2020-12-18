@@ -25,7 +25,7 @@
             <div class="input-group-prepend">
               <div class="input-group-text">Nombre</div>
             </div>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Ej: Edith" onkeyup="spaces();"
+            <input type="text" class="form-control" id="name" name="name" value="{{name}}" placeholder="Ej: Edith" onkeyup="spaces();"
               required>
             <div class="invalid-feedback">Por favor ingresa el nombre </div>
           </div>
@@ -33,7 +33,7 @@
             <div class="input-group-prepend">
               <div class="input-group-text">Apellidos</div>
             </div>
-            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Ej: Reyes Savedra"
+            <input type="text" class="form-control" id="lastname" name="lastname" value="{{lastname}}" placeholder="Ej: Reyes Savedra"
               onkeyup="spaces();" required>
             <div class="invalid-feedback">Por favor ingresa los apellidos</div>
           </div>
@@ -41,7 +41,7 @@
             <div class="input-group-prepend">
               <div class="input-group-text">Username</div>
             </div>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Edith_Savedra"
+            <input type="text" class="form-control" id="username" name="username" value="{{username}}" placeholder="Edith_Savedra"
               onkeyup="spaces();" required>
             <div class="invalid-feedback">Por favor ingresa el username</div>
             <small id="" class="form-text text-muted">
@@ -52,7 +52,7 @@
             <div class="input-group-prepend">
               <div class="input-group-text">Teléfono</div>
             </div>
-            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Ej: 55-5555-5555"
+            <input type="tel" class="form-control" id="phone" name="phone" value="{{phone}}" placeholder="Ej: 55-5555-5555"
               onkeyup="valphone();" pattern="[5-6]{2}-[0-9]{4}-[0-9]{4}" required>
             <div class="invalid-feedback">Por favor ingresa el numero telefonico</div>
             <small id="" class="form-text text-muted">
@@ -64,14 +64,14 @@
             <div class="input-group-prepend">
               <div class="input-group-text">Email</div>
             </div>
-            <input type="email" class="form-control" id="email" name="email" placeholder="ejemplo@gmail.com" required>
+            <input type="email" class="form-control" id="email" name="email" value="{{email}}" placeholder="ejemplo@gmail.com" required>
             <div class="invalid-feedback">Por favor ingresa el email</div>
           </div>
           <div class="input-group mr-sm-2">
             <div class="input-group-prepend">
               <div class="input-group-text">Password</div>
             </div>
-            <input type="password" class="form-control" id="password" name="password" placeholder="m&#C0n7ra$3ña%."
+            <input type="password" class="form-control" id="password" name="password" value="{{password}}" placeholder="m&#C0n7ra$3ña%."
               onkeyup="spaces(),valp1();" required>
             <div class="invalid-feedback">Por favor ingresa la contraseña</div>
           </div>
@@ -84,7 +84,7 @@
             <div class="input-group-prepend">
               <div class="input-group-text">Password</div>
             </div>
-            <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+            <input type="password" class="form-control" id="confirm_password" name="confirm_password" value="{{confirm_password}}"
               onkeyup="spaces(),valp2();" placeholder="Confirmar contraseña" required>
             <div class="invalid-feedback">Por favor ingresa la confirmación de contraseña</div>
           </div><span id="vp2"></span>

@@ -20,6 +20,7 @@ usersCtrl.singup = async (req, res) => {
   let errors = [];
   const { name, lastname, username, phone, email, password, confirm_password } = req.body;
 
+  // -------VALIDACIIÓN POR PARTE DE SERVIDOR------
   //valdando nombre
   if (name.length < 4) {
     errors.push({ text: "Ingresa un nombre con longitud mayor a 4 caracteres" });
@@ -37,7 +38,7 @@ usersCtrl.singup = async (req, res) => {
   if(phone.match(valphone)){
     errors.push({ text: "Numero telefonico inválido" });  
   }
-  //validar contraseña y su confirmación
+  //validar coincidencia de contraseña y su confirmación
   if (password != confirm_password) {
     errors.push({ text: "Las contraseña no coinciden, verificalas" });
   }
@@ -59,18 +60,41 @@ usersCtrl.singup = async (req, res) => {
       password,
       confirm_password
     });
-  } else {
-    // Look for email coincidence
+  } 
+  //en caso de que NO haya errores hacemos una ultima validación para consultar si ya está en uso el nombre de usuario ingresado
+  else {
+    //validoamos la existencia del username
     const usernameUser = await User.findOne({ username: username });
+    //si existe mostramos el mensaje de error
     if (usernameUser) {
       req.flash("error_msg", "El nombre de usuario que ingresaste ya está en uso. Prueba con uno diferente");
       res.redirect("/users/signup");
-    } else {
-      // Saving a New User
-      const newUser = new User({ name, email, password });
-      newUser.password = await newUser.encryptPassword(password);
+    }else 
+
+    const phoneUser = await User.findOne({ phone: phone });
+    //si existe mostramos el mensaje de error
+    if (phoneUser) {
+      req.flash("error_msg", "El numero telefonico ingresado ya está en uso");
+      res.redirect("/users/signup");
+    }else
+    const emailUser = await User.findOne({ email: email });
+    //si existe mostramos el mensaje de error
+    if (emailUser) {
+      req.flash("error_msg", "El correo electronico ingresado ya está en uso");
+      res.redirect("/users/signup");
+    }  
+
+    //si no existe coincidencia
+    else {
+      // usando el Schema User le pasamos los datos
+      const newUser = new User({ name, lastname, username, phone, email, password });
+      //encriptamos la contraseña
+      newUser.password = await newUser.encpass(password);
+      //guardamos los datos
       await newUser.save();
+      //mostramos un mensaje de satisfacción
       req.flash("success_msg", "Has registrado a un nuevo Administrador de Ventas satisfactoriamente");
+      //redirigimos
       res.redirect("/users/signin");
     }
   }
@@ -84,14 +108,20 @@ usersCtrl.renderSigninForm = (req, res) => {
 
 //funcion para iniciar sesion
 usersCtrl.signin = passport.authenticate("local", {
+    //en caso de que sea un usuario existente lo redirige a las ordenes
     successRedirect: "/orders",
+    //en caso erroneo, recarga la pagina mostrando los mensajes de error
     failureRedirect: "/users/signin",
     failureFlash: true
   });
 
+  // funcion para cerrar sesion
 usersCtrl.logout = (req, res) => {
+  //simplemente se borra la sesion del servidor
   req.logout();
-  req.flash("success_msg", "You are logged out now.");
+  //mensaje flash
+  req.flash("success_msg", "Has cerrado sesión satisfactoriamente!");
+  //redireccionamos a inicio de sesion
   res.redirect("/users/signin");
 };
 
