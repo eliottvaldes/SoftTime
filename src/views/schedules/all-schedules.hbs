@@ -1,0 +1,63 @@
+<div class="row">
+  {{#each pendientes}}
+  <div class="col-7">
+    <div class="card">
+      <div class="card-body">
+        <p>
+        <h4>
+          Fecha de entrega
+        </h4>
+        {{date}}
+        </p>
+        <hr>
+        <p>
+        <h4>
+          horarios
+        </h4>
+        {{time}}
+        </p>
+        <hr>
+        <p>
+        <h4>
+          monto pendiente
+        </h4>
+        {{amount}}
+        </p>
+        <hr>
+        <p>
+        <h4>
+          linea del metro
+        </h4>
+        {{line}}
+        </p>
+        <hr>
+        <p>
+        <h4>
+          Estacion
+        </h4>
+        {{station}}
+        </p>
+        <hr>
+        <p>
+        <h4>
+          Comentarios
+        </h4>
+        {{comments}}
+        </p>
+        <hr>
+        <form action="/schedules/delete/{{_id}}?_method=DELETE" method="POST">
+          <input type="hidden" name="_method" value="DELETE">
+          <button type="submit" class="btn btn-danger btn-block btn-sm">Delete</button>
+        </form>
+      </div>
+    </div>
+    {{else}}
+    <div class="card mx-auto">
+      <div class="card-body">
+        <h1>Bienvenido a tu agenda {{user.name}}</h1>
+        <p class="lead">No tienes ningun pendiente en tu agenda :'(</p>
+        <a href="/schedules/add" class="btn btn-success btn-block">Puedes crear uno ahora mismo</a>
+      </div>
+    </div>
+    {{/each}}
+  </div>

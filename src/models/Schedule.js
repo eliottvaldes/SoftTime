@@ -30,4 +30,4 @@ const ScheduleSchema = new Schema({
     timestamp: true
 })
 
-module.exports = model('Schedule', ScheduleSchema);
+module.exports = model('Schedules', ScheduleSchema);

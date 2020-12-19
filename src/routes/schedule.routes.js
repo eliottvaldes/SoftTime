@@ -15,9 +15,9 @@ const {
 const { checkSession } = require("../helpers/auth");
 
 // ruta para renderizar formulario de pendiente nuevo
-router.get("/schedules/add", renderScheduleForm);
+router.get("/schedules/add", checkSession, renderScheduleForm);
 
-router.post("/schedules/new-schedule", createNewSchedule);
+router.post("/schedules/new-schedule", checkSession, createNewSchedule);
 
 // ruta para renderizar la vista de todos los pendientes creados
 router.get("/schedules", checkSession, renderSchedules);

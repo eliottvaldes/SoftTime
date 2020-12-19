@@ -45,7 +45,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" for="date">Fecha</span>
                                 </div>
-                                <input type="date" min="2020-12-15" name="date" class="form-control" id="date" required>
+                                <input type="date" min="2020-12-15" name="date" class="form-control" id="date" value="{{date}}" required>
                                 <div class="invalid-feedback">
                                     Fecha no válida
                                 </div>
@@ -57,7 +57,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" for="time">Horaio</span>
                                 </div>
-                                <input type="time" name="time" class="form-control" id="time" required>
+                                <input type="time" name="time" class="form-control" id="time" value="{{time}}" required>
                                 <div class="invalid-feedback">
                                     Horario no válido
                                 </div>
@@ -69,7 +69,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" for="amount">Monto $</span>
                                 </div>
-                                <input type="number" name="amount" class="form-control" id="amount" required>
+                                <input type="number" name="amount" class="form-control" id="amount" value="{{amount}}" required>
                                 <div class="invalid-feedback">
                                     Monto pendiente no válido
                                 </div>
@@ -82,6 +82,7 @@
                         <div class="form-group col-auto">
                             <label for="line">Línea</label>
                             <select class="custom-select" name="line" id="line" required onchange="Stations();">
+                                <option>{{line}}</option>
                                 <option selected disabled value="">Líneas del metro de la CDMX</option>
                                 <option value="A">Línea A</option>
                                 <option value="B">Línea B</option>
@@ -104,7 +105,8 @@
                         <div class="form-group col-auto">
                             <label for="station">Estación</label>
                             <select class="custom-select" name="station" id="station" required>
-                                <option selected disabled value="">Estación del metro de la CDMX</option>
+                                <option selected>{{station}}</option>
+                                <option disabled value="">Estación del metro de la CDMX</option>
                                 {{!-- se van a insertar los datos segun sea la linea elegida --}}
                             </select>
                             <div class="invalid-feedback">
@@ -113,7 +115,7 @@
                         </div>
                         <div class="form-group ">
                             <label class="my-1" for="product">Comentario(s)</label>
-                            <textarea class="form-control" name="description" aria-describedby="helpcoments"
+                            <textarea class="form-control" name="comments" aria-describedby="helpcoments"
                                 required></textarea>
                             <div class="invalid-feedback">
                                 Descripción no válida
