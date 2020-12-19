@@ -25,6 +25,10 @@ const ScheduleSchema = new Schema({
     comments:{
         type: String,
         required: false
+    },
+    user: {
+        type: String,
+        required: true
     }
 },{
     timestamp: true
