@@ -8,27 +8,124 @@
 </div>
 {{/each}}
 
-<div class="col-8 mx-auto">
-  <div class="card">
-    <div class="card-header">
-      <h3>Editar mi pedido</h3>
+<style>
+  body {
+    background-color: #4158D0;
+    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+  }
+</style>
+<div class="container">
+  <div class="col-9 mx-auto mt-5 ">
+    {{!-- inicio de la tarjeta --}}
+    <div class="card shadow pb-3 mb-3 bg-white rounded">
+      <div class="card-header text-center">
+        <h3>Editar pedido <i class="fas fa-edit"></i></h3>
+      </div>
+      <div class="card-body">
+        <form action="/orders/edit-order/{{order._id}}?_method=PUT" method="POST" class="needs-validation" novalidate>
+          <input type="hidden" name="_method" value="PUT">
+          <div>
+            <h5>DATOS DEL PRODUCTO</h5>
+          </div>
+          {{!-- Para elegir el tipo de producto dentro del catálogo ya establecido --}}
+          <div class="form-group">
+            <label class="my-1" for="product">Producto</label>
+            <select class="custom-select" name="product" id="product" required>
+              <option selected>{{order.product}}</option>
+              <option disabled value="">Selecciona el tipo de producto</option>
+              <option disabled>-----------------------------------</option>
+              <option disabled class="font-weight-bold">PRINCIPALES</option>
+              <option>Papel Picado</option>>
+              <option>Esferas 90mm</option>>
+              <option>Figura de Animal</option>
+              <option disabled class="font-weight-bold">PLUMONES</option>
+              <option disabled class="font-italic">MARCA CRAYOLA</option>
+              <option value="Crayola Supertips">SuperTips</option>
+              <option value="Crayola Glitter">Alternative Glitter</option>
+              <option value="Crayola Metalics ">Alternative Metalics</option>
+              <option value="Crayola Permanent">Alternative Permanent</option>
+              <option disabled class="font-italic">MARCA STABILO</option>
+              <option value="Stabilo Boss">Boss</option>
+              <option value="Stabilo Swing Cool">Swing Cool</option>
+              <option value="Stabilo Point 88">Point 88</option>
+              <option value="Stabilo Rotuladores">Rotuladores</option>
+              <option disabled class="font-italic">OTRAS MARCAS</option>
+              <option value="Plumones Brush">Brush Economics</option>
+              <option value="Plumones Tombow">Tombow Professionals</option>
+              <option value="Plumones Artline">Artline Stix</option>
+              <option disabled class="font-weight-bold">ORGANIZADORES PARA PLUMONES</option>
+              <option>Organizador Madera</option>
+              <option>Organizador Acrílico</option>
+              <option disabled class="font-weight-bold">LIBRETAS</option>
+              <option value="Libreta Profesional">Profesional</option>
+              <option value="Libreta Francesa">Francesa</option>
+              <option value="Libreta Italiana">Italiana</option>
+              <option value="Libreta Pasta Impresa">Pasta Impresa</option>
+              <option disabled class="font-weight-bold">OTROS</option>
+              <option>Rompecabezas</option>
+              <option>Llavero</option>
+              <option disabled></option>
+              <option disabled></option>
+            </select>
+            <div class="invalid-feedback">
+              Selecciona el producto del que desees generar el pedido
+            </div>
+          </div>
+          {{!-- Para ingresar la descripción del producto --}}
+          <div class="form-group">
+            <label for="product">Descripción</label>
+            <textarea class="form-control" name="description" aria-describedby="helpdescription" rows="4" required maxlength="200">{{order.description}}</textarea>
+            <div class="invalid-feedback">
+              Descripción no válida
+            </div>
+            <small id="helpdescription" class="form-text text-muted">
+              Agrega la descripción del producto. En caso de que sea un producto personalizable indica las
+              caracteristicas
+              que debe tener
+            </small>
+          </div>
+          <div class="custom-file mb-5">
+            <input type="file" accept="image/png, image/jpg, image/jpeg" class="custom-file-input" id="img" aria-describedby="helpimg" >
+            <label class="custom-file-label" for="img">Imagen del producto</label>
+            <small id="helpimg" class="form-text text-muted">
+              Solo debes subir la imagen en caso de que existan modelos preestablecidos del producto Ej: Papel picado, Esferas, etc.
+            </small>
+            <div class="invalid-feedback">No has seleccionado alguna imagen</div>
+          </div>       
+          {{!-- boton submit --}}
+          <div class="form-group mt-3">
+            <button class="btn btn-primary btn-block" type="submit">
+              Guardar Cambios <i class="fas fa-save"></i>
+            </button>
+          </div>
+
+        </form>
+      </div>
     </div>
-    <div class="card-body">
-      {{!-- Usamos el metodo PUT para actualizar --}}
-      <form action="/orders/edit-order/{{order._id}}?_method=PUT" method="POST">
-        <input type="hidden" name="_method" value="PUT">
-        <div class="form-group">
-          <input type="text" name="product" class="form-control" value="{{order.product}}"/>
-        </div>
-        <div class="form-group">
-          <textarea name="description" class="form-control">{{order.description}}</textarea>
-        </div>
-        <div class="form-group">
-          <button class="btn btn-primary btn-block" type="submit">
-            Save
-          </button>
-        </div>
-      </form>
-    </div>
+    <br>
   </div>
+
 </div>
+
+
+{{!-- FUncion para validar los campos con bootstrap --}}
+<script>
+  (function () {
+    'use strict';
+    window.addEventListener('load', function () {
+      var forms = document.getElementsByClassName('needs-validation');
+      var validation = Array.prototype.filter.call(forms, function (form) {
+        form.addEventListener('submit', function (event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>

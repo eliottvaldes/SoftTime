@@ -32,27 +32,27 @@
               <option>Figura de Animal</option>
               <option disabled class="font-weight-bold">PLUMONES</option>
               <option disabled class="font-italic">MARCA CRAYOLA</option>
-              <option>SuperTips</option>
-              <option>Alternative Glitter</option>
-              <option>Alternative Metalics</option>
-              <option>Alternative Permanent</option>
+              <option value="Crayola Supertips">SuperTips</option>
+              <option value="Crayola Glitter">Alternative Glitter</option>
+              <option value="Crayola Metalics ">Alternative Metalics</option>
+              <option value="Crayola Permanent">Alternative Permanent</option>
               <option disabled class="font-italic">MARCA STABILO</option>
-              <option>Boss</option>
-              <option>Swing Cool</option>
-              <option>Point 88</option>
-              <option>Rotuladores</option>
+              <option value="Stabilo Boss">Boss</option>
+              <option value="Stabilo Swing Cool">Swing Cool</option>
+              <option value="Stabilo Point 88">Point 88</option>
+              <option value="Stabilo Rotuladores">Rotuladores</option>
               <option disabled class="font-italic">OTRAS MARCAS</option>
-              <option>Brush Economics</option>
-              <option>Tombow Professionals</option>
-              <option>Artline Stix</option>
+              <option value="Plumones Brush">Brush Economics</option>
+              <option value="Plumones Tombow">Tombow Professionals</option>
+              <option value="Plumones Artline">Artline Stix</option>
               <option disabled class="font-weight-bold">ORGANIZADORES PARA PLUMONES</option>
               <option>Organizador Madera</option>
               <option>Organizador Acrílico</option>
               <option disabled class="font-weight-bold">LIBRETAS</option>
-              <option>Profesional</option>
-              <option>Francesa</option>
-              <option>Italiana</option>
-              <option>Pasta Impresa</option>
+              <option value="Libreta Profesional">Profesional</option>
+              <option value="Libreta Francesa">Francesa</option>
+              <option value="Libreta Italiana">Italiana</option>
+              <option value="Libreta Pasta Impresa">Pasta Impresa</option>
               <option disabled class="font-weight-bold">OTROS</option>
               <option>Rompecabezas</option>
               <option>Llavero</option>
@@ -66,7 +66,7 @@
           {{!-- Para ingresar la descripción del producto --}}
           <div class="form-group">
             <label for="product">Descripción</label>
-            <textarea class="form-control" name="description" aria-describedby="helpdescription" required></textarea>
+            <textarea class="form-control" name="description" aria-describedby="helpdescription" rows="4" required maxlength="200"></textarea>
             <div class="invalid-feedback">
               Descripción no válida
             </div>
@@ -84,6 +84,9 @@
             </small>
             <div class="invalid-feedback">No has seleccionado alguna imagen</div>
           </div>       
+          <div class="hidden">
+            <input type="hidden" name="status" value="warning">
+          </div>
           {{!-- boton submit --}}
           <div class="form-group mt-3">
             <button class="btn btn-primary btn-block" type="submit">

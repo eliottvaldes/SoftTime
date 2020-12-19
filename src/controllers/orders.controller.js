@@ -11,7 +11,7 @@ ordersCtrl.renderOrderForm = (req, res) => {
 //crando un nuedo pedido
 ordersCtrl.createNewOrder = async (req, res) => {
   //obtenemos los datos desde unr request body
-  const { product, description } = req.body;
+  const { product, description, status } = req.body;
   //inicializamos un arreglo de errores en caso de que se presenten 
   const errors = [];
   //hacemos las validaciones
@@ -20,6 +20,12 @@ ordersCtrl.createNewOrder = async (req, res) => {
   }
   if (!description) {
     errors.push({ text: "Ingresa una descripción" });
+  } 
+  if (!status) {
+    errors.push({ text: "Por favor no modifique el status" });
+  } 
+  if (status!="warning") {
+    errors.push({ text: "Por favor NO modifique el status" });
   } 
   //En caso de que la longitud de los errores sea mayor 0 significa que hubo un error y lo muestra renderizando 
   if (errors.length > 0) {
@@ -30,7 +36,7 @@ ordersCtrl.createNewOrder = async (req, res) => {
     });
   } else {
     // en caso de que no haya errores, crea la nueva orden en la base de datos
-    const newOrder = new Order({ product, description });
+    const newOrder = new Order({ product, description, status });
     //requerimos el id del usuario activo en la sesion
     newOrder.user = req.user.id;
     //se asigna un await en la funcion async debido a que tarda tiempo en procesar la solicitud a la base de datos

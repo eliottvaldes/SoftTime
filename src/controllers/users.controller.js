@@ -16,6 +16,12 @@ usersCtrl.renderSignUpForm = (req, res) => {
 };
 
 
+//mostrando bienvenida
+usersCtrl.welcome = (req, res) => {
+  res.render('users/welcome');
+};
+
+
 //funcion encargada de guardar los datos de registro
 usersCtrl.singup = async (req, res) => {
   //arreglo de errores de validación
@@ -97,7 +103,7 @@ usersCtrl.renderSigninForm = (req, res) => {
 //funcion para iniciar sesion
 usersCtrl.signin = passport.authenticate("local", {
     //en caso de que sea un usuario existente lo redirige a las ordenes
-    successRedirect: "/orders",
+    successRedirect: "/users/welcome",
     //en caso erroneo, recarga la pagina mostrando los mensajes de error
     failureRedirect: "/users/signin",
     failureFlash: true
@@ -112,5 +118,6 @@ usersCtrl.logout = (req, res) => {
   //redireccionamos a inicio de sesion
   res.redirect("/users/signin");
 };
+
 
 module.exports = usersCtrl;
