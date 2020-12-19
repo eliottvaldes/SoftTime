@@ -13,7 +13,7 @@ const createAdminUser = async () => {
     email:"eliottvaldes@hotmail.com"    
   });
 
-  newUser.password = await newUser.encryptPassword("adminpassword");
+  newUser.password = await newUser.encpass("adminpassword");
 
   const admin = await newUser.save();
 

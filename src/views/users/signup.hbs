@@ -1,6 +1,6 @@
 <style>
   body {
-    background-image: url('/src/public/img/2.png');    
+    background-image: url('/img/2.png');    
     background-size: 100% 105%;
   }
 </style>
@@ -52,12 +52,9 @@
             <div class="input-group-prepend">
               <div class="input-group-text">Teléfono</div>
             </div>
-            <input type="tel" class="form-control" id="phone" name="phone" value="{{phone}}" placeholder="Ej: 55-5555-5555"
-              onkeyup="valphone();" pattern="[5-6]{2}-[0-9]{4}-[0-9]{4}" required>
-            <div class="invalid-feedback">Por favor ingresa el numero telefonico</div>
-            <small id="" class="form-text text-muted">
-              Los digitos del telefono deben estar separados por un '<strong> - </strong>'
-            </small>
+            <input type="text" class="form-control" id="phone" name="phone" value="{{phone}}" placeholder="Ej. 5555555555" minlength="10" maxlength="10" min="550000000000" max="569999999999"
+              onkeyup="valphone();" pattern="[5-6]{2}[0-9]{8}" required>
+            <div class="invalid-feedback">Por favor ingresa el numero telefonico</div>            
           </div>
 
           <div class="input-group mb-3 mr-sm-2">

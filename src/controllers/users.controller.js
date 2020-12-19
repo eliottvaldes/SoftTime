@@ -65,28 +65,14 @@ usersCtrl.singup = async (req, res) => {
   } 
   //en caso de que NO haya errores hacemos una ultima validación para consultar si ya está en uso el nombre de usuario ingresado
   else {
-    //validoamos la existencia del username
-    const usernameUser = await User.findOne({ username: username });
-    //si existe mostramos el mensaje de error
-    if (usernameUser) {
-      req.flash("error_msg", "El nombre de usuario que ingresaste ya está en uso. Prueba con uno diferente");
-      res.redirect("/users/signup");
-    }else 
-
-    const phoneUser = await User.findOne({ phone: phone });
-    //si existe mostramos el mensaje de error
-    if (phoneUser) {
-      req.flash("error_msg", "El numero telefonico ingresado ya está en uso");
-      res.redirect("/users/signup");
-    }else
-    const emailUser = await User.findOne({ email: email });
-    //si existe mostramos el mensaje de error
-    if (emailUser) {
-      req.flash("error_msg", "El correo electronico ingresado ya está en uso");
-      res.redirect("/users/signup");
-    }  
-
-    //si no existe coincidencia
+  //validoamos la existencia del username
+  const usernameUser = await User.findOne({ username: username });
+  //si existe mostramos el mensaje de error
+  if (usernameUser) {
+    req.flash("error_msg", "El nombre de usuario que ingresaste ya está en uso. Prueba con uno diferente");
+    res.redirect("/users/signup");
+    }
+        //si no existe coincidencia
     else {
       // usando el Schema User le pasamos los datos
       const newUser = new User({ name, lastname, username, phone, email, password });
