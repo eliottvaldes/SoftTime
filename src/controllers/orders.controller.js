@@ -91,4 +91,15 @@ ordersCtrl.deleteOrder = async (req, res) => {
   res.redirect("/orders");
 };
 
+//----------------------
+//para el administrador
+
+//metodo encargado de consulta para la base de datos para el administrador
+ordersCtrl.renderOrdersAdmin = async (req, res) => {
+  // guardamos en una variable el arreglo de los pedidos utilizando el .find() de acuerdo al id del usuario activo de la sesion
+  const orders = await Order.find().sort({ date: "asc" }).lean();
+  res.render("admin/all-my-orders", { orders });
+};
+
+
 module.exports = ordersCtrl;

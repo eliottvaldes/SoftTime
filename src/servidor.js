@@ -53,9 +53,13 @@ const MongoStore = connectMongo(session);
 app.use(
   session({
     secret: "softtimepass",
+    cookie: { maxAge: 26280 },
     resave: true,
     saveUninitialized: true,
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),  
+    host: app.get('host'),
+    port: app.get('port'),
+    expires: new Date(Date.now() + (30 * 840 * 1000))
   })
 );
 //iniciando passport
@@ -90,7 +94,8 @@ app.use(require("./routes/users.routes"));
 app.use(require("./routes/orders.routes"));
 //rutas de pendientes en la agenda
 app.use(require("./routes/schedule.routes"));
-
+//rutas de consultas
+app.use(require("./routes/queries.routes"));
 
 //------------ARCHIVOS ESTATICOS
 

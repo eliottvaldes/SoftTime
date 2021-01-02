@@ -7,7 +7,7 @@
     background-size: 100% 100%;
   }
 </style>
-<div class="container">
+<div class="container mx-auto mt-4 mb-3">
   <div class="col-9 mx-auto mt-5 ">
     {{!-- inicio de la tarjeta --}}
     <div class="card shadow pb-3 mb-3 bg-white rounded">
@@ -66,7 +66,8 @@
           {{!-- Para ingresar la descripción del producto --}}
           <div class="form-group">
             <label for="product">Descripción</label>
-            <textarea class="form-control" name="description" aria-describedby="helpdescription" rows="4" required maxlength="200"></textarea>
+            <textarea class="form-control" name="description" aria-describedby="helpdescription" rows="4" required
+              maxlength="200"></textarea>
             <div class="invalid-feedback">
               Descripción no válida
             </div>
@@ -77,13 +78,15 @@
             </small>
           </div>
           <div class="custom-file mb-5">
-            <input type="file" accept="image/png, image/jpg, image/jpeg" class="custom-file-input" id="img" aria-describedby="helpimg" >
+            <input type="file" accept="image/png, image/jpg, image/jpeg" class="custom-file-input" id="img"
+              aria-describedby="helpimg">
             <label class="custom-file-label" for="img">Imagen del producto</label>
             <small id="helpimg" class="form-text text-muted">
-              Solo debes subir la imagen en caso de que existan modelos preestablecidos del producto Ej: Papel picado, Esferas, etc.
+              Solo debes subir la imagen en caso de que existan modelos preestablecidos del producto Ej: Papel picado,
+              Esferas, etc.
             </small>
             <div class="invalid-feedback">No has seleccionado alguna imagen</div>
-          </div>       
+          </div>
           <div class="hidden">
             <input type="hidden" name="status" value="warning">
           </div>

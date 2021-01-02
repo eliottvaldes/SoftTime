@@ -30,6 +30,7 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         {{!-- Si existe un usuario --}}
+        
         {{#if user}}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -38,6 +39,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="/orders"><i class="fas fa-list"></i> Mis Pedidos</a>
               <a class="dropdown-item" href="/orders/add"><i class="fas fa-plus"></i> Agregar Pedido</a>
+              <a class="dropdown-item" href="/orders/find"><i class="fas fa-search"></i> Consultar</a>
             </div>
           </li>
           <li class="nav-item dropdown">

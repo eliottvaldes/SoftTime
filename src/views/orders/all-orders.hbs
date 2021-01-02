@@ -2,76 +2,84 @@
 <style>
   body {
     background-color: #52a7c1;
-    background-image: linear-gradient(315deg, #52a7c1 0%, #b3f6d8 74%);
+    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 50%, #aae69a 100%);
   }
 </style>
 
-<div class="row">
-  {{!-- Creamos un bucle para recorrer los datos de nuestra base de datos --}}
-  {{#each orders}}
-  <div class="col-6 my-3">
-    <div class="card shadow-sm bg-white rounded" style="height: 100%;">
-      <div class="card-body">
-        <div class="row row-cols-2">
-          {{!-- columna de imagen --}}
-          <div class="col-5">
-            <img src="/img/icon.png" alt="" width="100%">
-          </div>
-          {{!-- columna de titulo y description --}}
-          <div class="col-7 ">
-            {{!-- fila de product and actions --}}
-            <div class="row">
-              <div class="col-6">
-                <h5>
-                  {{ product }}
-                </h5>
-              </div>
-              <div class="col-2 align-self-top">
-                {{!-- para estatus --}}
-
-                <button class="btn btn-{{status}} btn-sm" title="El color representa el estatus de tu pedido"
-                  data-toggle="popover" data-trigger="hover"
-                  data-content="Amarillo: En proceso  |  Verde: Aceptado  |  Rojo: Rechazado"><i
-                    class="fas fa-info-circle fa-spin"></i></button>
-
-              </div>
-              <div class="col-2 align-self-top">
-                {{!-- para editar --}}
-                <a class="btn btn-primary btn-sm" href="/orders/edit/{{_id}}"><i class="fas fa-edit"></i></a>
-              </div>
-              <div class="col-2 align-self-top">
-                <!-- formlario para eliminar -->
-                <form action="/orders/delete/{{_id}}?_method=DELETE" method="POST">
-                  {{!-- Utilizamos el methodoverride para poder eliminar el pedido de acuerdo a su id --}}
-                  <input type="hidden" name="_method" value="DELETE">
-                  <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                </form>
-              </div>
+<div class="container mx-auto my-5">
+  <div class="row">
+    {{!-- Creamos un bucle para recorrer los datos de nuestra base de datos --}}
+    {{#each orders}}
+    <div class="col-6 my-3">
+      <div class="card shadow-sm bg-white rounded" style="height: 100%;">
+        <div class="card-body">
+          <div class="row row-cols-2">
+            {{!-- columna de imagen --}}
+            <div class="col-5">
+              <img src="/img/icon.png" alt="" width="100%">
             </div>
-            {{!-- fila de description --}}
-            <div class="row mt-2">
-              <p class="text-break">
-                {{description}}
-              </p>
+            {{!-- columna de titulo y description --}}
+            <div class="col-7 ">
+              {{!-- fila de product and actions --}}
+              <div class="row">
+                <div class="col-6">
+                  <h5>
+                    {{ product }}
+                  </h5>
+                </div>
+                <div class="col-2 align-self-top">
+                  {{!-- para estatus --}}
+
+                  <button class="btn btn-{{status}} btn-sm" title="El color representa el estatus de tu pedido"
+                    data-toggle="popover" data-trigger="hover"
+                    data-content="Amarillo: En proceso  |  Verde: Aceptado  |  Rojo: Rechazado"><i
+                      class="fas fa-info-circle fa-spin"></i></button>
+
+                </div>
+                <div class="col-2 align-self-top">
+                  {{!-- para editar --}}
+                  <a class="btn btn-primary btn-sm" href="/orders/edit/{{_id}}"><i class="fas fa-edit"></i></a>
+                </div>
+                <div class="col-2 align-self-top">
+                  <!-- formlario para eliminar -->
+                  <form action="/orders/delete/{{_id}}?_method=DELETE" method="POST">
+                    {{!-- Utilizamos el methodoverride para poder eliminar el pedido de acuerdo a su id --}}
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                  </form>
+                </div>
+              </div>
+              {{!-- fila de description --}}
+              <div class="row mt-2">
+                <p class="text-break">
+                  {{description}}
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-  </div>
-  {{else}}
-  <div class="card mx-auto">
-    <div class="card-body">
-      {{!-- Saludamos al usuario uwu --}}
-      <h1>Hola!</h1>
-      <p clsss="lead">Actualmente no tienes pedidos creados</p>
-      <a href="/orders/add" class="btn btn-success btn-block">Crea tu primer pedido ahora!</a>
     </div>
+    {{else}}
+    <div class="card mx-auto">
+      <div class="card-body">
+        {{!-- Saludamos al usuario uwu --}}
+        <div class="card-body">
+          <div class="text-center">
+            {{!-- Saludamos al usuario uwu --}}
+            <h1>Actualmente no tienes ninguna orden creada <i class="fas fa-frown ml-2"></i></h1>
+            <hr>
+            <img src="/img/space.svg" alt="" width="55%" height="40%">
+          </div>
+        </div>
+        <a href="/orders/add" class="btn btn-success btn-block btn-lg"><i class="fas fa-plus mr-2"></i> Crea tu primer
+          pedido ahora</a>
+      </div>
+    </div>
+    {{/each}}
   </div>
-  {{/each}}
 </div>
-
 <script>
   $(document).ready(function () {
     $('[data-toggle="popover"]').popover();

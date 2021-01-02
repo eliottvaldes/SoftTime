@@ -18,3 +18,9 @@ body {
     background-attachment: fixed;
     background-size: 100% 100%;
 }
+
+#msg{    
+    width: 90%;
+    height: 70%;
+    color: salmon;
+}

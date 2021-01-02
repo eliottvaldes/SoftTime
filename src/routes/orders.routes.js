@@ -6,6 +6,7 @@ const {
   renderOrderForm,
   createNewOrder,
   renderOrders,
+  renderOrdersAdmin,
   renderEditForm,
   updateOrder,
   deleteOrder
@@ -21,6 +22,9 @@ router.post("/orders/new-order", checkSession, createNewOrder);
 
 // ruta para renderizar la vista de todos los pedidos creados
 router.get("/orders", checkSession, renderOrders);
+
+// ruta para renderizar la vista de todos los pedidos creados
+router.get("/ordersAdmin", checkSession, renderOrdersAdmin);
 
 // ruta para renderizar un formulario para editar el formulario pedidos se usa el parametro id para indicar el id del pedido que se va a modificar
 router.get("/orders/edit/:id", checkSession, renderEditForm);

@@ -1,96 +1,99 @@
 <style>
   body {
-    background-image: url('/img/2.png');    
+    background-image: url('/img/2.png');
     background-size: 100% 105%;
   }
 </style>
+<div class="container mx-auto mt-4 mb-3">
+  <div class="row row-cols-2">
+    <div class="col-3">
 
-<div class="row row-cols-2">
-  <div class="col-3">
+    </div>
+    <div class="col-3 mr-5">
 
-  </div>
-  <div class="col-3 mr-5">
+    </div>
+    <div class="col-5 mx-auto">
+      <div class="card mt-4 shadow-lg mb-5 bg-white rounded">
+        <div class="card-header text-center">
+          <h1 class="h4">
+            REGISTRAR VENDEDOR <i class="fas fa-plus-circle "></i>
+          </h1>
+        </div>
+        <div class="card-body">
+          <form action="/users/signup" method="POST" class="needs-validation" novalidate>
+            <div class="input-group mb-3 mr-sm-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text">Nombre</div>
+              </div>
+              <input type="text" class="form-control" id="name" name="name" value="{{name}}" placeholder="Ej: Edith"
+                onkeyup="spaces();" required>
+              <div class="invalid-feedback">Por favor ingresa el nombre </div>
+            </div>
+            <div class="input-group mb-3 mr-sm-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text">Apellidos</div>
+              </div>
+              <input type="text" class="form-control" id="lastname" name="lastname" value="{{lastname}}"
+                placeholder="Ej: Reyes Savedra" onkeyup="spaces();" required>
+              <div class="invalid-feedback">Por favor ingresa los apellidos</div>
+            </div>
+            <div class="input-group mb-3 mr-sm-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text">Username</div>
+              </div>
+              <input type="text" class="form-control" id="username" name="username" value="{{username}}"
+                placeholder="Edith_Savedra" onkeyup="spaces();" required>
+              <div class="invalid-feedback">Por favor ingresa el username</div>
+              <small id="" class="form-text text-muted">
+                Este será el nombre de usuario requerido para iniciar sesión
+              </small>
+            </div>
+            <div class="input-group mb-3 mr-sm-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text">Teléfono</div>
+              </div>
+              <input type="text" class="form-control" id="phone" name="phone" value="{{phone}}"
+                placeholder="Ej. 5555555555" minlength="10" maxlength="10" min="550000000000" max="569999999999"
+                onkeyup="valphone();" pattern="[5-6]{2}[0-9]{8}" required>
+              <div class="invalid-feedback">Por favor ingresa el numero telefonico</div>
+            </div>
 
-  </div>
-  <div class="col-5 mx-auto">
-    <div class="card mt-4 shadow-lg mb-5 bg-white rounded">
-      <div class="card-header text-center">
-        <h1 class="h4">
-          REGISTRAR VENDEDOR <i class="fas fa-plus-circle "></i>
-        </h1>
-      </div>
-      <div class="card-body">
-        <form action="/users/signup" method="POST" class="needs-validation" novalidate>
-          <div class="input-group mb-3 mr-sm-2">
-            <div class="input-group-prepend">
-              <div class="input-group-text">Nombre</div>
+            <div class="input-group mb-3 mr-sm-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text">Email</div>
+              </div>
+              <input type="email" class="form-control" id="email" name="email" value="{{email}}"
+                placeholder="ejemplo@gmail.com" required>
+              <div class="invalid-feedback">Por favor ingresa el email</div>
             </div>
-            <input type="text" class="form-control" id="name" name="name" value="{{name}}" placeholder="Ej: Edith" onkeyup="spaces();"
-              required>
-            <div class="invalid-feedback">Por favor ingresa el nombre </div>
-          </div>
-          <div class="input-group mb-3 mr-sm-2">
-            <div class="input-group-prepend">
-              <div class="input-group-text">Apellidos</div>
+            <div class="input-group mr-sm-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text">Password</div>
+              </div>
+              <input type="password" class="form-control" id="password" name="password" value="{{password}}"
+                placeholder="m&#C0n7ra$3ña%." onkeyup="spaces(),valp1();" required>
+              <div class="invalid-feedback">Por favor ingresa la contraseña</div>
             </div>
-            <input type="text" class="form-control" id="lastname" name="lastname" value="{{lastname}}" placeholder="Ej: Reyes Savedra"
-              onkeyup="spaces();" required>
-            <div class="invalid-feedback">Por favor ingresa los apellidos</div>
-          </div>
-          <div class="input-group mb-3 mr-sm-2">
-            <div class="input-group-prepend">
-              <div class="input-group-text">Username</div>
-            </div>
-            <input type="text" class="form-control" id="username" name="username" value="{{username}}" placeholder="Edith_Savedra"
-              onkeyup="spaces();" required>
-            <div class="invalid-feedback">Por favor ingresa el username</div>
-            <small id="" class="form-text text-muted">
-              Este será el nombre de usuario requerido para iniciar sesión
-            </small>
-          </div>
-          <div class="input-group mb-3 mr-sm-2">
-            <div class="input-group-prepend">
-              <div class="input-group-text">Teléfono</div>
-            </div>
-            <input type="text" class="form-control" id="phone" name="phone" value="{{phone}}" placeholder="Ej. 5555555555" minlength="10" maxlength="10" min="550000000000" max="569999999999"
-              onkeyup="valphone();" pattern="[5-6]{2}[0-9]{8}" required>
-            <div class="invalid-feedback">Por favor ingresa el numero telefonico</div>            
-          </div>
-
-          <div class="input-group mb-3 mr-sm-2">
-            <div class="input-group-prepend">
-              <div class="input-group-text">Email</div>
-            </div>
-            <input type="email" class="form-control" id="email" name="email" value="{{email}}" placeholder="ejemplo@gmail.com" required>
-            <div class="invalid-feedback">Por favor ingresa el email</div>
-          </div>
-          <div class="input-group mr-sm-2">
-            <div class="input-group-prepend">
-              <div class="input-group-text">Password</div>
-            </div>
-            <input type="password" class="form-control" id="password" name="password" value="{{password}}" placeholder="m&#C0n7ra$3ña%."
-              onkeyup="spaces(),valp1();" required>
-            <div class="invalid-feedback">Por favor ingresa la contraseña</div>
-          </div>
-          <span class=" mb-3" id="vp1">
-            <small class="form-text text-muted">
-              El minimo de longitud es de 8 caracteres.Esta será la contraseña requerida para iniciar sesión
-            </small>
-          </span>
-          <div class="input-group my-3 mr-sm-2">
-            <div class="input-group-prepend">
-              <div class="input-group-text">Password</div>
-            </div>
-            <input type="password" class="form-control" id="confirm_password" name="confirm_password" value="{{confirm_password}}"
-              onkeyup="spaces(),valp2();" placeholder="Confirmar contraseña" required>
-            <div class="invalid-feedback">Por favor ingresa la confirmación de contraseña</div>
-          </div><span id="vp2"></span>
-          <br>
-          <button class="rounded-pill btn btn-primary btn-block">
-            REGISTRAR! <i class="fas fa-user-check"></i>
-          </button>
-          <br>
-        </form>
+            <span class=" mb-3" id="vp1">
+              <small class="form-text text-muted">
+                El minimo de longitud es de 8 caracteres.Esta será la contraseña requerida para iniciar sesión
+              </small>
+            </span>
+            <div class="input-group my-3 mr-sm-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text">Password</div>
+              </div>
+              <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+                value="{{confirm_password}}" onkeyup="spaces(),valp2();" placeholder="Confirmar contraseña" required>
+              <div class="invalid-feedback">Por favor ingresa la confirmación de contraseña</div>
+            </div><span id="vp2"></span>
+            <br>
+            <button class="rounded-pill btn btn-primary btn-block">
+              REGISTRAR! <i class="fas fa-user-check"></i>
+            </button>
+            <br>
+          </form>
+        </div>
       </div>
     </div>
   </div>
