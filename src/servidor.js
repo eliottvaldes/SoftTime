@@ -44,7 +44,7 @@ app.set('view engine', '.hbs');
 //usar morgan para ver las peticiones al servidor
 app.use(morgan('dev'));
 app.use(express.urlencoded( 
-    { extendend: true }
+    { extended: true }
 ));
 //para el modulo de metodos override para poder usar metodos delete o update a traves de una consulta con un input name="_method"
 app.use(methodOverride("_method"));
@@ -96,6 +96,8 @@ app.use(require("./routes/orders.routes"));
 app.use(require("./routes/schedule.routes"));
 //rutas de consultas
 app.use(require("./routes/queries.routes"));
+//rutas de graficas
+//app.use(require("./routes/charts.routes"));
 
 //------------ARCHIVOS ESTATICOS
 

@@ -27,6 +27,13 @@ ordersCtrl.createNewOrder = async (req, res) => {
   if (status!="warning") {
     errors.push({ text: "Por favor NO modifique el status" });
   } 
+
+  var base64data = "";
+  //revisa si en la peticion hay archivos y los escribe en base64
+  if (req.file) {
+    base64data = req.file.buffer.toString('base64');
+  }
+  
   //En caso de que la longitud de los errores sea mayor 0 significa que hubo un error y lo muestra renderizando 
   if (errors.length > 0) {
     res.render("orders/new-order", {
@@ -39,6 +46,8 @@ ordersCtrl.createNewOrder = async (req, res) => {
     const newOrder = new Order({ product, description, status });
     //requerimos el id del usuario activo en la sesion
     newOrder.user = req.user.id;
+    //la variable base64data esta inicializada vacia
+    newOrder.image = base64data;
     //se asigna un await en la funcion async debido a que tarda tiempo en procesar la solicitud a la base de datos
     await newOrder.save();
     //una vez guardado mandamos un mensaje de creación satisfactoria

@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+const getStream = require('get-stream')
+const upload = multer()
 
 // importamos los objetos dentro del controlador llamado orders controller
 const {
@@ -18,7 +21,7 @@ const { checkSession } = require("../helpers/auth");
 // ruta para renderizar formulario de pedido nuevo
 router.get("/orders/add", checkSession, renderOrderForm);
 
-router.post("/orders/new-order", checkSession, createNewOrder);
+router.post("/orders/new-order", checkSession, upload.single('img'), createNewOrder);
 
 // ruta para renderizar la vista de todos los pedidos creados
 router.get("/orders", checkSession, renderOrders);
