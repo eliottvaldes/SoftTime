@@ -53,13 +53,13 @@ const MongoStore = connectMongo(session);
 app.use(
   session({
     secret: "softtimepass",
-    cookie: { maxAge: 26280 },
+    cookie: { maxAge: 2628000 },
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({ mongooseConnection: mongoose.connection }),  
     host: app.get('host'),
     port: app.get('port'),
-    expires: new Date(Date.now() + (30 * 840 * 1000))
+    expires: new Date(Date.now() + (30 * 84000 * 1000))
   })
 );
 //iniciando passport

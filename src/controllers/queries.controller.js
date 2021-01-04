@@ -9,19 +9,31 @@ QueriesCrtl.renderOrdersAdmin = async (req, res) => {
 };
 
 QueriesCrtl.renderPending = async (req, res) => {
-  const pending = await Data.find({status: "warning"}).sort({ date: "desc" }).lean();
-  res.render("admin/pending", { pending });
+  const statusOrder = await Data.find({status: "warning"}).sort({ date: "desc" }).lean();
+  res.render("admin/status", { statusOrder });
+//  console.log(statusOrder[0].status);
 };
 
 QueriesCrtl.renderValidated = async (req, res) => {
-  const validated = await Data.find({status: "success"}).sort({ date: "desc" }).lean();
-  res.render("admin/validated", { validated });
+  const statusOrder = await Data.find({status: "success"}).sort({ date: "desc" }).lean();
+  res.render("admin/status", { statusOrder });
 };
 
 QueriesCrtl.renderRejected = async (req, res) => {
-  const rejected = await Data.find({status: "danger"}).sort({ date: "desc" }).lean();
-  res.render("admin/rejected", { rejected });
+  const statusOrder = await Data.find({status: "danger"}).sort({ date: "desc" }).lean();
+  res.render("admin/status", { statusOrder });
 };
+
+QueriesCrtl.renderRecently = async (req, res) => {
+  const dateOrder = await Data.find().sort({ date: "desc" }).limit(10).lean();
+  res.render("admin/dates", { dateOrder });
+};
+
+QueriesCrtl.renderLongAgo = async (req, res) => {
+  const dateOrder = await Data.find().sort({ date: "asc" }).limit(10).lean();
+  res.render("admin/dates", { dateOrder });
+};
+
 
 QueriesCrtl.renderEditStatus = async (req, res) => {
   const status = await Data.findById(req.params.id).lean();

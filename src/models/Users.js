@@ -32,10 +32,15 @@ const UsersSchema = new Schema({
         type: String,
         required: true
     },
+    privilege:
+    {
+        type: String,
+        required: true
+    },
     date: { 
         type: Date, 
         default: Date.now 
-    },
+    },    
 });
 
 //metodo para cifrar contraseña de usuario a partir de bcryptjs

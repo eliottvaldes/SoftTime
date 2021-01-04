@@ -5,6 +5,7 @@
     background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 50%, #aae69a 100%);
   }
 </style>
+{{>nav-admin}}
 <div class="container mx-auto my-4">
   {{!-- menu de filtros --}}
   {{#if orders}}
@@ -131,7 +132,7 @@
   </div>
   <br>
   {{else}}
-  <div class="card mx-auto">
+  <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
     <div class="card-body">
       <div class="text-center">
         {{!-- Saludamos al usuario uwu --}}
@@ -142,9 +143,8 @@
     </div>
   </div>
   {{/if}}
-
 </div>
-
+{{>footer}}
 <script>
   $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
