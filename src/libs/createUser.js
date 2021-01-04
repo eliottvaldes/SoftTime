@@ -10,7 +10,8 @@ const createAdminUser = async () => {
     lastname:"valdes",
     username:"administrador",
     phone:"5573549436",
-    email:"eliottvaldes@hotmail.com"    
+    email:"eliottvaldes@hotmail.com"  ,
+    privilege:"admin"  
   });
 
   newUser.password = await newUser.encpass("adminpassword");

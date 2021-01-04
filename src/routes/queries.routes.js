@@ -6,23 +6,31 @@ const {
 renderOrdersAdmin,
 renderPending,
 renderValidated,
-renderRejected
+renderRejected,
+renderRecently,
+renderLongAgo
 } = require("../controllers/queries.controller");
 
 // Helpers
 const { checkSession } = require("../helpers/auth");
 
-// ruta para renderizar la vista de todos los pedidos creados
+// pedidos creados
 router.get("/Orders-Admin", checkSession, renderOrdersAdmin);
 
-// ruta para renderizar la vista de todos los pedidos pendientes
+// pedidos pendientes
 router.get("/Orders-Status-Pending", checkSession, renderPending);
 
-// ruta para renderizar la vista de todos los pedidos aceptados
+// pedidos aceptados
 router.get("/Orders-Status-Validated", checkSession, renderValidated);
 
-// ruta para renderizar la vista de todos los pedidos rechazados
+// pedidos rechazados
 router.get("/Orders-Status-Rejected", checkSession, renderRejected);
+
+// pedidos recientes (solo muestra 10)
+router.get("/Orders-Date-Recently", checkSession, renderRecently);
+
+// pedidos antiguos (solo muestra 10)
+router.get("/Orderes-Date-Long-Ago", checkSession, renderLongAgo);
 
 
 //exportamos modulo para acceso global a las rutas

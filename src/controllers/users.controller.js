@@ -43,8 +43,8 @@ usersCtrl.singup = async (req, res) => {
   }
   var valphone = (/([a-zA-Z])/ig);
   //validar numero telefonico
-  if(phone.match(valphone)){
-    errors.push({ text: "Numero telefonico inválido" });  
+  if (phone.match(valphone)) {
+    errors.push({ text: "Numero telefonico inválido" });
   }
   //validar coincidencia de contraseña y su confirmación
   if (password != confirm_password) {
@@ -68,20 +68,21 @@ usersCtrl.singup = async (req, res) => {
       password,
       confirm_password
     });
-  } 
+  }
   //en caso de que NO haya errores hacemos una ultima validación para consultar si ya está en uso el nombre de usuario ingresado
   else {
-  //validoamos la existencia del username
-  const usernameUser = await User.findOne({ username: username });
-  //si existe mostramos el mensaje de error
-  if (usernameUser) {
-    req.flash("error_msg", "El nombre de usuario que ingresaste ya está en uso. Prueba con uno diferente");
-    res.redirect("/users/signup");
+    //validoamos la existencia del username
+    const usernameUser = await User.findOne({ username: username });
+    //si existe mostramos el mensaje de error
+    if (usernameUser) {
+      req.flash("error_msg", "El nombre de usuario que ingresaste ya está en uso. Prueba con uno diferente");
+      res.redirect("/users/signup");
     }
-        //si no existe coincidencia
+    //si no existe coincidencia
     else {
+      let privilege = "manager";
       // usando el Schema User le pasamos los datos
-      const newUser = new User({ name, lastname, username, phone, email, password });
+      const newUser = new User({ name, lastname, username, phone, email, password, privilege });
       //encriptamos la contraseña
       newUser.password = await newUser.encpass(password);
       //guardamos los datos
@@ -102,14 +103,14 @@ usersCtrl.renderSigninForm = (req, res) => {
 
 //funcion para iniciar sesion
 usersCtrl.signin = passport.authenticate("local", {
-    //en caso de que sea un usuario existente lo redirige a las ordenes
-    successRedirect: "/users/welcome",
-    //en caso erroneo, recarga la pagina mostrando los mensajes de error
-    failureRedirect: "/users/signin",
-    failureFlash: true
-  });
+  //en caso de que sea un usuario existente lo redirige a las ordenes
+  successRedirect: "/users/welcome",
+  //en caso erroneo, recarga la pagina mostrando los mensajes de error
+  failureRedirect: "/users/signin",
+  failureFlash: true
+});
 
-  // funcion para cerrar sesion
+// funcion para cerrar sesion
 usersCtrl.logout = (req, res) => {
   //simplemente se borra la sesion del servidor
   req.logout();

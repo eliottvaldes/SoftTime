@@ -1,0 +1,52 @@
+<nav class="navbar  fixed-top navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/Orders-Admin">
+      {{!-- <img src="/img/icon.png" width="30" height="30" class="d-inline-block align-top" alt="logo" loading="lazy">
+      --}}
+      TWOC/DB
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        {{!-- Si existe un usuario --}}
+
+        {{#if user}}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Pedidos
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/orders"><i class="fas fa-list"></i> Mis Pedidos</a>
+            <a class="dropdown-item" href="/orders/add"><i class="fas fa-plus"></i> Agregar Pedido</a>
+            <a class="dropdown-item" href="/orders/find"><i class="fas fa-search"></i> Consultar</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Equipo
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/schedules"><i class="fas fa-users"></i> Mi equipo</a>
+            <a class="dropdown-item" href="/schedules/add"><i class="fas fa-user-plus"></i> Añadir Integrante</a>
+          </div>
+        </li>        
+        <li class="nav-item">
+          <a class="nav-link" href="/users/signup">Registar Administrador <i class="fas fa-user-plus"></i></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/logout">Cerrar Sesión <i class="fas fa-sign-out-alt"></i></a>
+        </li>
+        {{else}}
+        <li class="nav-item">
+          <a class="nav-link" href="/users/signin">Iniciar Sesión <i class="fas fa-sign-in-alt"></i></a>
+        </li>
+        {{/if}}
+      </ul>
+    </div>
+  </div>
+</nav>
