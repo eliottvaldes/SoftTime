@@ -97,7 +97,7 @@ app.use(require("./routes/schedule.routes"));
 //rutas de consultas
 app.use(require("./routes/queries.routes"));
 //rutas de graficas
-//app.use(require("./routes/charts.routes"));
+app.use(require("./routes/charts.routes"));
 
 //------------ARCHIVOS ESTATICOS
 

@@ -4,9 +4,8 @@
     <H1>Graficos generales</H1>
     <br>
 
-    <div id="chart">
-
-    </div>
+    <div id="chartPedidos"><div>
+    <div id="chartPagos"></div>
 
     <br>
     <hr>
@@ -15,10 +14,22 @@
 </div>
 
 <script>
-    var options = {
+    var fechasNOrders = [];
+    var pedidosNOrders = [];
+    var amount = 0;
+    var max = 0;
+    {{#each ordersData}}
+        amount++;
+        fechasNOrders.push(String( {{mes}} + "/" + {{dia}} + "/" + {{anio}} ));
+        pedidosNOrders.push({{pedidos}});
+    {{/each}}
+
+    max = Math.max.apply(Math, pedidosNOrders);
+
+    var optionsPedidos = {
         series: [{
-            name: 'Likes',
-            data: [4, 3, 10, 9, 29, 19, 22, 9, 12, 7, 19, 5, 13, 9, 17, 2, 7, 5]
+            name: 'Pedidos',
+            data: pedidosNOrders
         }],
         chart: {
             height: 350,
@@ -30,8 +41,8 @@
         },
         xaxis: {
             type: 'datetime',
-            categories: ['1/11/2000', '2/11/2000', '3/11/2000', '4/11/2000', '5/11/2000', '6/11/2000', '7/11/2000', '8/11/2000', '9/11/2000', '10/11/2000', '11/11/2000', '12/11/2000', '1/11/2001', '2/11/2001', '3/11/2001', '4/11/2001', '5/11/2001', '6/11/2001'],
-            tickAmount: 10,
+            categories: fechasNOrders,
+            tickAmount: amount,
             labels: {
                 formatter: function (value, timestamp, opts) {
                     return opts.dateFormatter(new Date(timestamp), 'dd MMM')
@@ -39,7 +50,7 @@
             }
         },
         title: {
-            text: 'Social Media',
+            text: 'Pedidos hechos',
             align: 'left',
             style: {
                 fontSize: "16px",
@@ -68,14 +79,94 @@
             }
         },
         yaxis: {
-            min: -10,
-            max: 40,
+            min: 0,
+            max: max,
             title: {
-                text: 'Engagement',
+                text: 'Pedidos',
             },
         }
     };
 
-    var chart = new ApexCharts(document.querySelector("#chart"), options);
-    chart.render();
+    var chartPedidos = new ApexCharts(document.querySelector("#chartPedidos"), optionsPedidos);
+    chartPedidos.render();
+
+
+
+
+
+
+    var fechasNSchedules = [];
+    var dineroNSchedules = [];
+    amount = 0;
+    {{#each schedulesData}}
+        amount++;
+        fechasNSchedules.push(String( {{mes}} + "/" + {{dia}} + "/" + {{anio}} ));
+        dineroNSchedules.push({{dinero}});
+    {{/each}}
+    max = Math.max.apply(Math, dineroNSchedules);
+    var optionsPagos = {
+        series: [{
+            name: 'Cantidad',
+            data: dineroNSchedules
+        }],
+        chart: {
+            height: 350,
+            type: 'line',
+        },
+        stroke: {
+            width: 7,
+            curve: 'smooth'
+        },
+        xaxis: {
+            type: 'datetime',
+            categories: fechasNSchedules,
+            tickAmount: amount,
+            labels: {
+                formatter: function (value, timestamp, opts) {
+                    return opts.dateFormatter(new Date(timestamp), 'dd MMM')
+                }
+            }
+        },
+        title: {
+            text: 'Pagos',
+            align: 'left',
+            style: {
+                fontSize: "16px",
+                color: '#666'
+            }
+        },
+        fill: {
+            type: 'gradient',
+            gradient: {
+                shade: 'dark',
+                gradientToColors: ['#FDD835'],
+                shadeIntensity: 1,
+                type: 'horizontal',
+                opacityFrom: 1,
+                opacityTo: 1,
+                stops: [0, 100, 100, 100]
+            },
+        },
+        markers: {
+            size: 4,
+            colors: ["#FFA41B"],
+            strokeColors: "#fff",
+            strokeWidth: 2,
+            hover: {
+                size: 7,
+            }
+        },
+        yaxis: {
+            min: 0,
+            max: max,
+            title: {
+                text: 'Cantidad',
+            },
+        }
+    };
+
+    var chartPagos = new ApexCharts(document.querySelector("#chartPagos"), optionsPagos);
+    chartPagos.render();
+
+
 </script>
