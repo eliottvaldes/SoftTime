@@ -1,0 +1,37 @@
+<div class="col-12 bg-white mb-5 sticky-top shadow-sm pb-3 bg-white rounded">
+    <h4 class="my-4">
+        <i class="fas fa-filter mt-4 mx-2"></i>Filtros
+    </h4>
+    <hr class="mb-4">
+    <div class="btn-group dropright">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            Status
+        </button>
+        <div class="dropdown-menu dropright">
+            <a class="dropdown-item text-warning" href="/user/query/filter/orders-status-pending"> <i
+                    class="fas fa-exclamation-triangle mr-1"></i>Pendientes</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-success" href="/user/query/filter/orders-status-validated"><i
+                    class="fas fa-check-circle mr-1"></i>Aprobados</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-danger" href="/user/query/filter/orders-status-rejected"><i
+                    class="fas fa-times-circle mr-1"></i>Rechazados</a>
+        </div>
+    </div>
+    <br>
+    <div class="btn-group dropright">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            Fecha
+        </button>
+        <div class="dropdown-menu dropright">
+            <a class="dropdown-item text-primary" href="/user/query/filter/orders-date-recently"><i
+                    class="fas fa-calendar-minus mr-1"></i>Reciente</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-muted" href="/user/query/filter/orders-date-long-ago"><i
+                    class="fas fa-calendar-plus mr-1"></i>Antiguo</a>
+        </div>
+    </div>
+    <br>
+</div>

@@ -1,0 +1,70 @@
+{{!-- IMPORTANTE, se debe instalar una version antigua de handlebars4.5.0 --}}
+<style>
+    body {
+        background-color: #52a7c1;
+        background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 50%, #aae69a 100%);
+    }
+</style>
+<div class="container mx-auto my-4">
+    {{!-- menu de filtros --}}
+    {{#if dateOrder}}
+    <div class="row row-cols-2 my-5">
+        <div class="col-3 sticky-top mr-5">
+        {{!-- Filtros --}}
+        {{>filters-user}}
+        </div>
+        {{!-- Tabla de datos --}}
+        <div class="col-8">
+            <br>
+            <table class="table table-hover table-striped bg-white table-responsive rounded">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>                        
+                        <th scope="col">Fecha</th>                        
+                        <th scope="col">Detalles</th>                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {{!-- Creamos un bucle para recorrer los datos de nuestra base de datos --}}
+                    {{#each dateOrder}}
+                    <tr>
+                        <th scope="row">{{@index}}</th>
+                        <td>{{product}}</td>
+                        <td>{{date}}</td>                        
+                    </tr>
+                    {{else}}
+                    <div class="card mx-auto">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-4">
+                                </div>
+                                <div class="col-8">
+                                    <div class="text-center">
+                                        <h1>¡Actualmente no tienes ningun dato para consultar!</h1>
+                                        <hr>
+                                        <img src="/img/team2.svg" alt="" width="65%" height="50%">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </tbody>
+            </table>
+            <br>
+            <hr>            
+        </div>
+    </div>
+    <br>
+    {{else}}
+    {{>nodatauser}}
+    {{/if}}
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });
+</script>

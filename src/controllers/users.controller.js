@@ -8,19 +8,21 @@ const User = require('../models/Users');
 // requerimos el modulo passport para las sesiones
 const passport = require("passport");
 
-
-//mostrando el formulario de registro
-usersCtrl.renderSignUpForm = (req, res) => {
-  //formulario de registro
-  res.render('users/signup');
-};
-
-
-//mostrando bienvenida
+//mostrando bienvenida normal user
 usersCtrl.welcome = (req, res) => {
   res.render('users/welcome');
 };
 
+//mostrando bienvenida admin user
+usersCtrl.welcomeAd = (req, res) => {
+  res.render('admin/welcome');
+};
+
+//mostrando el formulario de registro
+usersCtrl.renderSignUpForm = (req, res) => {
+  //formulario de registro
+  res.render('admin/signup');
+};
 
 //funcion encargada de guardar los datos de registro
 usersCtrl.singup = async (req, res) => {
@@ -58,7 +60,7 @@ usersCtrl.singup = async (req, res) => {
   //en caso de que SI existan errores
   if (errors.length > 0) {
     //renderizamos la misma pagina pero mostrarndo los errores y los datos previamente ingresados
-    res.render("users/signup", {
+    res.render("admin/signup", {
       errors,
       name,
       lastname,
@@ -95,8 +97,7 @@ usersCtrl.singup = async (req, res) => {
   }
 };
 
-
-//solo renderiza formulario de inicio de sesion
+//renderiza formulario de inicio de sesion
 usersCtrl.renderSigninForm = (req, res) => {
   res.render("users/signin");
 };
@@ -109,6 +110,22 @@ usersCtrl.signin = passport.authenticate("local", {
   failureRedirect: "/users/signin",
   failureFlash: true
 });
+
+//-------------------ADMINISTRADOR -----------------
+//formulario inicio de sesion admin
+usersCtrl.renderSigninadForm = (req, res) => {
+  res.render("admin/signinad");
+};
+
+//iniciar sesion admin
+usersCtrl.signinad = passport.authenticate("local", {
+  //en caso de que sea un usuario existente lo redirige a las ordenes
+  successRedirect: "/admin/welcome",
+  //en caso erroneo, recarga la pagina mostrando los mensajes de error
+  failureRedirect: "/admin/signinad",
+  failureFlash: true
+});
+//---------------------------------------------------
 
 // funcion para cerrar sesion
 usersCtrl.logout = (req, res) => {

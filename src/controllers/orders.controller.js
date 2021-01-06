@@ -33,7 +33,7 @@ ordersCtrl.createNewOrder = async (req, res) => {
   if (req.file) {
     base64data = req.file.buffer.toString('base64');
   }
-  
+
   //En caso de que la longitud de los errores sea mayor 0 significa que hubo un error y lo muestra renderizando 
   if (errors.length > 0) {
     res.render("orders/new-order", {
@@ -80,11 +80,17 @@ ordersCtrl.renderEditForm = async (req, res) => {
 };
 
 //obtener los datos para actualizar
-ordersCtrl.updateOrder = async (req, res) => {
-  //otenemos el arreglo de datos del request body
-  const { product, description } = req.body;
-  //actualizamos los datos en la base de datos
-  await Order.findByIdAndUpdate(req.params.id, { product, description });
+ordersCtrl.updateOrder = async (req, res) => {  
+  //otenemos el arreglo de datos del request body  
+  const product = req.body.product;
+  const description = req.body.description;
+  var image;
+  if (req.file) {
+   image = req.file.buffer.toString('base64');  
+  }
+  
+  //actualizamos los datos en la base de datos    
+  await Order.findByIdAndUpdate(req.params.id, { product, description, image });
   //Mensaje de satisfaccion
   req.flash("success_msg", "Tu pedido se ha actualizado exitosamente");
   //redireccionamos a donde se ven todos los pedidos

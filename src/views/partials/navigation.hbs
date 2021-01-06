@@ -7,27 +7,7 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-          <div class="btn-group dropright">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              More
-            </button>
-            <div class="dropdown-menu">
-              <h6 class="dropdown-header">Te podría interesar</h6>
-              <li class="nav-item">
-                <a class="nav-link text-primary" href="/about"><i class="fas fa-users"></i> Conócemos </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-success" href="/about"><i class="fas fa-phone"></i> Contacto</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-warning" href="/about"><i class="fas fa-book"></i> Políticas</a>
-              </li>
-            </div>
-          </div>          
-      </ul>
+    <div class="collapse navbar-collapse" id="navbarNav">      
       <ul class="navbar-nav ml-auto">
         {{!-- Si existe un usuario --}}
         
@@ -39,7 +19,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="/orders"><i class="fas fa-list"></i> Mis Pedidos</a>
               <a class="dropdown-item" href="/orders/add"><i class="fas fa-plus"></i> Agregar Pedido</a>
-              <a class="dropdown-item" href="/orders/find"><i class="fas fa-search"></i> Consultar</a>
+              <a class="dropdown-item" href="/user/query/filter/orders-status-pending"><i class="fas fa-search"></i> Consultar</a>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -58,10 +38,7 @@
         {{else}}
           <li class="nav-item">
             <a class="nav-link" href="/users/signin">Iniciar Sesión <i class="fas fa-sign-in-alt"></i></a>            
-          </li>
-          {{!-- <li class="nav-item">
-            <a class="nav-link" href="/users/signup">Registrate <i class="fas fa-user-plus"></i></a> 
-          </li> --}}
+          </li>          
         {{/if}}
       </ul>
     </div>

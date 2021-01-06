@@ -8,29 +8,60 @@ renderPending,
 renderValidated,
 renderRejected,
 renderRecently,
-renderLongAgo
+renderLongAgo,
+renderPendinguser,
+renderValidateduser,
+renderRejecteduser,
+renderRecentlyuser,
+renderLongAgouser
 } = require("../controllers/queries.controller");
 
 // Helpers
 const { checkSession } = require("../helpers/auth");
 
+//----------------------ADMIN USER---------------------
 // pedidos creados
-router.get("/Orders-Admin", checkSession, renderOrdersAdmin);
+router.get("/query/filter/orders-admin", checkSession, renderOrdersAdmin);
 
 // pedidos pendientes
-router.get("/Orders-Status-Pending", checkSession, renderPending);
+router.get("/query/filter/orders-status-pending", checkSession, renderPending);
 
 // pedidos aceptados
-router.get("/Orders-Status-Validated", checkSession, renderValidated);
+router.get("/query/filter/orders-status-validated", checkSession, renderValidated);
 
 // pedidos rechazados
-router.get("/Orders-Status-Rejected", checkSession, renderRejected);
+router.get("/query/filter/orders-status-rejected", checkSession, renderRejected);
 
 // pedidos recientes (solo muestra 10)
-router.get("/Orders-Date-Recently", checkSession, renderRecently);
+router.get("/query/filter/orders-date-recently", checkSession, renderRecently);
 
 // pedidos antiguos (solo muestra 10)
-router.get("/Orderes-Date-Long-Ago", checkSession, renderLongAgo);
+router.get("/query/filter/orders-date-Long-Ago", checkSession, renderLongAgo);
+
+//pedidos personalizables
+router.get("/query/filter/orders-type-customize", checkSession, renderLongAgo);
+
+//pedidos no personalizables (generales)
+router.get("/query/filter/orders-type-non-customize", checkSession, renderLongAgo);
+
+
+
+
+//---------------------NORMAL USER-------------------------- 
+// pedidos pendientes
+router.get("/user/query/filter/orders-status-pending", checkSession, renderPendinguser);
+
+// pedidos aceptados
+router.get("/user/query/filter/orders-status-validated", checkSession, renderValidateduser);
+
+// pedidos rechazados
+router.get("/user/query/filter/orders-status-rejected", checkSession, renderRejecteduser);
+
+// pedidos recientes (solo muestra 10)
+router.get("/user/query/filter/orders-date-recently", checkSession, renderRecentlyuser);
+
+// pedidos antiguos (solo muestra 10)
+router.get("/user/query/filter/orders-date-Long-Ago", checkSession, renderLongAgouser);
 
 
 //exportamos modulo para acceso global a las rutas

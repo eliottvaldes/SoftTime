@@ -1,0 +1,68 @@
+<div class="col-12 bg-white mb-5 sticky-top shadow-sm pb-3 bg-white rounded">
+    <h4 class="my-4">
+        <i class="fas fa-filter mt-4 mx-2"></i>Filtros
+    </h4>
+    <hr class="mb-4">
+    <div class="list-group list-group-flush">
+        <a href="/query/filter/orders-admin" class="list-group-item list-group-item-action">
+            <i class="fas fa-list mr-1"></i>Todos</h5>
+        </a>
+    </div>
+    <div class="btn-group dropright">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            Status
+        </button>
+        <div class="dropdown-menu dropright">
+            <a class="dropdown-item text-warning" href="/query/filter/orders-status-pending"> <i
+                    class="fas fa-exclamation-triangle mr-1"></i>Pendientes</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-success" href="/query/filter/orders-status-validated"><i
+                    class="fas fa-check-circle mr-1"></i>Aprobados</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-danger" href="/query/filter/orders-status-rejected"><i
+                    class="fas fa-times-circle mr-1"></i>Rechazados</a>
+        </div>
+    </div>
+    <br>
+    <div class="btn-group dropright">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            Fecha
+        </button>
+        <div class="dropdown-menu dropright">
+            <a class="dropdown-item text-primary" href="/query/filter/orders-date-recently"><i
+                    class="fas fa-calendar-minus mr-1"></i> Reciente</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-muted" href="/query/filter/orders-date-long-ago"><i
+                    class="fas fa-calendar-plus mr-1"></i> Antiguo</a>
+        </div>
+    </div>
+    <br>
+    <div class="btn-group dropright">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            Tipo
+        </button>
+        <div class="dropdown-menu dropright">
+            <a class="dropdown-item text-primary" href="/query/filter/orders-type-customize"><i
+                    class="fas fa-calendar-minus mr-1"></i> Personalizable</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-muted" href="/query/filter/orders-type-non-customize"><i
+                    class="fas fa-calendar-plus mr-1"></i> No personalizable</a>
+        </div>
+    </div>
+    <br>
+    <div class="btn-group dropright">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <i class="fas fa-plus mr-1"></i>Otros
+        </button>
+        <div class="dropdown-menu dropright">
+            <a class="dropdown-item" href="/query/filter/find-by-name"><i class="fas fa-user-cog mr-1"></i>Por
+                Solicitante</a>
+        </div>
+    </div>
+    <hr class="mt-3 mb-2">
+    <span id="infofilter"></span>   
+</div>

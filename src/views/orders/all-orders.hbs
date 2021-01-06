@@ -16,7 +16,11 @@
           <div class="row row-cols-2">
             {{!-- columna de imagen --}}
             <div class="col-5">
+              {{#if image}}
               <img src="data:image/png;base64,{{image}}" alt="" width="100%">
+              {{else}}
+              <img src="/img/icon.png" alt="imagen no personalizable">
+              {{/if}}
             </div>
             {{!-- columna de titulo y description --}}
             <div class="col-7 ">

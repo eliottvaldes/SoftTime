@@ -25,7 +25,7 @@
         <h3>Editar pedido <i class="fas fa-edit"></i></h3>
       </div>
       <div class="card-body">
-        <form action="/orders/edit-order/{{order._id}}?_method=PUT" method="POST" class="needs-validation" novalidate>
+        <form action="/orders/edit-order/{{order._id}}?_method=PUT" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
           <input type="hidden" name="_method" value="PUT">
           <div>
             <h5>DATOS DEL PRODUCTO</h5>
@@ -89,8 +89,7 @@
             </small>
           </div>
           <div class="custom-file mb-5">
-            <input type="file" accept="image/png, image/jpg, image/jpeg" class="custom-file-input" id="img"
-              aria-describedby="helpimg">
+            <input type="file" accept="image/png, image/jpg, image/jpeg" class="custom-file-input" id="img" name="img" aria-describedby="helpimg">
             <label class="custom-file-label" for="img">Imagen del producto</label>
             <small id="helpimg" class="form-text text-muted">
               Solo debes subir la imagen en caso de que existan modelos preestablecidos del producto Ej: Papel picado,

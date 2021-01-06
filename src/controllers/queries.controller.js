@@ -3,38 +3,32 @@ const QueriesCrtl = {};
 // requerimos el modelo de la base de datos de ../models/schedules
 const Data = require("../models/Orders");
 
+//------------ADMIN QUERIES--------------------
+//all orders
 QueriesCrtl.renderOrdersAdmin = async (req, res) => {
-  const orders = await Data.find().sort({ date: "asc" }).lean();
-  res.render("admin/all-my-orders", { orders }); 
+  const orders = await Data.find().sort({ date: "asc" }).lean();  
+  res.render("admin-queries/all-my-orders", { orders }); 
 };
-
 QueriesCrtl.renderPending = async (req, res) => {
   const statusOrder = await Data.find({status: "warning"}).sort({ date: "desc" }).lean();
-  res.render("admin/status", { statusOrder });
-//  console.log(statusOrder[0].status);
+  res.render("admin-queries/status", { statusOrder });
 };
-
 QueriesCrtl.renderValidated = async (req, res) => {
   const statusOrder = await Data.find({status: "success"}).sort({ date: "desc" }).lean();
-  res.render("admin/status", { statusOrder });
+  res.render("admin-queries/status", { statusOrder });
 };
-
 QueriesCrtl.renderRejected = async (req, res) => {
   const statusOrder = await Data.find({status: "danger"}).sort({ date: "desc" }).lean();
-  res.render("admin/status", { statusOrder });
+  res.render("admin-queries/status", { statusOrder });
 };
-
 QueriesCrtl.renderRecently = async (req, res) => {
   const dateOrder = await Data.find().sort({ date: "desc" }).limit(10).lean();
-  res.render("admin/dates", { dateOrder });
+  res.render("admin-queries/dates", { dateOrder });
 };
-
 QueriesCrtl.renderLongAgo = async (req, res) => {
   const dateOrder = await Data.find().sort({ date: "asc" }).limit(10).lean();
-  res.render("admin/dates", { dateOrder });
+  res.render("admin-queries/dates", { dateOrder });
 };
-
-
 QueriesCrtl.renderEditStatus = async (req, res) => {
   const status = await Data.findById(req.params.id).lean();
   if (schedules.user != req.user.id) {
@@ -43,7 +37,6 @@ QueriesCrtl.renderEditStatus = async (req, res) => {
   }
   res.render("schedules/edit-schedule", { status });
 };
-
 QueriesCrtl.updateStatus = async (req, res) => {
   const { date, time, amount, line, station, comments } = req.body;
   await Data.findByIdAndUpdate(req.params.id, { date, time, amount, line, station, comments });
@@ -51,10 +44,28 @@ QueriesCrtl.updateStatus = async (req, res) => {
   res.redirect("/ordersAdmin");
 };
 
-QueriesCrtl.deleteSchedule = async (req, res) => {
-  await Schedule.findByIdAndDelete(req.params.id);
-  req.flash("success_msg", "El pendiente ha sido eliminado");
-  res.redirect("/schedules");
+//--------USER QUERIES-------------------
+QueriesCrtl.renderPendinguser = async (req, res) => {
+  // guardamos en una variable el arreglo de los pedidos utilizando el .find() de acuerdo al id del usuario activo de la sesion
+  const statusOrder = await Data.find({ user: req.user.id, status: "warning"}).sort({ date: "desc" }).lean();
+  res.render("user-queries/status", { statusOrder });
 };
-
+QueriesCrtl.renderValidateduser = async (req, res) => {
+  // guardamos en una variable el arreglo de los pedidos utilizando el .find() de acuerdo al id del usuario activo de la sesion
+  const statusOrder = await Data.find({ user: req.user.id, status: "success"}).sort({ date: "desc" }).lean();    
+  res.render("user-queries/status", { statusOrder });
+};
+QueriesCrtl.renderRejecteduser = async (req, res) => {
+  // guardamos en una variable el arreglo de los pedidos utilizando el .find() de acuerdo al id del usuario activo de la sesion
+  const statusOrder = await Data.find({ user: req.user.id, status: "danger"}).sort({ date: "desc" }).lean();    
+  res.render("user-queries/status", { statusOrder });
+};
+QueriesCrtl.renderRecentlyuser = async (req, res) => {
+  const dateOrder = await Data.find({ user: req.user.id }).sort({ date: "desc" }).limit(10).lean();
+  res.render("user-queries/date", { dateOrder });
+};
+QueriesCrtl.renderLongAgouser = async (req, res) => {
+  const dateOrder = await Data.find({ user: req.user.id }).sort({ date: "asc" }).limit(10).lean();
+  res.render("user-queries/date", { dateOrder });
+};
 module.exports = QueriesCrtl;
