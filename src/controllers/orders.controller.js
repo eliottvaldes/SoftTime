@@ -11,7 +11,7 @@ ordersCtrl.renderOrderForm = (req, res) => {
 //crando un nuedo pedido
 ordersCtrl.createNewOrder = async (req, res) => {
   //obtenemos los datos desde unr request body
-  const { product, description, status } = req.body;
+  const { product, description, status, tag } = req.body;
   //inicializamos un arreglo de errores en caso de que se presenten 
   const errors = [];
   //hacemos las validaciones
@@ -20,14 +20,21 @@ ordersCtrl.createNewOrder = async (req, res) => {
   }
   if (!description) {
     errors.push({ text: "Ingresa una descripción" });
-  } 
+  }
   if (!status) {
     errors.push({ text: "Por favor no modifique el status" });
-  } 
-  if (status!="warning") {
+  }
+  if (status != "warning") {
     errors.push({ text: "Por favor NO modifique el status" });
-  } 
-
+  }
+  if (!tag) {
+    errors.push({ text: "No elimines el tipo de producto" });
+  }
+/*
+  if (tag != "customizable" || tag != "noncustomizable") {
+    errors.push({ text: "Por favor NO modifique el tipo de producto" });
+  }
+*/
   var base64data = "";
   //revisa si en la peticion hay archivos y los escribe en base64
   if (req.file) {
@@ -43,7 +50,7 @@ ordersCtrl.createNewOrder = async (req, res) => {
     });
   } else {
     // en caso de que no haya errores, crea la nueva orden en la base de datos
-    const newOrder = new Order({ product, description, status });
+    const newOrder = new Order({ product, description, status, tag });
     //requerimos el id del usuario activo en la sesion
     newOrder.user = req.user.id;
     //la variable base64data esta inicializada vacia
@@ -62,8 +69,8 @@ ordersCtrl.renderOrders = async (req, res) => {
   // guardamos en una variable el arreglo de los pedidos utilizando el .find() de acuerdo al id del usuario activo de la sesion
   const orders = await Order.find({ user: req.user.id })
     .sort({ date: "desc" }).lean();
-    //Ordenamos de acuerdo a la fecha de creacion
-    //renderizamos el archivo donde estan todas las notas
+  //Ordenamos de acuerdo a la fecha de creacion
+  //renderizamos el archivo donde estan todas las notas
   res.render("orders/all-orders", { orders });
 };
 
@@ -80,15 +87,15 @@ ordersCtrl.renderEditForm = async (req, res) => {
 };
 
 //obtener los datos para actualizar
-ordersCtrl.updateOrder = async (req, res) => {  
+ordersCtrl.updateOrder = async (req, res) => {
   //otenemos el arreglo de datos del request body  
   const product = req.body.product;
   const description = req.body.description;
   var image;
   if (req.file) {
-   image = req.file.buffer.toString('base64');  
+    image = req.file.buffer.toString('base64');
   }
-  
+
   //actualizamos los datos en la base de datos    
   await Order.findByIdAndUpdate(req.params.id, { product, description, image });
   //Mensaje de satisfaccion
@@ -106,7 +113,7 @@ ordersCtrl.deleteOrder = async (req, res) => {
   res.redirect("/orders");
 };
 
-//----------------------
+//---------------------- 
 //para el administrador
 
 //metodo encargado de consulta para la base de datos para el administrador

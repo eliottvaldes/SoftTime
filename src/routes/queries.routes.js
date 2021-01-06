@@ -9,11 +9,13 @@ renderValidated,
 renderRejected,
 renderRecently,
 renderLongAgo,
+renderAllOrders,
 renderPendinguser,
 renderValidateduser,
 renderRejecteduser,
 renderRecentlyuser,
-renderLongAgouser
+renderLongAgouser,
+renderDetails
 } = require("../controllers/queries.controller");
 
 // Helpers
@@ -48,6 +50,9 @@ router.get("/query/filter/orders-type-non-customize", checkSession, renderLongAg
 
 
 //---------------------NORMAL USER-------------------------- 
+// pedidos creados
+router.get("/query/filter/orders-all", checkSession, renderAllOrders);
+
 // pedidos pendientes
 router.get("/user/query/filter/orders-status-pending", checkSession, renderPendinguser);
 
@@ -63,6 +68,8 @@ router.get("/user/query/filter/orders-date-recently", checkSession, renderRecent
 // pedidos antiguos (solo muestra 10)
 router.get("/user/query/filter/orders-date-Long-Ago", checkSession, renderLongAgouser);
 
+//Muestra los detalles de el producto
+router.get("/user/query/filter/datails-order/:id", checkSession, renderDetails);
 
 //exportamos modulo para acceso global a las rutas
 module.exports = router;

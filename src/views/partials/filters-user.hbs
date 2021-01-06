@@ -3,6 +3,11 @@
         <i class="fas fa-filter mt-4 mx-2"></i>Filtros
     </h4>
     <hr class="mb-4">
+        <div class="list-group list-group-flush">
+        <a href="/query/filter/orders-all" class="list-group-item list-group-item-action">
+            <i class="fas fa-list mr-1"></i>Todos</h5>
+        </a>
+    </div>
     <div class="btn-group dropright">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
@@ -34,4 +39,20 @@
         </div>
     </div>
     <br>
+    <div class="btn-group dropright">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Tipo
+        </button>
+        <div class="dropdown-menu dropright">
+            <a class="dropdown-item text-primary" href="/user/query/filter/orders-type-customizable">
+                <i class="fas fa-calendar-minus mr-1"></i> Personalizable
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-muted" href="/user/query/filter/orders-type-non-customizable">
+                <i class="fas fa-calendar-plus mr-1"></i> No personalizable
+            </a>
+        </div>
+    </div>
+    <hr class="mt-3 mb-2">
+    <span id="infofilter"></span>   
 </div>

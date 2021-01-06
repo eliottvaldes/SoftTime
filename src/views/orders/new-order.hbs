@@ -23,13 +23,12 @@
           {{!-- Para elegir el tipo de producto dentro del catálogo ya establecido --}}
           <div class="form-group">
             <label class="my-1" for="product">Producto</label>
-            <select class="custom-select" name="product" id="product" required>
+            <select class="custom-select" name="product" id="product" required onchange="settype();">
               <option selected disabled value="">Selecciona el tipo de producto</option>
               <option disabled>-----------------------------------</option>
               <option disabled class="font-weight-bold">PRINCIPALES</option>
-              <option>Papel Picado</option>>
-              <option>Esferas 90mm</option>>
-              <option>Figura de Animal</option>
+              <option value="Papel Picado">Papel Picado</option>>
+              <option value="Figura de Animal">Figura de Animal</option>
               <option disabled class="font-weight-bold">PLUMONES</option>
               <option disabled class="font-italic">MARCA CRAYOLA</option>
               <option value="Crayola Supertips">SuperTips</option>
@@ -46,23 +45,24 @@
               <option value="Plumones Tombow">Tombow Professionals</option>
               <option value="Plumones Artline">Artline Stix</option>
               <option disabled class="font-weight-bold">ORGANIZADORES PARA PLUMONES</option>
-              <option>Organizador Madera</option>
-              <option>Organizador Acrílico</option>
+              <option value="">Organizador Madera</option>
+              <option value="">Organizador Acrílico</option>
               <option disabled class="font-weight-bold">LIBRETAS</option>
               <option value="Libreta Profesional">Profesional</option>
               <option value="Libreta Francesa">Francesa</option>
               <option value="Libreta Italiana">Italiana</option>
               <option value="Libreta Pasta Impresa">Pasta Impresa</option>
               <option disabled class="font-weight-bold">OTROS</option>
-              <option>Rompecabezas</option>
-              <option>Llavero</option>
+              <option value="Rompecabezas">Rompecabezas</option>
+              <option value="Llavero">Llavero</option>
               <option disabled></option>
               <option disabled></option>
             </select>
             <div class="invalid-feedback">
               Selecciona el producto del que desees generar el pedido
             </div>
-          </div>
+          </div>  
+          <input type="hidden" value="" name="tag" id="type">        
           {{!-- Para ingresar la descripción del producto --}}
           <div class="form-group">
             <label for="product">Descripción</label>
@@ -102,14 +102,25 @@
     <br>
     <br>
   </div>
-
 </div>
 
-
-{{!-- FUncion para validar los campos con bootstrap --}}
+<script>
+  function settype(){
+    var selection= document.getElementById('product').value;
+    console.log("el producto selccionado es:" +selection);
+    let stype;
+    if(selection=='Papel Picado' || selection=='Figura de Animal'  || selection=='Libreta Profesional'  || selection=='Libreta Francesa'  || selection=='Libreta Italiana' || selection=='Libreta Pasta Impresa' || selection=='Rompecabezas' || selection=='Llavero' ){
+      stype="customizable";
+    }else{
+      stype="noncustomizable";
+    }
+    console.log("producto tipo:" + stype)
+    document.getElementById("type").value = stype;    
+  }
+</script>
 <script>
   (function () {
-    'use strict';
+    'use strict';   
     window.addEventListener('load', function () {
       var forms = document.getElementsByClassName('needs-validation');
       var validation = Array.prototype.filter.call(forms, function (form) {

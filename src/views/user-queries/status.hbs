@@ -85,10 +85,8 @@
 <script>
 
     function filterInfo() {
-        var filter = document.getElementById('state').value;
-
+        var filter = document.getElementById("state").value;
         var sfilter;
-        console.log("El filtro ocupado es: " + filter);
         var disfil = document.getElementById('infofilter');
 
         if (filter == "warning") {
@@ -96,14 +94,14 @@
             disfil.innerHTML = `<p><h6 class="text-warning">Filtrando por: ${sfilter}</h6></p>`;
         }
         if (filter == "success") {
-            sfilter = "Estatus Pendiente"
+            sfilter = "Estatus Aprobado"
             disfil.innerHTML = `<p><h6 class="text-success">Filtrando por: ${sfilter}</h6></p>`;
         }
         if (filter == "danger") {
-            sfilter = "Estatus Pendiente"
+            sfilter = "Estatus Rechazado"
             disfil.innerHTML = `<p><h6 class="text-danger">Filtrando por: ${sfilter}</h6></p>`;
         }
-    }
+    }    
     window.onload = filterInfo;
 </script>
 <script>

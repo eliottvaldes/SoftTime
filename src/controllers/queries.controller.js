@@ -45,6 +45,12 @@ QueriesCrtl.updateStatus = async (req, res) => {
 };
 
 //--------USER QUERIES-------------------
+//todos los pedidos
+QueriesCrtl.renderAllOrders = async (req, res) => {
+  const orders = await Data.find({ user: req.user.id }).sort({ date: "desc" }).lean();    
+  res.render("user-queries/all", { orders });
+};
+
 QueriesCrtl.renderPendinguser = async (req, res) => {
   // guardamos en una variable el arreglo de los pedidos utilizando el .find() de acuerdo al id del usuario activo de la sesion
   const statusOrder = await Data.find({ user: req.user.id, status: "warning"}).sort({ date: "desc" }).lean();
@@ -56,7 +62,6 @@ QueriesCrtl.renderValidateduser = async (req, res) => {
   res.render("user-queries/status", { statusOrder });
 };
 QueriesCrtl.renderRejecteduser = async (req, res) => {
-  // guardamos en una variable el arreglo de los pedidos utilizando el .find() de acuerdo al id del usuario activo de la sesion
   const statusOrder = await Data.find({ user: req.user.id, status: "danger"}).sort({ date: "desc" }).lean();    
   res.render("user-queries/status", { statusOrder });
 };
@@ -68,4 +73,15 @@ QueriesCrtl.renderLongAgouser = async (req, res) => {
   const dateOrder = await Data.find({ user: req.user.id }).sort({ date: "asc" }).limit(10).lean();
   res.render("user-queries/date", { dateOrder });
 };
+QueriesCrtl.renderDetails = async (req, res) => {
+  const order = await Data.findById(req.params.id).lean();
+  if (order.user != req.user.id) {
+    req.flash("error_msg", "Por favor verifica tu inicio de sesión");
+    return res.redirect("/user-queries/date");
+  }
+  res.render("user-queries/details", { order });  
+};
+
+
+
 module.exports = QueriesCrtl;

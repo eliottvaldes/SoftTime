@@ -1,0 +1,93 @@
+{{!-- IMPORTANTE, se debe instalar una version antigua de handlebars4.5.0 --}}
+<style>
+    body {
+        background-color: #52a7c1;
+        background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 50%, #aae69a 100%);
+    }
+</style>
+<div class="container mx-auto my-4">
+    {{!-- menu de filtros --}}
+    {{#if orders}}
+    <div class="row row-cols-2 my-5">
+        <div class="col-3 sticky-top mr-5">
+            {{!-- Filtros --}}
+            {{>filters-user}}
+        </div>
+        {{!-- Tabla de datos --}}
+        <div class="col-8">
+            <br>
+            <table class="table table-hover table-striped bg-white table-responsive rounded">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col-1" style="width: 5%;">#</th>
+                        <th scope="col-2" style="width: 10%;">Name</th>
+                        <th scope="col-3" style="width: 20%;">Description</th>
+                        <th scope="col-3" style="width: 25%;">Imagen</th>
+                        <th scope="col-2" style="width: 25%;">Fecha</th>
+                        <th scope="col-1" style="width: 5%;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {{!-- Creamos un bucle para recorrer los datos de nuestra base de datos --}}
+                    {{#each orders}}
+                    <tr>
+                        <th scope="row">{{@index}}</th>
+                        <td>{{product}}</td>
+                        <td>{{description}}</td>
+                        <td>
+                            {{#if image}}
+                            <img src="data:image/png;base64,{{image}}" alt="" width="75%">
+                            {{else}}
+                            <img src="/img/icon.png" alt="imagen no personalizable" width="75%">
+                            {{/if}}
+                        </td>
+                        <td>{{date}}</td>
+                        <td class="text-{{status}}">                            
+                            <input type="hidden" id="state" value="Todos">
+                            <button class="btn btn-{{status}} btn-sm" title="El color representa el estatus de tu pedido" data-toggle="popover" data-trigger="hover" data-content="Amarillo: En proceso  |  Verde: Aceptado  |  Rojo: Rechazado"> 
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {{else}}
+                    <div class="card mx-auto">
+                        <div class="card-body">
+                            {{!-- Saludamos al usuario uwu --}}
+                            <div class="text-center">
+                                {{!-- Saludamos al usuario uwu --}}
+                                <h1>¡Actualmente no tienes ningun dato para consultar!</h1>
+                                <hr>
+                                <img src="/img/team2.svg" alt="" width="65%" height="50%">
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </tbody>
+            </table>
+            <br>
+            <hr>
+            <div class="">
+                {{!-- Exportación de tablas a archivos --}}
+                {{>export-data}}
+            </div>
+        </div>
+    </div>
+    <br>
+    {{else}}
+    {{>nodatauser}}
+    {{/if}}
+</div>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });
+</script>
+<script>
+    function filterInfo() {
+        var filter = document.getElementById('state').value;  
+        var disfil = document.getElementById('infofilter');                        
+        disfil.innerHTML = `<p><h6>Filtrando por: ${filter}</h6></p>`;
+    }    
+    window.onload = filterInfo;
+</script>

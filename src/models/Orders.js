@@ -14,17 +14,20 @@ const OrdersSchema = new Schema(
         status:{
             type: String,
             required: true
+        },        
+        tag: {
+            type:String
         },
         user: {
             type: String,
             required: true
+        },        
+        image: {
+            type: String
         },
         date: { 
             type: Date, 
             default: Date.now 
-        },
-        image: {
-            type: String
         }
     },
     {
