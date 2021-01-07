@@ -18,10 +18,10 @@
             <table class="table table-hover table-striped bg-white table-responsive rounded">
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>                        
-                        <th scope="col">Fecha</th>                        
-                        <th scope="col">Detalles</th>                        
+                        <th scope="col" style="width: 7.5%;">#</th>
+                        <th scope="col" style="width: 30%;">Name</th>                        
+                        <th scope="col" style="width: 50%;">Fecha</th>                        
+                        <th scope="col" style="width: 12.5%;">Detalles</th>                        
                     </tr>
                 </thead>
                 <tbody>
@@ -31,9 +31,9 @@
                         <th scope="row">{{@index}}</th>
                         <td>{{product}}</td>
                         <td>{{date}}</td>
+                        <input type="hidden" id="state" value="Fecha">
                         <td>
-                            <div class="col-2">
-                            {{!-- para editar --}}
+                            <div class="col-2">                            
                             <a class="btn btn-primary btn-sm" href="/user/query/filter/datails-order/{{_id}}"><i class="fas fa-eye"></i></a>
                             </div>
                         </td>                                               

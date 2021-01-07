@@ -18,8 +18,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="/orders"><i class="fas fa-list"></i> Mis Pedidos</a>
-              <a class="dropdown-item" href="/orders/add"><i class="fas fa-plus"></i> Agregar Pedido</a>
-              <a class="dropdown-item" href="/query/filter/orders-all"><i class="fas fa-search"></i> Consultar</a>
+              <a class="dropdown-item" href="/orders/add"><i class="fas fa-plus"></i> Agregar Pedido</a>              
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -32,8 +31,11 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/users/logout">Cerrar Sesión <i class="fas fa-sign-out-alt"></i></a>
+            <a class="nav-link" href="/query/filter/orders-all"><i class="fas fa-search"></i> Consultas</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/users/logout">Cerrar Sesión <i class="fas fa-sign-out-alt"></i></a>
+          </li>          
           {{!-- Si hay un usuario sin autentificarse --}}
         {{else}}
           <li class="nav-item">

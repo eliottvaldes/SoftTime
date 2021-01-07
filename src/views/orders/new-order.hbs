@@ -107,14 +107,12 @@
 <script>
   function settype(){
     var selection= document.getElementById('product').value;
-    console.log("el producto selccionado es:" +selection);
     let stype;
     if(selection=='Papel Picado' || selection=='Figura de Animal'  || selection=='Libreta Profesional'  || selection=='Libreta Francesa'  || selection=='Libreta Italiana' || selection=='Libreta Pasta Impresa' || selection=='Rompecabezas' || selection=='Llavero' ){
       stype="customizable";
     }else{
       stype="noncustomizable";
     }
-    console.log("producto tipo:" + stype)
     document.getElementById("type").value = stype;    
   }
 </script>

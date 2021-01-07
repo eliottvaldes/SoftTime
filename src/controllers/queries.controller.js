@@ -43,6 +43,16 @@ QueriesCrtl.updateStatus = async (req, res) => {
   req.flash("success_msg", "Pendiente modificado satisfactoriamente");
   res.redirect("/ordersAdmin");
 };
+QueriesCrtl.renderCustomizable = async (req, res) => {
+  const statusOrder = await Data.find({tag: "customizable"}).sort({ date: "desc" }).lean();
+  res.render("admin-queries/status", { statusOrder });
+};
+QueriesCrtl.renderNonCustomizable = async (req, res) => {
+  const statusOrder = await Data.find({tag: "noncustomizable"}).sort({ date: "desc" }).lean();
+  res.render("admin-queries/status", { statusOrder });
+};
+
+
 
 //--------USER QUERIES-------------------
 //todos los pedidos
@@ -50,7 +60,6 @@ QueriesCrtl.renderAllOrders = async (req, res) => {
   const orders = await Data.find({ user: req.user.id }).sort({ date: "desc" }).lean();    
   res.render("user-queries/all", { orders });
 };
-
 QueriesCrtl.renderPendinguser = async (req, res) => {
   // guardamos en una variable el arreglo de los pedidos utilizando el .find() de acuerdo al id del usuario activo de la sesion
   const statusOrder = await Data.find({ user: req.user.id, status: "warning"}).sort({ date: "desc" }).lean();
@@ -73,7 +82,7 @@ QueriesCrtl.renderLongAgouser = async (req, res) => {
   const dateOrder = await Data.find({ user: req.user.id }).sort({ date: "asc" }).limit(10).lean();
   res.render("user-queries/date", { dateOrder });
 };
-QueriesCrtl.renderDetails = async (req, res) => {
+QueriesCrtl.renderDetailsuser = async (req, res) => {
   const order = await Data.findById(req.params.id).lean();
   if (order.user != req.user.id) {
     req.flash("error_msg", "Por favor verifica tu inicio de sesión");
@@ -81,7 +90,14 @@ QueriesCrtl.renderDetails = async (req, res) => {
   }
   res.render("user-queries/details", { order });  
 };
-
+QueriesCrtl.renderCustomizableuser = async (req, res) => {
+  const typeOrder = await Data.find({ user: req.user.id, tag: "customizable"}).sort({ date: "desc" }).lean();    
+  res.render("user-queries/type", { typeOrder });
+};
+QueriesCrtl.renderNonCustomizableuser = async (req, res) => {
+  const typeOrder = await Data.find({ user: req.user.id, tag: "noncustomizable"}).sort({ date: "desc" }).lean();    
+  res.render("user-queries/type", { typeOrder });
+};
 
 
 module.exports = QueriesCrtl;
