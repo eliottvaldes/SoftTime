@@ -12,7 +12,8 @@ const {
   renderOrdersAdmin,
   renderEditForm,
   updateOrder,
-  deleteOrder
+  deleteOrder,
+  deleteAdminOrder
 } = require("../controllers/orders.controller");
 
 // requerimos la funcion para mostrar si está autenticado y cuenta con sesión activa
@@ -34,9 +35,11 @@ router.get("/orders/edit/:id", checkSession, renderEditForm);
 // Usamos metodo put debido a que se usa para hacer referencia paraa actualizar
 router.put("/orders/edit-order/:id", checkSession, upload.single('img'), updateOrder);
 
-// ruta para eliminar pedidos
 // se usa el metodo delete para poder eliminarlo usando el :id y el modulo overrride
 router.delete("/orders/delete/:id", checkSession, deleteOrder);
+
+// se usa el metodo delete para poder eliminarlo usando el :id y el modulo overrride
+router.delete("/admin/orders/delete/:id", checkSession, deleteAdminOrder);
 
 
 //exportamos modulo para acceso global a las rutas

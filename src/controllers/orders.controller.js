@@ -94,8 +94,9 @@ ordersCtrl.updateOrder = async (req, res) => {
   var image;
   if (req.file) {
     image = req.file.buffer.toString('base64');
+  }else{
+    image = req.body.image;
   }
-
   //actualizamos los datos en la base de datos    
   await Order.findByIdAndUpdate(req.params.id, { product, description, image });
   //Mensaje de satisfaccion
@@ -113,8 +114,15 @@ ordersCtrl.deleteOrder = async (req, res) => {
   res.redirect("/orders");
 };
 
-//---------------------- 
+//---------------------- ---------------------
 //para el administrador
+
+//para eliminar 
+ordersCtrl.deleteAdminOrder = async (req, res) => {
+  await Order.findByIdAndDelete(req.params.id);
+  req.flash("success_msg", "Pedido eliminado satisfactoriamente");
+  res.redirect("/query/filter/all-orders");
+};
 
 //metodo encargado de consulta para la base de datos para el administrador
 ordersCtrl.renderOrdersAdmin = async (req, res) => {

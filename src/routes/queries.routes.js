@@ -3,12 +3,14 @@ const router = express.Router();
 
 // importamos los objetos dentro del controlador llamado queries controller
 const {
+renderAllOrdersAdmin,
 renderOrdersAdmin,
 renderPending,
 renderValidated,
 renderRejected,
 renderRecently,
 renderLongAgo,
+renderDetails,
 renderCustomizable,
 renderNonCustomizable,
 renderAllOrders,
@@ -26,6 +28,9 @@ renderNonCustomizableuser
 const { checkSession } = require("../helpers/auth");
 
 //----------------------ADMIN USER---------------------
+// TODOS pedidos creados
+router.get("/query/filter/all-orders", checkSession, renderAllOrdersAdmin);
+
 // pedidos creados
 router.get("/query/filter/orders-admin", checkSession, renderOrdersAdmin);
 
@@ -44,11 +49,14 @@ router.get("/query/filter/orders-date-recently", checkSession, renderRecently);
 // pedidos antiguos (solo muestra 10)
 router.get("/query/filter/orders-date-Long-Ago", checkSession, renderLongAgo);
 
+//Muestra los detalles de el producto
+router.get("/admin/query/filter/datails-order/:id", checkSession, renderDetails);
+
 //pedidos personalizables
-router.get("/query/filter/orders-type-customize", checkSession, renderCustomizable);
+router.get("/query/filter/orders-type-customizable", checkSession, renderCustomizable);
 
 //pedidos no personalizables (generales)
-router.get("/query/filter/orders-type-non-customize", checkSession, renderNonCustomizable);
+router.get("/query/filter/orders-type-non-customizable", checkSession, renderNonCustomizable);
 
 
 

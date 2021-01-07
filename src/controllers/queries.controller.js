@@ -5,6 +5,11 @@ const Data = require("../models/Orders");
 
 //------------ADMIN QUERIES--------------------
 //all orders
+QueriesCrtl.renderAllOrdersAdmin = async (req, res) => {
+  const ordersAll = await Data.find().sort({ date: "asc" }).lean();  
+  res.render("admin/all-orders", { ordersAll }); 
+};
+//all orders
 QueriesCrtl.renderOrdersAdmin = async (req, res) => {
   const orders = await Data.find().sort({ date: "asc" }).lean();  
   res.render("admin-queries/all-my-orders", { orders }); 
@@ -29,6 +34,23 @@ QueriesCrtl.renderLongAgo = async (req, res) => {
   const dateOrder = await Data.find().sort({ date: "asc" }).limit(10).lean();
   res.render("admin-queries/dates", { dateOrder });
 };
+QueriesCrtl.renderDetails = async (req, res) => {
+  const order = await Data.findById(req.params.id).lean();
+  if (order.user != req.user.id) {
+    req.flash("error_msg", "Por favor verifica tu inicio de sesión");
+    return res.redirect("/admin-queries/date");
+  }
+  res.render("admin-queries/details", { order });  
+};
+QueriesCrtl.renderCustomizable = async (req, res) => {
+  const typeOrder = await Data.find({tag: "customizable"}).sort({ date: "desc" }).lean();
+  res.render("admin-queries/type", { typeOrder });
+};
+QueriesCrtl.renderNonCustomizable = async (req, res) => {
+  const typeOrder = await Data.find({tag: "noncustomizable"}).sort({ date: "desc" }).lean();
+  res.render("admin-queries/type", { typeOrder });
+};
+
 QueriesCrtl.renderEditStatus = async (req, res) => {
   const status = await Data.findById(req.params.id).lean();
   if (schedules.user != req.user.id) {
@@ -42,14 +64,6 @@ QueriesCrtl.updateStatus = async (req, res) => {
   await Data.findByIdAndUpdate(req.params.id, { date, time, amount, line, station, comments });
   req.flash("success_msg", "Pendiente modificado satisfactoriamente");
   res.redirect("/ordersAdmin");
-};
-QueriesCrtl.renderCustomizable = async (req, res) => {
-  const statusOrder = await Data.find({tag: "customizable"}).sort({ date: "desc" }).lean();
-  res.render("admin-queries/status", { statusOrder });
-};
-QueriesCrtl.renderNonCustomizable = async (req, res) => {
-  const statusOrder = await Data.find({tag: "noncustomizable"}).sort({ date: "desc" }).lean();
-  res.render("admin-queries/status", { statusOrder });
 };
 
 

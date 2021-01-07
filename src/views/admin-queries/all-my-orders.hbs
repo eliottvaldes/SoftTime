@@ -23,8 +23,8 @@
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Description</th>
+            <th scope="col">Imagen</th>           
             <th scope="col">Fecha</th>
-            <th scope="col">Creador</th>
             <th scope="col">Status</th>
           </tr>
         </thead>
@@ -36,9 +36,16 @@
             <th scope="row">{{@index}}</th>
             <td>{{product}}</td>
             <td>{{description}}</td>
-            <td>{{date}}</td>
-            <td>{{user}}</td>
             <td>
+                {{#if image}}
+                <img src="data:image/png;base64,{{image}}" alt="" width="75%">
+                {{else}}
+                <img src="/img/icon.png" alt="imagen no personalizable" width="75%">
+                {{/if}}
+            </td>
+            <td>{{date}}</td>            
+            <td>
+              <input type="hidden" id="state" value="Todos">
               <a class="btn btn-{{status}} btn-sm" href="/orders/edit/{{_id}}"><i class="fas fa-edit"></i></a>
             </td>
           </tr>
@@ -83,4 +90,12 @@
   $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
   });
+</script>
+<script>
+    function filterInfo() {
+        var filter = document.getElementById('state').value;  
+        var disfil = document.getElementById('infofilter');                        
+        disfil.innerHTML = `<p><h6>Filtrando por: ${filter}</h6></p>`;
+    }    
+    window.onload = filterInfo;
 </script>

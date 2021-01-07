@@ -53,7 +53,7 @@ const MongoStore = connectMongo(session);
 app.use(
   session({
     secret: "softtimepass",
-    cookie: { maxAge: 2628000 },
+    cookie: { maxAge: 5628000 },
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({ mongooseConnection: mongoose.connection }),  
