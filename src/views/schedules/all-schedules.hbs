@@ -9,7 +9,7 @@
         var urls = [];
         {{#each eventos}}
           comentarios.push("{{titulo}}");
-          fechas.push("{{year}}" + "-" + "{{month}}" + "-" + "{{day}}" );
+          fechas.push("{{year}}" + "-" + "{{month}}" + "-" + "{{day}}" + "T" + "{{time}}");
           urls.push("{{url}}");
         {{/each}}
         var index = comentarios.length;

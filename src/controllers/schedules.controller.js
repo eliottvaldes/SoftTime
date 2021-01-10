@@ -70,6 +70,7 @@ schedulesCtrl.renderSchedules = async (req, res) => {
     }
     evento.month = mes;
     evento.day = dia;
+    evento.time = pendientes[i].time;
     evento.url = String("/schedule/" + pendientes[i]._id);
     eventos.push(evento);
   }
