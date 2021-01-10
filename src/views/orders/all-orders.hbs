@@ -8,6 +8,7 @@
 
 <div class="container mx-auto my-5">
   <div class="row">
+    {{#if user}}
     {{!-- Creamos un bucle para recorrer los datos de nuestra base de datos --}}
     {{#each orders}}
     <div class="col-6 my-3">
@@ -82,6 +83,11 @@
       </div>
     </div>
     {{/each}}
+    {{else}}
+    <li class="nav-item">
+      <a class="nav-link" href="/users/signin">Iniciar Sesión <i class="fas fa-sign-in-alt"></i></a>
+    </li>
+    {{/if}}
   </div>
 </div>
 <script>

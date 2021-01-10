@@ -6,6 +6,7 @@ const {
   renderScheduleForm,
   createNewSchedule,
   renderSchedules,
+  renderSchedule,
   renderEditForm,
   updateSchedule,
   deleteSchedule
@@ -21,6 +22,9 @@ router.post("/schedules/new-schedule", checkSession, createNewSchedule);
 
 // ruta para renderizar la vista de todos los pendientes creados
 router.get("/schedules", checkSession, renderSchedules);
+
+// ruta para renderizar la vista de un pedido especifico
+router.get("/schedule/:id", checkSession, renderSchedule);
 
 // ruta para renderizar un formulario para editar el formulario pedidos se usa el parametro id para indicar el id del pedido que se va a modificar
 router.get("/schedules/edit/:id", checkSession, renderEditForm);

@@ -1,72 +1,48 @@
 <div class="container mx-auto mt-4 mb-3">
-  <div class="row">
-    {{#each pendientes}}
-    <div class="col-7">
-      <div class="card">
-        <div class="card-body">
-          <p>
-          <h4>
-            Fecha de entrega
-          </h4>
-          {{date}}
-          </p>
-          <hr>
-          <p>
-          <h4>
-            horarios
-          </h4>
-          {{time}}
-          </p>
-          <hr>
-          <p>
-          <h4>
-            monto pendiente
-          </h4>
-          {{amount}}
-          </p>
-          <hr>
-          <p>
-          <h4>
-            linea del metro
-          </h4>
-          {{line}}
-          </p>
-          <hr>
-          <p>
-          <h4>
-            Estacion
-          </h4>
-          {{station}}
-          </p>
-          <hr>
-          <p>
-          <h4>
-            Comentarios
-          </h4>
-          {{comments}}
-          </p>
-          <hr>
-          <form action="/schedules/delete/{{_id}}?_method=DELETE" method="POST">
-            <input type="hidden" name="_method" value="DELETE">
-            <button type="submit" class="btn btn-danger btn-block btn-sm">Delete</button>
-          </form>
-        </div>
-      </div>
-      {{else}}
-      <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
-        <div class="card-body">
-          <div class="card-body">
-            <div class="text-center">
-              {{!-- Saludamos al usuario uwu --}}
-              <h1>¡Actualmente no tienes pendientes en tu agenda!<i class="fas fa-sad-cry ml-2"></i></h1>
-              <hr>
-              <img src="/img/info.svg" alt="" width="55%" height="40%">
-            </div>
-          </div>
-          <a href="/schedules/add" class="btn btn-success btn-block btn-lg"><i class="fas fa-calendar-plus mr-2"></i>
-            Crea tu primer pendiente ahora</a>
-        </div>
-      </div>
-      {{/each}}
+  <div class="col-12">
+    {{#if user}}
+    <div id="calendar">
+      <script>
+        var eventos = [];
+        var comentarios = [];
+        var fechas = [];
+        var urls = [];
+        {{#each eventos}}
+          comentarios.push("{{titulo}}");
+          fechas.push("{{year}}" + "-" + "{{month}}" + "-" + "{{day}}" );
+          urls.push("{{url}}");
+        {{/each}}
+        var index = comentarios.length;
+        for (let i = 0; i < index; i++) {
+          var evento = {};
+          var titulo = comentarios[i];
+          var fecha = fechas[i];
+          var url = urls[i];
+          evento.title = titulo;
+          evento.start = fecha;
+          evento.url = url;
+          eventos.push(evento);
+        }
+        console.log(eventos);
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          events: eventos,
+          eventClick: function (info) {
+            info.jsEvent.preventDefault();
+
+            if (info.event.url) {
+              window.open(info.event.url);
+            }
+          }
+        });
+        calendar.render();
+
+      </script>
     </div>
+    {{else}}
+    <li class="nav-item">
+      <a class="nav-link" href="/users/signin">Iniciar Sesión <i class="fas fa-sign-in-alt"></i></a>
+    </li>
+    {{/if}}
   </div>
+</div>

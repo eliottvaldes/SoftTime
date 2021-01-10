@@ -1,0 +1,61 @@
+<div class="container mx-auto mt-4 mb-3">
+    <div class="row">
+        {{#if user}}
+        <div class="col-7">
+            <div class="card">
+                <div class="card-body">
+                    <p>
+                    <h4>
+                        Fecha de entrega
+                    </h4>
+                    {{date}}
+                    </p>
+                    <hr>
+                    <p>
+                    <h4>
+                        horarios
+                    </h4>
+                    {{time}}
+                    </p>
+                    <hr>
+                    <p>
+                    <h4>
+                        monto pendiente
+                    </h4>
+                    {{amount}}
+                    </p>
+                    <hr>
+                    <p>
+                    <h4>
+                        linea del metro
+                    </h4>
+                    {{line}}
+                    </p>
+                    <hr>
+                    <p>
+                    <h4>
+                        Estacion
+                    </h4>
+                    {{station}}
+                    </p>
+                    <hr>
+                    <p>
+                    <h4>
+                        Comentarios
+                    </h4>
+                    {{comments}}
+                    </p>
+                    <hr>
+                    <form action="/schedules/delete/{{_id}}?_method=DELETE" method="POST">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger btn-block btn-sm">Delete</button>
+                    </form>
+                </div>
+            </div>
+            {{else}}
+            <li class="nav-item">
+                <a class="nav-link" href="/users/signin">Iniciar Sesión <i class="fas fa-sign-in-alt"></i></a>
+            </li>
+            {{/if}}
+        </div>
+    </div>

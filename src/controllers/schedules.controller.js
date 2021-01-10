@@ -56,7 +56,37 @@ schedulesCtrl.renderSchedules = async (req, res) => {
   const pendientes = await Schedule.find({ user: req.user.id })
     .sort({ date: "desc" })
     .lean();
-  res.render("schedules/all-schedules", { pendientes });
+  var eventos = [];
+  for (let i = 0; i < pendientes.length; i++) {
+    var evento = {};
+    evento.titulo = String(pendientes[i].comments);
+    var date = new Date(pendientes[i].date);
+    evento.year = date.getFullYear();
+    var mes = date.getMonth() + 1, 
+        dia = date.getDate() + 1;
+    
+    if (date.getMonth() + 1 < 10) {
+      mes = "0" + String(date.getMonth() + 1);
+    }
+    evento.month = mes;
+    evento.day = dia;
+    evento.url = String("/schedule/" + pendientes[i]._id);
+    eventos.push(evento);
+  }
+  
+  console.log(eventos);
+  res.render("schedules/all-schedules", { eventos });
+};
+
+schedulesCtrl.renderSchedule = async (req, res) => {
+  const pendiente = await Schedule.findById(req.params.id);
+  var date = pendiente.date;
+  var time = pendiente.time;
+  var amount = pendiente.amount;
+  var line = pendiente.line;
+  var station = pendiente.station;
+  var comments = pendiente.comments;
+  res.render("schedules/schedule", { date, time, amount, line, station, comments });
 };
 
 schedulesCtrl.renderEditForm = async (req, res) => {
