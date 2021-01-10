@@ -81,13 +81,14 @@ schedulesCtrl.renderSchedules = async (req, res) => {
 
 schedulesCtrl.renderSchedule = async (req, res) => {
   const pendiente = await Schedule.findById(req.params.id);
+  var id = pendiente._id;
   var date = pendiente.date;
   var time = pendiente.time;
   var amount = pendiente.amount;
   var line = pendiente.line;
   var station = pendiente.station;
   var comments = pendiente.comments;
-  res.render("schedules/schedule", { date, time, amount, line, station, comments });
+  res.render("schedules/schedule", { id, date, time, amount, line, station, comments });
 };
 
 schedulesCtrl.renderEditForm = async (req, res) => {
