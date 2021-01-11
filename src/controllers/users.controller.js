@@ -110,6 +110,16 @@ usersCtrl.signin = passport.authenticate("local", {
   failureRedirect: "/users/signin",
   failureFlash: true
 });
+/*async (req, res) => {
+  const { username, password } = req.body;
+  const usr = await User.findOne({username: username});
+  console.log(usr.privilege);
+  if (usr.privilege.trim() === "sell") {
+    res.render("users/welcome");
+  } else {
+    res.render("admin/welcome");
+  }
+}*/
 
 //-------------------ADMINISTRADOR -----------------
 //formulario inicio de sesion admin

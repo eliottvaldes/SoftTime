@@ -11,23 +11,27 @@ const OrdersSchema = new Schema(
             type: String,
             required: true
         },
-        status:{
+        status: {
             type: String,
             required: true
-        },        
+        },
         tag: {
-            type:String
+            type: String
         },
         user: {
             type: String,
             required: true
-        },        
+        },
         image: {
             type: String
         },
-        date: { 
-            type: Date, 
-            default: Date.now 
+        date: {
+            type: Date,
+            default: Date.now
+        },
+        privilege: {
+            type: String,
+            default: "sell" 
         }
     },
     {
