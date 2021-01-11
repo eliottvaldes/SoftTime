@@ -21,10 +21,15 @@ QueriesCrtl.renderOrdersAdmin = async (req, res) => {
   res.render("admin-queries/all-my-orders", { orders, sellers }); 
 };
 QueriesCrtl.renderSellAdminOrders = async (req, res) => {
-  const userSel = await Users.find({ _id: req.params.user}).lean();
-  var id = userSel._id;
+  const userSel = await Users.find({ username: req.params.user}).lean();
+  var id = userSel[0]._id;
   const orders = await Data.find({user: id}).lean();
-  res.render("admin-queries/sell_admin_orders", { orders }); 
+  const users = await Users.find({}).sort({username : "asc"});
+  var sellers = [];
+  for (let i = 0; i < users.length; i++) {
+    sellers.push(users[i].username);
+  }
+  res.render("admin-queries/sell_admin_orders", { orders, sellers }); 
 };
 QueriesCrtl.renderPending = async (req, res) => {
   const statusOrder = await Data.find({status: "warning"}).sort({ date: "desc" }).lean();

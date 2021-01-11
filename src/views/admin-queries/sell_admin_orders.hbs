@@ -8,13 +8,14 @@
 {{>nav-admin}}
 <div class="container mx-auto my-4">
   {{!-- menu de filtros --}}
-  {{#if orders}}
+  
   <div class="row row-cols-2 my-5">
     <div class="col-3 sticky-top mr-5">
     {{!-- Filtros --}}
     {{>filters-orders sellers=sellers}}
     </div>
     {{!-- Tabla de datos --}}
+    {{#if orders}}
     <div class="col-8">
       <br>
       <table class="table table-hover table-striped bg-white table-responsive rounded">
