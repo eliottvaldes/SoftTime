@@ -104,9 +104,9 @@ app.use(require("./routes/charts.routes"));
 app.use(express.static(path.join(__dirname, 'public')));
  
 
-app.get('/', (req,res)=>{ 
-  res.render('404');
-}); 
+app.use((req, res) => {
+  res.render("404");
+});
 
 
 //exportamos para poder acceder a estas funciones desde cualquier parte
