@@ -1,56 +1,52 @@
 <div class="container mx-auto mt-4 mb-3">
-    <div class="row">
+    <div class="row mx-auto">
         {{#if user}}
         <div class="col-7">
-            <div class="card">
+            <div class="card my-5">
                 <div class="card-body">
                     <p>
-                    <h4>
-                        Fecha de entrega
+                    <h4 class="text-center">
+                        <i class="fas fa-clipboard-list"></i> Producto: {{product}}
                     </h4>
-                    {{date}}
                     </p>
                     <hr>
                     <p>
-                    <h4>
-                        horarios
-                    </h4>
-                    {{time}}
+                    <h5>
+                        Horario
+                    </h5>
+                    <i class="fas fa-clock mr-2"></i>Fecha: {{date}}
+                    <br>
+                    <i class="fas fa-calendar mr-2"></i>Hora: {{date}}
                     </p>
                     <hr>
                     <p>
-                    <h4>
-                        monto pendiente
-                    </h4>
-                    {{amount}}
+                    <h5>
+                        <i class="fas fa-money-bill-alt mr-2"></i>Monto pendiente
+                    </h5>
+                    ${{amount}}.00
                     </p>
                     <hr>
                     <p>
-                    <h4>
-                        linea del metro
-                    </h4>
-                    {{line}}
+                    <h5>
+                        <i class="fas fa-map-marked-alt mr-2"></i>Ubicacion
+                    </h5>
+                    {{station}}, Linea {{line}}
                     </p>
                     <hr>
                     <p>
-                    <h4>
-                        Estacion
-                    </h4>
-                    {{station}}
-                    </p>
-                    <hr>
-                    <p>
-                    <h4>
-                        Comentarios
-                    </h4>
+                    <h5>
+                        <i class="fas fa-comment-dots mr-2"></i>Comentarios
+                    </h5>
                     {{comments}}
                     </p>
                     <hr>
                     <form action="/schedules/delete/{{id}}?_method=DELETE" method="POST">
                         <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger btn-block btn-sm">Delete</button>
+                        <button type="submit" class="btn btn-danger btn-block">Eliminar <i
+                                class="fas fa-trash ml-2"></i></button>
                     </form>
                 </div>
+                <br>
             </div>
             {{else}}
             <li class="nav-item">
@@ -58,4 +54,16 @@
             </li>
             {{/if}}
         </div>
+        <div class="col-3 mt-5">
+            <div class="container mx-auto">
+                <div class="float-right">
+                    <button class="btn btn-primary" onclick="javascript:window.close()">
+                        <a class="text-white text-decoration-none">
+                            REGESAR<i class="fas fa-reply ml-2"></i>
+                        </a>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
+</div>

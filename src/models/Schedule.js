@@ -2,6 +2,10 @@ const {Schema, model}= require('mongoose');
 
 //describimoos la estructura de la base de datos de la AGENDA de cada usuario
 const ScheduleSchema = new Schema({          
+    product: { 
+        type: Array,
+        required: true
+    },
     date: { 
         type: String,
         required: true

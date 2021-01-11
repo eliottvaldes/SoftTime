@@ -3,17 +3,23 @@ const schedulesCtrl = {};
 // requerimos el modelo de la base de datos de ../models/schedules
 const Schedule = require("../models/Schedule");
 
-// renderizamos la vista new-Schedule donde se encuentra el formulario para un nuevo pendiente
-schedulesCtrl.renderScheduleForm = (req, res) => {
-  res.render("schedules/new-schedule");
+const Order = require("../models/Orders");
+
+//metodo encargado de consulta para la base de datos
+schedulesCtrl.renderScheduleForm = async (req, res) => {
+  const orders = await Order.find({ user: req.user.id }).sort({ date: "asc" }).lean();  
+  res.render("schedules/new-schedule", { orders });
 };
 
 schedulesCtrl.createNewSchedule = async (req, res) => {
   //obtenemos los datos del formulario
-  const { date, time, amount, line, station, comments } = req.body;
+  const {product, date, time, amount, line, station, comments } = req.body;
   //creamos una lista de errores
   const errors = [];
   //iniicamos las validadciones por parte del servidor
+  if (!product) {
+    errors.push({ text: "Selecciona un producto a entregar" });
+  }
   if (!date) {
     errors.push({ text: "Selecciona una fecha de entrega" });
   }
@@ -21,6 +27,9 @@ schedulesCtrl.createNewSchedule = async (req, res) => {
     errors.push({ text: "Selecciona un horario de entrega" });
   }
   if (!amount) {
+    errors.push({ text: "Ingresa un monto pendiente válido" });
+  }
+  if(amount<5){
     errors.push({ text: "Ingresa un monto pendiente válido" });
   }
   if (!line) {
@@ -32,9 +41,13 @@ schedulesCtrl.createNewSchedule = async (req, res) => {
   if (!comments) {
     errors.push({ text: "Ingresa un comentario" });
   }
+  if (comments.length<5) {
+    errors.push({ text: "Ingresa un comentario con longitud minima de 5 carateres" });
+  }
   if (errors.length > 0) {
     res.render("schedules/new-schedule", {
       errors,
+      product,
       date,
       time,
       amount,
@@ -44,22 +57,20 @@ schedulesCtrl.createNewSchedule = async (req, res) => {
     });
   } else {
 
-    const newSchedule = new Schedule({ date, time, amount, line, station, comments });
+    const newSchedule = new Schedule({product, date, time, amount, line, station, comments });
     newSchedule.user = req.user.id;
     await newSchedule.save();
-    req.flash("success_msg", "Entrega programada satisfactoriamente. Se ha agregado a tu agenda");
+    req.flash("success_msg", "Entrega programada satisfactoriamente.");
     res.redirect("/schedules");
   }
 };
 
 schedulesCtrl.renderSchedules = async (req, res) => {
-  const pendientes = await Schedule.find({ user: req.user.id })
-    .sort({ date: "desc" })
-    .lean();
+  const pendientes = await Schedule.find({ user: req.user.id }).sort({ date: "desc" }).lean();
   var eventos = [];
   for (let i = 0; i < pendientes.length; i++) {
     var evento = {};
-    evento.titulo = String(pendientes[i].comments);
+    evento.titulo = String(pendientes[i].product);
     var date = new Date(pendientes[i].date);
     evento.year = date.getFullYear();
     var mes = date.getMonth() + 1, 
@@ -82,13 +93,14 @@ schedulesCtrl.renderSchedules = async (req, res) => {
 schedulesCtrl.renderSchedule = async (req, res) => {
   const pendiente = await Schedule.findById(req.params.id);
   var id = pendiente._id;
+  var product = pendiente.product;
   var date = pendiente.date;
   var time = pendiente.time;
   var amount = pendiente.amount;
   var line = pendiente.line;
   var station = pendiente.station;
   var comments = pendiente.comments;
-  res.render("schedules/schedule", { id, date, time, amount, line, station, comments });
+  res.render("schedules/schedule", { id, product, date, time, amount, line, station, comments });
 };
 
 schedulesCtrl.renderEditForm = async (req, res) => {
