@@ -1,11 +1,10 @@
-{{!-- IMPORTANTE, se debe instalar una version antigua de handlebars4.5.0 --}}
 <style>
     body {
         background-color: #52a7c1;
         background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 50%, #aae69a 100%);
     }
 </style>
-{{!-- mostrar la seccion de los errores --}}
+{{>nav-admin}}
 {{#each errors}}
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
   {{text}}
@@ -14,7 +13,7 @@
   </button>
 </div>
 {{/each}}
-{{>nav-admin}}
+
 <div class="container mx-auto mt-5 mb-3">
     <div class="row">
         <div class="col-5">

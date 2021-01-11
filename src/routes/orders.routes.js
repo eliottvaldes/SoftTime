@@ -9,11 +9,12 @@ const {
   renderOrderForm,
   createNewOrder,
   renderOrders,
-  renderOrdersAdmin,
   renderEditForm,
   updateOrder,
   deleteOrder,
-  deleteAdminOrder
+  deleteAdminOrder,
+  renderChangeStatus,
+  renderUpdatedStatus
 } = require("../controllers/orders.controller");
 
 // requerimos la funcion para mostrar si está autenticado y cuenta con sesión activa
@@ -27,9 +28,6 @@ router.post("/orders/new-order", checkSession, upload.single('img'), createNewOr
 // ruta para renderizar la vista de todos los pedidos creados
 router.get("/orders", checkSession, renderOrders);
 
-// ruta para renderizar la vista de todos los pedidos creados
-router.get("/ordersAdmin", checkSession, renderOrdersAdmin);
-
 // ruta para renderizar un formulario para editar el formulario pedidos se usa el parametro id para indicar el id del pedido que se va a modificar
 router.get("/orders/edit/:id", checkSession, renderEditForm);
 // Usamos metodo put debido a que se usa para hacer referencia paraa actualizar
@@ -40,6 +38,11 @@ router.delete("/orders/delete/:id", checkSession, deleteOrder);
 
 // se usa el metodo delete para poder eliminarlo usando el :id y el modulo overrride
 router.delete("/admin/orders/delete/:id", checkSession, deleteAdminOrder);
+
+// editar estatus
+router.get("/admin/order/update/status/:id", checkSession, renderChangeStatus);
+// guardar actualizacion
+router.put("/admin/order/updated/status/:id", checkSession, renderUpdatedStatus);
 
 
 //exportamos modulo para acceso global a las rutas

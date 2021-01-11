@@ -71,14 +71,12 @@ QueriesCrtl.renderLongAgo = async (req, res) => {
   }
   res.render("admin-queries/dates", { dateOrder, sellers });
 };
+
 QueriesCrtl.renderDetails = async (req, res) => {
-  const order = await Data.findById(req.params.id).lean();
-  if (order.user != req.user.id) {
-    req.flash("error_msg", "Por favor verifica tu inicio de sesión");
-    return res.redirect("/admin-queries/date");
-  }
+  const order = await Data.findById(req.params.id).lean();  
   res.render("admin-queries/details", { order });  
 };
+
 QueriesCrtl.renderCustomizable = async (req, res) => {
   const typeOrder = await Data.find({tag: "customizable"}).sort({ date: "desc" }).lean();
   const users = await Users.find({}).sort({username : "asc"});

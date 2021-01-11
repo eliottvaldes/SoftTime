@@ -1,0 +1,91 @@
+{{!-- IMPORTANTE, se debe instalar una version antigua de handlebars4.5.0 --}}
+<style>
+    body {
+        background-color: #52a7c1;
+        background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 50%, #aae69a 100%);
+    }
+</style>
+{{>nav-admin}}
+{{!-- mostrar la seccion de los errores --}}
+{{#each errors}}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{text}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{{/each}}
+
+<div class="container mx-auto mt-5 mb-3">
+    <div class="row">
+        <div class="col-5">
+            <div class="card">
+                <div class="card-header">
+                    <h3>DETALLES DEL PEDIDO</h3>
+                </div>
+                <div class="card-body">
+                    <p>PRODUCTO</p>
+                    <p>{{order.product}}</p>
+                    <hr>
+                    <p>DESCRIPCIÓN</p>
+                    <p>{{order.description}}</p>
+                    <hr>
+                    <p>FECHA DE CREACIÓN</p>
+                    <p>{{order.date}}</p>
+
+                    <div class="float-left">
+                        <form action="/admin/order/updated/status/{{order._id}}?_method=PUT" method="POST"
+                            class="needs-validation mt-3" novalidate>
+                            <input type="hidden" name="_method" value="PUT">
+                            <input type="hidden" name="product" value="{{order.product}}" required>
+                            <input type="hidden" name="desciption" {{order.desciption}}>
+                            <div class="form-group">
+                                <select class="custom-select" name="status" required>
+                                    <option selected value="{{order.status}}">Cambiar Status</option>
+                                    <option value="warning">Pendiente</option>
+                                    <option value="success">Aceptado</option>
+                                    <option value="danger">Rechazado</option>
+                                    <option disabled></option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Selecciona el producto del que desees generar el pedido
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <button class="btn btn-primary btn-block" type="submit">
+                                    Guardar Cambios <i class="fas fa-save"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <div class="col-7">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card" style="height:450px;">
+                        <div class="card-body">
+                            <div class="container">
+                                {{#if order.image}}
+                                <img src="data:image/png;base64,{{order.image}}" alt="" style="width:100%;"
+                                    class="mx-auto">
+                                {{else}}
+                                <img src="/img/icon.png" alt="imagen no personalizable" style="height:420px"
+                                    class="mx-auto">
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row float-right">
+                <button class="btn btn-primary btn-block mr-4 mt-4">
+                    <a class="text-white" href="/query/filter/all-orders"><i class="fas fa-arrow-alt-circle-left"></i>
+                        REGRESAR</a>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -41,9 +41,7 @@
                         <td class="align-middle">{{date}}</td>
                         <td class="text-center align-middle">                            
                             <input type="hidden" id="state" value="Todos">
-                            <button class="btn btn-{{status}} btn-sm" title="El color representa el estatus de tu pedido" data-toggle="popover" data-trigger="hover" data-content="Amarillo: En proceso  |  Verde: Aceptado  |  Rojo: Rechazado"> 
-                                <i class="fas fa-info-circle"></i>
-                            </button>
+                            <a class="btn btn-{{status}} btn-sm" href="/admin/order/update/status/{{_id}}"><i class="fas fa-edit"></i></a>
                         </td>
                         <td class="text-center align-middle">
                             <form action="/admin/orders/delete/{{_id}}?_method=DELETE" method="POST">

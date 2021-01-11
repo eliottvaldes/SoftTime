@@ -114,8 +114,9 @@ ordersCtrl.deleteOrder = async (req, res) => {
   res.redirect("/orders");
 };
 
-//---------------------- ---------------------
-//para el administrador
+
+//----------------------ADMINISTRADOR ---------------------
+
 
 //para eliminar 
 ordersCtrl.deleteAdminOrder = async (req, res) => {
@@ -124,12 +125,22 @@ ordersCtrl.deleteAdminOrder = async (req, res) => {
   res.redirect("/query/filter/all-orders");
 };
 
-//metodo encargado de consulta para la base de datos para el administrador
-ordersCtrl.renderOrdersAdmin = async (req, res) => {
-  // guardamos en una variable el arreglo de los pedidos utilizando el .find() de acuerdo al id del usuario activo de la sesion
-  const orders = await Order.find().sort({ date: "asc" }).lean();
-  res.render("admin/all-my-orders", { orders });
+//formulario mostrando los datos para reemplaxar
+ordersCtrl.renderChangeStatus = async (req, res) => {
+  const order = await Order.findById(req.params.id).lean();  
+  res.render("admin/change-status", { order });
 };
+
+//obtener los datos para actualizar
+ordersCtrl.renderUpdatedStatus = async (req, res) => {
+  const status = req.body.status;
+  await Order.findByIdAndUpdate(req.params.id, { status });
+  req.flash("success_msg", "Se ha cambiado el status");
+  res.redirect("/query/filter/all-orders");
+};
+
+
+
 
 
 module.exports = ordersCtrl;
