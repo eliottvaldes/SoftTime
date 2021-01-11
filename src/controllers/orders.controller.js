@@ -91,11 +91,13 @@ ordersCtrl.updateOrder = async (req, res) => {
   //otenemos el arreglo de datos del request body  
   const product = req.body.product;
   const description = req.body.description;
-  var image;
+  var image = "";
   if (req.file) {
     image = req.file.buffer.toString('base64');
   }else{
-    image = req.body.image;
+    console.log(req.params.id);
+    const ord = await Order.findById({_id: req.params.id}).lean();
+    image = ord.image;
   }
   //actualizamos los datos en la base de datos    
   await Order.findByIdAndUpdate(req.params.id, { product, description, image });
