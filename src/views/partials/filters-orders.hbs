@@ -11,6 +11,26 @@
     <div class="btn-group dropright">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
+            Administradores de ventas
+        </button>
+        <div class="dropdown-menu dropright">
+            <p id="vends"></p>
+            <script>
+                var vendedores = "{{sellers}}".split(",");
+                var text = "";
+                for (let i = 0; i < vendedores.length; i++) {
+                    text += "<a class='dropdown-item text-warning' href='/query/filter/sell-admins-orders/"+vendedores[i]+"?'>";
+                    text += "<i class='fas fa-exclamation-triangle mr-1></i>" + vendedores[i] + "</a>";
+                    text += "<div class='dropdown-divider'></div>";
+                }
+                document.getElementById("vends").innerHTML = text;
+            </script>
+        </div>
+    </div>
+    </br>
+    <div class="btn-group dropright">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
             Status
         </button>
         <div class="dropdown-menu dropright">

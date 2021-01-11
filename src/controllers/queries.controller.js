@@ -2,6 +2,7 @@ const QueriesCrtl = {};
 
 // requerimos el modelo de la base de datos de ../models/schedules
 const Data = require("../models/Orders");
+const Users = require("../models/Users");
 
 //------------ADMIN QUERIES--------------------
 //all orders
@@ -11,28 +12,64 @@ QueriesCrtl.renderAllOrdersAdmin = async (req, res) => {
 };
 //all orders
 QueriesCrtl.renderOrdersAdmin = async (req, res) => {
-  const orders = await Data.find().sort({ date: "asc" }).lean();  
-  res.render("admin-queries/all-my-orders", { orders }); 
+  const orders = await Data.find().sort({ date: "asc" }).lean(); 
+  const users = await Users.find({}).sort({username : "asc"});
+  var sellers = [];
+  for (let i = 0; i < users.length; i++) {
+    sellers.push(users[i].username);
+  }
+  res.render("admin-queries/all-my-orders", { orders, sellers }); 
+};
+QueriesCrtl.renderSellAdminOrders = async (req, res) => {
+  const userSel = await Users.find({ _id: req.params.user}).lean();
+  var id = userSel._id;
+  const orders = await Data.find({user: id}).lean();
+  res.render("admin-queries/sell_admin_orders", { orders }); 
 };
 QueriesCrtl.renderPending = async (req, res) => {
   const statusOrder = await Data.find({status: "warning"}).sort({ date: "desc" }).lean();
-  res.render("admin-queries/status", { statusOrder });
+  const users = await Users.find({}).sort({username : "asc"});
+  var sellers = [];
+  for (let i = 0; i < users.length; i++) {
+    sellers.push(users[i].username);
+  }
+  res.render("admin-queries/status", { statusOrder, sellers});
 };
 QueriesCrtl.renderValidated = async (req, res) => {
   const statusOrder = await Data.find({status: "success"}).sort({ date: "desc" }).lean();
-  res.render("admin-queries/status", { statusOrder });
+  const users = await Users.find({}).sort({username : "asc"});
+  var sellers = [];
+  for (let i = 0; i < users.length; i++) {
+    sellers.push(users[i].username);
+  }
+  res.render("admin-queries/status", { statusOrder, sellers });
 };
 QueriesCrtl.renderRejected = async (req, res) => {
   const statusOrder = await Data.find({status: "danger"}).sort({ date: "desc" }).lean();
-  res.render("admin-queries/status", { statusOrder });
+  const users = await Users.find({}).sort({username : "asc"});
+  var sellers = [];
+  for (let i = 0; i < users.length; i++) {
+    sellers.push(users[i].username);
+  }
+  res.render("admin-queries/status", { statusOrder, sellers });
 };
 QueriesCrtl.renderRecently = async (req, res) => {
   const dateOrder = await Data.find().sort({ date: "desc" }).limit(10).lean();
-  res.render("admin-queries/dates", { dateOrder });
+  const users = await Users.find({}).sort({username : "asc"});
+  var sellers = [];
+  for (let i = 0; i < users.length; i++) {
+    sellers.push(users[i].username);
+  }
+  res.render("admin-queries/dates", { dateOrder, sellers });
 };
 QueriesCrtl.renderLongAgo = async (req, res) => {
   const dateOrder = await Data.find().sort({ date: "asc" }).limit(10).lean();
-  res.render("admin-queries/dates", { dateOrder });
+  const users = await Users.find({}).sort({username : "asc"});
+  var sellers = [];
+  for (let i = 0; i < users.length; i++) {
+    sellers.push(users[i].username);
+  }
+  res.render("admin-queries/dates", { dateOrder, sellers });
 };
 QueriesCrtl.renderDetails = async (req, res) => {
   const order = await Data.findById(req.params.id).lean();
@@ -44,11 +81,21 @@ QueriesCrtl.renderDetails = async (req, res) => {
 };
 QueriesCrtl.renderCustomizable = async (req, res) => {
   const typeOrder = await Data.find({tag: "customizable"}).sort({ date: "desc" }).lean();
-  res.render("admin-queries/type", { typeOrder });
+  const users = await Users.find({}).sort({username : "asc"});
+  var sellers = [];
+  for (let i = 0; i < users.length; i++) {
+    sellers.push(users[i].username);
+  }
+  res.render("admin-queries/type", { typeOrder, sellers });
 };
 QueriesCrtl.renderNonCustomizable = async (req, res) => {
   const typeOrder = await Data.find({tag: "noncustomizable"}).sort({ date: "desc" }).lean();
-  res.render("admin-queries/type", { typeOrder });
+  const users = await Users.find({}).sort({username : "asc"});
+  var sellers = [];
+  for (let i = 0; i < users.length; i++) {
+    sellers.push(users[i].username);
+  }
+  res.render("admin-queries/type", { typeOrder, sellers });
 };
 
 QueriesCrtl.renderEditStatus = async (req, res) => {

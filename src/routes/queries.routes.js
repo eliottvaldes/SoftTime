@@ -5,6 +5,7 @@ const router = express.Router();
 const {
 renderAllOrdersAdmin,
 renderOrdersAdmin,
+renderSellAdminOrders,
 renderPending,
 renderValidated,
 renderRejected,
@@ -30,6 +31,9 @@ const { checkSession } = require("../helpers/auth");
 //----------------------ADMIN USER---------------------
 // TODOS pedidos creados
 router.get("/query/filter/all-orders", checkSession, renderAllOrdersAdmin);
+
+// pedidos por administrador de ventas
+router.get("/query/filter/sell-admins-orders/:user", checkSession, renderSellAdminOrders);
 
 // pedidos creados
 router.get("/query/filter/orders-admin", checkSession, renderOrdersAdmin);

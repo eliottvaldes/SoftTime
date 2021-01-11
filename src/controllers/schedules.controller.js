@@ -75,7 +75,6 @@ schedulesCtrl.renderSchedules = async (req, res) => {
     eventos.push(evento);
   }
   
-  console.log(eventos);
   res.render("schedules/all-schedules", { eventos });
 };
 
