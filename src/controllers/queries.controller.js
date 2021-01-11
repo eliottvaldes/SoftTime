@@ -1,10 +1,24 @@
 const QueriesCrtl = {};
-
-// requerimos el modelo de la base de datos de ../models/schedules
 const Data = require("../models/Orders");
 const Users = require("../models/Users");
 
+
+
 //------------ADMIN QUERIES--------------------
+
+//all users
+QueriesCrtl.renderAllUsers = async (req, res) => {
+  const users = await Users.find().skip(1).lean();
+  const first = await Users.find({username: "administrador"}).lean(); 
+  res.render("admin/team", { users, first}); 
+};
+QueriesCrtl.renderUserDetails = async (req, res) => {
+  const users = await Users.find().skip(1).lean(); 
+  const user = await Users.findById(req.params.id).lean();  
+  res.render("admin/team-detail", {  users, user });  
+};
+
+
 //all orders
 QueriesCrtl.renderAllOrdersAdmin = async (req, res) => {
   const ordersAll = await Data.find().sort({ date: "asc" }).lean();  

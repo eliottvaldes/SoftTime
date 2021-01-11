@@ -3,6 +3,8 @@ const router = express.Router();
 
 // importamos los objetos dentro del controlador llamado queries controller
 const {
+renderAllUsers,
+renderUserDetails,
 renderAllOrdersAdmin,
 renderOrdersAdmin,
 renderSellAdminOrders,
@@ -29,6 +31,12 @@ renderNonCustomizableuser
 const { checkSession } = require("../helpers/auth");
 
 //----------------------ADMIN USER---------------------
+// all users
+router.get("/query/my-team", checkSession, renderAllUsers);
+
+// details specific user
+router.get("/query/my-team/details/:id", checkSession, renderUserDetails);
+
 // TODOS pedidos creados
 router.get("/query/filter/all-orders", checkSession, renderAllOrdersAdmin);
 

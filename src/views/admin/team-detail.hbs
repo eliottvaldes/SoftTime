@@ -1,0 +1,52 @@
+{{>nav-admin}}
+<div class="container mx-auto my-5">
+    {{#if users}}
+    <div class="row">
+        <div class="col-4 mr-5">
+            <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+                <div class="cad-body">
+                    <div class="list-group">
+                        {{#each users}}
+                        <a href="/query/my-team/details/{{_id}}" class="list-group-item list-group-item-action"><i class="fas fa-user mr-2"></i>
+                            {{username}}
+                        </a>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-7">
+            <div class="card shadow mb-5 bg-white rounded">
+                <div class="card-body">                    
+                    <h4 class="mt-2"><i class="mr-2 fas fa-id-badge"></i> Nombre:</h4> {{user.name}}                    
+                    <h4 class="mt-2"><i class="mr-2 fas fa-id-card"></i> Apellido: </h4> {{user.lastname}}                    
+                    <h4 class="mt-2"><i class="mr-2 fas fa-at"></i> Username: </h4> {{user.username}}                    
+                    <h4 class="mt-2"><i class="mr-2 fas fa-phone"></i> Telefono: </h4> {{user.phone}}                    
+                    <h4 class="mt-2"><i class="mr-2 fas fa-envelope"></i> Email: </h4> {{user.email}}                    
+                    <h4 class="mt-2"><i class="mr-2 fas fa-stopwatch"></i> Fecha de Creacion: </h4> {{user.date}}
+                    <h4 class="mt-2"><i class="mr-2 fas fa-lock"></i> Contraseña: </h4>{{user.password}}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="card mx-auto shadow p-3 mb-5 bg-white rounded">
+        <div class="card-body">
+            <h1>¡Actualmente no tienes ningun adminsitrador de ventas registrado</h1>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <p>
+                        <a class="btn btn-primary" href="/admin/signup"><i class="fas fa-user-plus"></i> Añadir Integrante</a>
+                    </p>                    
+                </div>
+                <div class="col-8">
+                    <div class="text-center">
+                        <img src="/img/team2.svg" alt="" width="65%" height="50%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+</div>

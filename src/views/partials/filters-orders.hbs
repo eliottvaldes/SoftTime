@@ -7,28 +7,7 @@
         <a href="/query/filter/orders-admin" class="list-group-item list-group-item-action">
             <i class="fas fa-list mr-1"></i>Todos</h5>
         </a>
-    </div>
-    <div class="btn-group dropright">
-        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            Administradores de ventas
-        </button>
-        <div class="dropdown-menu dropright">
-            <p id="vends" class="text-success"></p>
-            <script>             
-                var uwu = "{{sellers}}";
-                vendedores = uwu.split(",");
-                var text = "";
-                for (let i = 0; i < vendedores.length; i++) {
-                    text += "<a class='dropdown-item' href='/query/filter/sell-admins-orders/"+vendedores[i]+"'>";
-                    text += "<i class='fas fa-user mr-2'></i>" + vendedores[i] + "</a>";
-                    text += "<div class='dropdown-divider'></div>";
-                }
-                document.getElementById("vends").innerHTML = text;
-            </script>
-        </div>
-    </div>
-    </br>
+    </div>    
     <div class="btn-group dropright">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
@@ -77,11 +56,21 @@
     <div class="btn-group dropright">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
-            <i class="fas fa-plus mr-1"></i>Otros
+            Solicitante
         </button>
         <div class="dropdown-menu dropright">
-            <a class="dropdown-item" href="/query/filter/find-by-name"><i class="fas fa-user-cog mr-1"></i>Por
-                Solicitante</a>
+            <p id="vends" class="text-success"></p>
+            <script>             
+                var uwu = "{{sellers}}";
+                vendedores = uwu.split(",");
+                var text = "";
+                for (let i = 0; i < vendedores.length; i++) {
+                    text += "<a class='dropdown-item' href='/query/filter/sell-admins-orders/"+vendedores[i]+"'>";
+                    text += "<i class='fas fa-user mr-2'></i>" + vendedores[i] + "</a>";
+                    text += "<div class='dropdown-divider'></div>";
+                }
+                document.getElementById("vends").innerHTML = text;
+            </script>
         </div>
     </div>
     <hr class="mt-3 mb-2">

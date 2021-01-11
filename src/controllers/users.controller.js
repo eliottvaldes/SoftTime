@@ -78,7 +78,7 @@ usersCtrl.singup = async (req, res) => {
     //si existe mostramos el mensaje de error
     if (usernameUser) {
       req.flash("error_msg", "El nombre de usuario que ingresaste ya está en uso. Prueba con uno diferente");
-      res.redirect("/users/signup");
+      res.redirect("/admin/signup");
     }
     //si no existe coincidencia
     else {
@@ -92,7 +92,7 @@ usersCtrl.singup = async (req, res) => {
       //mostramos un mensaje de satisfacción
       req.flash("success_msg", "Has registrado a un nuevo Administrador de Ventas satisfactoriamente");
       //redirigimos
-      res.redirect("/users/signin");
+      res.redirect("/query/my-team");
     }
   }
 };
