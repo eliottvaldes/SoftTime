@@ -20,7 +20,7 @@ createAdminUser();
 
 //------------CONFIGURACIONES
 //para que el puerto se asigne automaticamente al subirlo a un host
-app.set("port", process.env.PORT || 3001);
+app.set("port", process.env.PORT || 3000);
 app.set("views", path.join(__dirname, "views"));
  
 //para el motor de plantillas handlebars
