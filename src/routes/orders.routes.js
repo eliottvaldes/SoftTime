@@ -23,29 +23,35 @@ const { checkSession } = require("../helpers/auth");
 //funcion para checar el privilegio del usuario
 function requireRole(role) {
   return function (req, res, next) {
-    if (req.user.privilege.trim() == role) {
+    var privilege = req.user.privilege.trim() == role ? true : false;
+    var admin = req.user.privilege.trim() == "admin" ? true : false;
+    if (privilege) {
       next();
     } else {
-      res.send(403);
+      res.render("error", {
+        admin: admin,
+        httperr: "Sin autorizacion",
+        descripcion: "Usted no tiene acceso a esta pagina."
+      });
     }
   }
 }
 
 // ruta para renderizar formulario de pedido nuevo
-router.get("/orders/add", checkSession, requireRole("sell"), renderOrderForm);
+router.get("/orders/add", checkSession, requireRole("manager"), renderOrderForm);
 
-router.post("/orders/new-order", checkSession, requireRole("sell"), upload.single('img'), createNewOrder);
+router.post("/orders/new-order", checkSession, requireRole("manager"), upload.single('img'), createNewOrder);
 
 // ruta para renderizar la vista de todos los pedidos creados
-router.get("/orders", checkSession, requireRole("sell"), renderOrders);
+router.get("/orders", checkSession, requireRole("manager"), renderOrders);
 
 // ruta para renderizar un formulario para editar el formulario pedidos se usa el parametro id para indicar el id del pedido que se va a modificar
-router.get("/orders/edit/:id", checkSession, requireRole("sell"), renderEditForm);
+router.get("/orders/edit/:id", checkSession, requireRole("manager"), renderEditForm);
 // Usamos metodo put debido a que se usa para hacer referencia paraa actualizar
-router.put("/orders/edit-order/:id", checkSession, requireRole("sell"), upload.single('img'), updateOrder);
+router.put("/orders/edit-order/:id", checkSession, requireRole("manager"), upload.single('img'), updateOrder);
 
 // se usa el metodo delete para poder eliminarlo usando el :id y el modulo overrride
-router.delete("/orders/delete/:id", checkSession, requireRole("sell"), deleteOrder);
+router.delete("/orders/delete/:id", checkSession, requireRole("manager"), deleteOrder);
 
 // se usa el metodo delete para poder eliminarlo usando el :id y el modulo overrride
 router.delete("/admin/orders/delete/:id", checkSession, requireRole("admin"), deleteAdminOrder);

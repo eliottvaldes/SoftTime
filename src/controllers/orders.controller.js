@@ -5,12 +5,11 @@ const Order = require("../models/Orders");
 
 // renderizamos la vista new-order donde se encuentra el formulario para un nuevo pedido
 ordersCtrl.renderOrderForm = (req, res) => {
-  res.render("orders/new-order");
+  res.render("orders/new-order", {admin: false});
 };
 
 //crando un nuedo pedido
 ordersCtrl.createNewOrder = async (req, res) => {
-  console.log(req.user.privilege);
   //obtenemos los datos desde unr request body
   const { product, description, status, tag } = req.body;
   //inicializamos un arreglo de errores en caso de que se presenten 
@@ -72,7 +71,7 @@ ordersCtrl.renderOrders = async (req, res) => {
     .sort({ date: "desc" }).lean();
   //Ordenamos de acuerdo a la fecha de creacion
   //renderizamos el archivo donde estan todas las notas
-  res.render("orders/all-orders", { orders });
+  res.render("orders/all-orders", { admin: false, orders });
 };
 
 //formulario mostrando los datos para reemplaxar
@@ -84,7 +83,7 @@ ordersCtrl.renderEditForm = async (req, res) => {
     req.flash("error_msg", "Por favor inicia sesión desde tu cuenta");
     return res.redirect("/orders");
   }
-  res.render("orders/edit-order", { order });
+  res.render("orders/edit-order", { admin: false, order });
 };
 
 //obtener los datos para actualizar
@@ -131,7 +130,7 @@ ordersCtrl.deleteAdminOrder = async (req, res) => {
 //formulario mostrando los datos para reemplaxar
 ordersCtrl.renderChangeStatus = async (req, res) => {
   const order = await Order.findById(req.params.id).lean();  
-  res.render("admin/change-status", { order });
+  res.render("admin/change-status", { admin: true, order });
 };
 
 //obtener los datos para actualizar

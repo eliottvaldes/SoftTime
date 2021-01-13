@@ -7,13 +7,16 @@ const Order = require("../models/Orders");
 
 //metodo encargado de consulta para la base de datos
 schedulesCtrl.renderScheduleForm = async (req, res) => {
-  const orders = await Order.find({ user: req.user.id }).sort({ date: "asc" }).lean();  
-  res.render("schedules/new-schedule", { orders });
+  const orders = await Order.find({ user: req.user.id }).sort({ date: "asc" }).lean();
+  res.render("schedules/new-schedule", {
+    admin: false,
+    orders
+  });
 };
 
 schedulesCtrl.createNewSchedule = async (req, res) => {
   //obtenemos los datos del formulario
-  const {product, date, time, amount, line, station, comments } = req.body;
+  const { product, date, time, amount, line, station, comments } = req.body;
   //creamos una lista de errores
   const errors = [];
   //iniicamos las validadciones por parte del servidor
@@ -29,7 +32,7 @@ schedulesCtrl.createNewSchedule = async (req, res) => {
   if (!amount) {
     errors.push({ text: "Ingresa un monto pendiente válido" });
   }
-  if(amount<5){
+  if (amount < 5) {
     errors.push({ text: "Ingresa un monto pendiente válido" });
   }
   if (!line) {
@@ -41,11 +44,12 @@ schedulesCtrl.createNewSchedule = async (req, res) => {
   if (!comments) {
     errors.push({ text: "Ingresa un comentario" });
   }
-  if (comments.length<5) {
+  if (comments.length < 5) {
     errors.push({ text: "Ingresa un comentario con longitud minima de 5 carateres" });
   }
   if (errors.length > 0) {
     res.render("schedules/new-schedule", {
+      admin: false,
       errors,
       product,
       date,
@@ -57,7 +61,7 @@ schedulesCtrl.createNewSchedule = async (req, res) => {
     });
   } else {
 
-    const newSchedule = new Schedule({product, date, time, amount, line, station, comments });
+    const newSchedule = new Schedule({ product, date, time, amount, line, station, comments });
     newSchedule.user = req.user.id;
     await newSchedule.save();
     req.flash("success_msg", "Entrega programada satisfactoriamente.");
@@ -73,9 +77,9 @@ schedulesCtrl.renderSchedules = async (req, res) => {
     evento.titulo = String(pendientes[i].product);
     var date = new Date(pendientes[i].date);
     evento.year = date.getFullYear();
-    var mes = date.getMonth() + 1, 
-        dia = date.getDate() + 1;
-    
+    var mes = date.getMonth() + 1,
+      dia = date.getDate() + 1;
+
     if (date.getMonth() + 1 < 10) {
       mes = "0" + String(date.getMonth() + 1);
     }
@@ -85,8 +89,10 @@ schedulesCtrl.renderSchedules = async (req, res) => {
     evento.url = String("/schedule/" + pendientes[i]._id);
     eventos.push(evento);
   }
-  
-  res.render("schedules/all-schedules", { eventos });
+
+  res.render("schedules/all-schedules", { 
+    admin: false,
+    eventos });
 };
 
 schedulesCtrl.renderSchedule = async (req, res) => {
@@ -99,7 +105,7 @@ schedulesCtrl.renderSchedule = async (req, res) => {
   var line = pendiente.line;
   var station = pendiente.station;
   var comments = pendiente.comments;
-  res.render("schedules/schedule", { id, product, date, time, amount, line, station, comments });
+  res.render("schedules/schedule", { admin: false, id, product, date, time, amount, line, station, comments });
 };
 
 schedulesCtrl.renderEditForm = async (req, res) => {
@@ -108,7 +114,7 @@ schedulesCtrl.renderEditForm = async (req, res) => {
     req.flash("error_msg", "Por favor autentificate para poder continuar");
     return res.redirect("/schedules");
   }
-  res.render("schedules/edit-schedule", { schedules });
+  res.render("schedules/edit-schedule", { admin: false, schedules });
 };
 
 schedulesCtrl.updateSchedule = async (req, res) => {

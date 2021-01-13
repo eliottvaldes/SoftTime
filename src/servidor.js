@@ -22,17 +22,17 @@ createAdminUser();
 //para que el puerto se asigne automaticamente al subirlo a un host
 app.set("port", process.env.PORT || 3001);
 app.set("views", path.join(__dirname, "views"));
- 
+
 //para el motor de plantillas handlebars
 app.set("views", path.join(__dirname, "views"));
-app.engine(  
+app.engine(
   ".hbs",
   exphbs({
     extname: ".hbs",
-    defaultLayout: "main",    
+    defaultLayout: "main",
     layoutsDir: path.join(app.get("views"), "layouts"),
     partialsDir: path.join(app.get("views"), "partials")
-    
+
   })
 );
 //para establecer el motor de plantillas creado en la s lineas anteriores
@@ -43,8 +43,8 @@ app.set('view engine', '.hbs');
 
 //usar morgan para ver las peticiones al servidor
 app.use(morgan('dev'));
-app.use(express.urlencoded( 
-    { extended: true }
+app.use(express.urlencoded(
+  { extended: true }
 ));
 //para el modulo de metodos override para poder usar metodos delete o update a traves de una consulta con un input name="_method"
 app.use(methodOverride("_method"));
@@ -56,7 +56,7 @@ app.use(
     cookie: { maxAge: 5628000 },
     resave: true,
     saveUninitialized: true,
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),  
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
     host: app.get('host'),
     port: app.get('port'),
     expires: new Date(Date.now() + (30 * 84000 * 1000))
@@ -73,7 +73,7 @@ app.use(flash());
 
 //------------VARIABLES GLOBALES
 
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
   //creamos variables global para almacenar los mensajes para poder mostrarlos
   res.locals.success_msg = req.flash("success_msg");
   res.locals.error_msg = req.flash("error_msg");
@@ -83,7 +83,7 @@ app.use((req,res,next)=>{
   res.locals.user = req.user || null;
   next();
 });
-  
+
 
 //------------RUTAS 
 //rutas de pagina inicial
@@ -102,12 +102,16 @@ app.use(require("./routes/charts.routes"));
 //------------ARCHIVOS ESTATICOS
 
 app.use(express.static(path.join(__dirname, 'public')));
- 
+
 
 app.use((req, res) => {
-  res.render("404");
+  var admin = req.user.privilege.trim() == "admin" ? true : false;
+  res.render("error", {
+    admin: admin,
+    httperr: "Recursos no encontrado",
+    descripcion: "La pagina que estas buscando no existe."
+  });
 });
-
 
 //exportamos para poder acceder a estas funciones desde cualquier parte
 module.exports = app;

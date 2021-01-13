@@ -41,7 +41,12 @@
 <body>
 
   {{!-- mostramos la barra de navegación --}}
+  {{#if admin}}
+  {{> nav-admin}}
+  {{else}}
   {{> navigation }}
+  {{/if}}
+
   {{!-- cuerpo de cada pagina mostrando los mensajes, errores y el cuerpo de cada plantilla --}}
   <div class="container mx-auto">
     {{> messages }}

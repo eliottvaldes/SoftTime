@@ -10,18 +10,22 @@ const passport = require("passport");
 
 //mostrando bienvenida normal user
 usersCtrl.welcome = (req, res) => {
-  res.render('users/welcome');
+  res.render('users/welcome', {
+    admin: false
+  });
 };
 
 //mostrando bienvenida admin user
 usersCtrl.welcomeAd = (req, res) => {
-  res.render('admin/welcome');
+  res.render('admin/welcome', {
+    admin: true
+  });
 };
 
 //mostrando el formulario de registro
 usersCtrl.renderSignUpForm = (req, res) => {
   //formulario de registro
-  res.render('admin/signup');
+  res.render('admin/signup', { admin: true });
 };
 
 //funcion encargada de guardar los datos de registro
@@ -61,6 +65,7 @@ usersCtrl.singup = async (req, res) => {
   if (errors.length > 0) {
     //renderizamos la misma pagina pero mostrarndo los errores y los datos previamente ingresados
     res.render("admin/signup", {
+      admin: true,
       errors,
       name,
       lastname,
@@ -106,7 +111,7 @@ usersCtrl.renderSigninForm = (req, res) => {
 usersCtrl.signin = (req, res) => {
   if (req.user.privilege.trim() == "admin") {
     res.redirect("/admin/welcome");
-  } else if (req.user.privilege.trim() == "sell") {
+  } else if (req.user.privilege.trim() == "manager") {
     res.redirect("/users/welcome");
   }
 };

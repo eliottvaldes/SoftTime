@@ -40,7 +40,6 @@ chartsCtrl.renderCharts = async (req, res) => {
         bidim.pedidos = numeroDePedidos[i];
         ordersData.push(bidim);
     }
-    console.log(ordersData);
 
 
     //SCHEDULES
@@ -73,9 +72,9 @@ chartsCtrl.renderCharts = async (req, res) => {
         bidim.dinero = cantidadDeDinero[i];
         schedulesData.push(bidim);
     }
-    console.log(schedulesData);
 
     res.render("admin/charts", {
+        admin: false, 
         ordersData,
         schedulesData
     });
