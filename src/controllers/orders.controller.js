@@ -74,7 +74,16 @@ ordersCtrl.createNewOrder = async (req, res) => {
     //la variable base64data esta inicializada vacia
     newOrder.image = base64data;
     //se asigna un await en la funcion async debido a que tarda tiempo en procesar la solicitud a la base de datos
-    await newOrder.save();
+    await newOrder.save(
+      (err) => {
+        if (err) {
+          res.status(500).render("error", {
+            admin: false,
+            httperr: "Problema interno",
+            descripcion: "Ha ocurrido un problema en el servidor"
+          });
+        }
+      });
     //una vez guardado mandamos un mensaje de creación satisfactoria
     req.flash("success_msg", "Pedido Generado Satisfactoriamente");
     //redirigimos a orders donde se guarda
@@ -85,7 +94,22 @@ ordersCtrl.createNewOrder = async (req, res) => {
 //metodo encargado de consulta para la base de datos
 ordersCtrl.renderOrders = async (req, res) => {
   // guardamos en una variable el arreglo de los pedidos utilizando el .find() de acuerdo al id del usuario activo de la sesion
-  const orders = await Order.find({ user: req.user.id })
+  const orders = await Order.find({ user: req.user.id },
+    (err, pend) => {
+      if (err) {
+        res.status(500).render("error", {
+          admin: false,
+          httperr: "Problema interno",
+          descripcion: "Ha ocurrido un problema en el servidor"
+        });
+      } else if (!pend) {
+        res.status(404).render("error", {
+          admin: false,
+          httperr: "Recursos no encontrado",
+          descripcion: "La pagina que estas buscando no existe."
+        });
+      }
+    })
     .sort({ date: "desc" }).lean();
   //Ordenamos de acuerdo a la fecha de creacion
   //renderizamos el archivo donde estan todas las notas
@@ -95,7 +119,22 @@ ordersCtrl.renderOrders = async (req, res) => {
 //formulario mostrando los datos para reemplaxar
 ordersCtrl.renderEditForm = async (req, res) => {
   //hacemos la consulta a la base de datos para obtener los datos
-  const order = await Order.findById(req.params.id).lean();
+  const order = await Order.findById(req.params.id,
+    (err, pend) => {
+      if (err) {
+        res.status(500).render("error", {
+          admin: false,
+          httperr: "Problema interno",
+          descripcion: "Ha ocurrido un problema en el servidor"
+        });
+      } else if (!pend) {
+        res.status(404).render("error", {
+          admin: false,
+          httperr: "Recursos no encontrado",
+          descripcion: "La pagina que estas buscando no existe."
+        });
+      }
+    }).lean();
   // si la nota cuenta con parametro id diferente el id de la sesion actual le mandamos un mensaje de no validacion
   if (order.user != req.user.id) {
     req.flash("error_msg", "Por favor inicia sesión desde tu cuenta");
@@ -114,11 +153,41 @@ ordersCtrl.updateOrder = async (req, res) => {
     image = req.file.buffer.toString('base64');
   } else {
     console.log(req.params.id);
-    const ord = await Order.findById({ _id: req.params.id }).lean();
+    const ord = await Order.findById({ _id: req.params.id },
+      (err, pend) => {
+        if (err) {
+          res.status(500).render("error", {
+            admin: false,
+            httperr: "Problema interno",
+            descripcion: "Ha ocurrido un problema en el servidor"
+          });
+        } else if (!pend) {
+          res.status(404).render("error", {
+            admin: false,
+            httperr: "Recursos no encontrado",
+            descripcion: "La pagina que estas buscando no existe."
+          });
+        }
+      }).lean();
     image = ord.image;
   }
   //actualizamos los datos en la base de datos    
-  await Order.findByIdAndUpdate(req.params.id, { product, description, image });
+  await Order.findByIdAndUpdate(req.params.id, { product, description, image },
+    (err, pend) => {
+      if (err) {
+        res.status(500).render("error", {
+          admin: false,
+          httperr: "Problema interno",
+          descripcion: "Ha ocurrido un problema en el servidor"
+        });
+      } else if (!pend) {
+        res.status(404).render("error", {
+          admin: false,
+          httperr: "Recursos no encontrado",
+          descripcion: "La pagina que estas buscando no existe."
+        });
+      }
+    });
   //Mensaje de satisfaccion
   req.flash("success_msg", "Tu pedido se ha actualizado exitosamente");
   //redireccionamos a donde se ven todos los pedidos
@@ -128,7 +197,22 @@ ordersCtrl.updateOrder = async (req, res) => {
 //para eliminar 
 ordersCtrl.deleteOrder = async (req, res) => {
   //consultamos la base de datos para eliminar dependiendo del id
-  await Order.findByIdAndDelete(req.params.id);
+  await Order.findByIdAndDelete(req.params.id,
+    (err, pend) => {
+      if (err) {
+        res.status(500).render("error", {
+          admin: false,
+          httperr: "Problema interno",
+          descripcion: "Ha ocurrido un problema en el servidor"
+        });
+      } else if (!pend) {
+        res.status(404).render("error", {
+          admin: false,
+          httperr: "Recursos no encontrado",
+          descripcion: "La pagina que estas buscando no existe."
+        });
+      }
+    });
   //mostramos mensaje de pedido eliminado satisdactoriamente
   req.flash("success_msg", "Pedido eliminado de la base de datos");
   res.redirect("/orders");
@@ -140,21 +224,66 @@ ordersCtrl.deleteOrder = async (req, res) => {
 
 //para eliminar 
 ordersCtrl.deleteAdminOrder = async (req, res) => {
-  await Order.findByIdAndDelete(req.params.id);
+  await Order.findByIdAndDelete(req.params.id,
+    (err, pend) => {
+      if (err) {
+        res.status(500).render("error", {
+          admin: true,
+          httperr: "Problema interno",
+          descripcion: "Ha ocurrido un problema en el servidor"
+        });
+      } else if (!pend) {
+        res.status(404).render("error", {
+          admin: true,
+          httperr: "Recursos no encontrado",
+          descripcion: "La pagina que estas buscando no existe."
+        });
+      }
+    });
   req.flash("success_msg", "Pedido eliminado satisfactoriamente");
   res.redirect("/query/filter/all-orders");
 };
 
 //formulario mostrando los datos para reemplaxar
 ordersCtrl.renderChangeStatus = async (req, res) => {
-  const order = await Order.findById(req.params.id).lean();  
+  const order = await Order.findById(req.params.id,
+    (err, pend) => {
+      if (err) {
+        res.status(500).render("error", {
+          admin: true,
+          httperr: "Problema interno",
+          descripcion: "Ha ocurrido un problema en el servidor"
+        });
+      } else if (!pend) {
+        res.status(404).render("error", {
+          admin: true,
+          httperr: "Recursos no encontrado",
+          descripcion: "La pagina que estas buscando no existe."
+        });
+      }
+    }).lean();  
   res.render("admin/change-status", { admin: true, order });
 };
 
 //obtener los datos para actualizar
 ordersCtrl.renderUpdatedStatus = async (req, res) => {
   const status = req.body.status;
-  await Order.findByIdAndUpdate(req.params.id, { status });
+  await Order.findByIdAndUpdate(req.params.id, { status },
+    (err, pend) => {
+      if (err) {
+        res.status(500).render("error", {
+          admin: true,
+          httperr: "Problema interno",
+          descripcion: "Ha ocurrido un problema en el servidor"
+        });
+      } else if (!pend) {
+        res.status(404).render("error", {
+          admin: true,
+          httperr: "Recursos no encontrado",
+          descripcion: "La pagina que estas buscando no existe."
+        });
+      }
+    });
   req.flash("success_msg", "Se ha cambiado el status");
   res.redirect("/query/filter/all-orders");
 };

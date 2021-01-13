@@ -139,6 +139,7 @@ usersCtrl.singup = async (req, res) => {
     //renderizamos la misma pagina pero mostrarndo los errores y los datos previamente ingresados
     res.render("admin/signup", {
       admin: true,
+      manager: false,
       errors,
       name,
       lastname,
