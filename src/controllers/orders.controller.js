@@ -16,13 +16,17 @@ ordersCtrl.createNewOrder = async (req, res) => {
   //inicializamos un arreglo de errores en caso de que se presenten 
   const errors = [];
   //hacemos las validaciones
+
   if (!product) {
     errors.push({ text: "Selecciona un producto para poder continuar" });
   }
   if (!description) {
-    errors.push({ text: "Ingresa una descripción" });
-  }
+    errors.push({ text: "Agrega una descripción" });
+  }  
   if(description){
+    if (description.length<5) {
+      errors.push({ text: "Agrega una descripción con longitud minima de 5 carateres" });
+    }
     for (i = 0; i < description.length; i++) {
       if (description.charAt(i) == ' ' && description.charAt(i + 1) == ' ') {        
         errors.push({ text: "Ingresa una descripción valida" });   
@@ -33,16 +37,22 @@ ordersCtrl.createNewOrder = async (req, res) => {
   if (!status) {
     errors.push({ text: "Por favor no modifique el status" });
   }
-  if (status != "warning") {
-    errors.push({ text: "Por favor NO modifique el status" });
+  if(status){
+    if (status != "warning") {
+      errors.push({ text: "Por favor No modifique el status" });
+    }
   }
+  
   if (!tag) {
     errors.push({ text: "No elimines el tipo de producto" });
   }
+
   /*
+  if(tag{
     if (tag != "customizable" || tag != "noncustomizable") {
       errors.push({ text: "Por favor NO modifique el tipo de producto" });
     }
+  }    
   */
   var base64data = "";
   //revisa si en la peticion hay archivos y los escribe en base64

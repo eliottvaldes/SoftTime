@@ -23,31 +23,56 @@ schedulesCtrl.createNewSchedule = async (req, res) => {
   if (!date) {
     errors.push({ text: "Selecciona una fecha de entrega" });
   }
+  if(date){
+    var non = (/([a-zA-Z])/ig);
+    if(date.match(non)){
+      errors.push({ text: "No debes ingresar letras al campo para la fecha" });
+    }
+  }
   if (!time) {
     errors.push({ text: "Selecciona un horario de entrega" });
   }
+  if(time){
+    var non = (/([a-zA-Z])/ig);
+    if(time.match(non)){
+      errors.push({ text: "No debes ingresar letras al campo para el horario" });
+    }
+  }
   if (!amount) {
-    errors.push({ text: "Ingresa un monto pendiente válido" });
+    errors.push({ text: "Agrega un monto pendiente válido" });
   }
-  if(amount<5){
-    errors.push({ text: "Ingresa un monto pendiente válido" });
-  }
+  if(amount){
+    var non = (/([a-zA-Z])/ig);
+    if(amount.match(non)){
+      errors.push({ text: "No debes ingresar letras al campo del monto" });
+    }
+    if(amount<5){
+      errors.push({ text: "Agrega un monto pendiente válido, debe ser mayor a 5" });
+    }
+  }  
   if (!line) {
     errors.push({ text: "Selecciona una línea del metro válida para la entrega" });
   }
   if (!station) {
     errors.push({ text: "Selecciona una estación del metro válida para la entrega" });
   }
+  if(station){
+    var non = (/([0-9])/ig);
+    if(station.match(non)){
+      errors.push({ text: "No debes cambiar las estaciones" });
+    }
+  }
+
   if (!comments) {
-    errors.push({ text: "Ingresa un comentario" });
-  }
-  if (comments.length<5) {
-    errors.push({ text: "Ingresa un comentario con longitud minima de 5 carateres" });
-  }
+    errors.push({ text: "Agrega un comentario" });
+  }  
   if(comments){
+    if (comments.length<5) {
+      errors.push({ text: "Agrega un comentario con longitud minima de 5 carateres" });
+    }
     for (i = 0; i < comments.length; i++) {
       if (comments.charAt(i) == ' ' && comments.charAt(i + 1) == ' ') {        
-        errors.push({ text: "Ingresa un comentario valido" });   
+        errors.push({ text: "Ingresa un comentario válido" });   
         break;   
       }
     }
