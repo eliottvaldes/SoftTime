@@ -1,3 +1,4 @@
+{{> navigation }}
 <style>
     body {
         background-image: url('https://images.squarespace-cdn.com/content/v1/5c64519cd7819e5a4b62a726/1551987835069-0ZJUWDSA5H569F220335/ke17ZwdGBToddI8pDm48kBOQXxG3HoTMk1mFu8bffrMUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYxCRW4BPu10St3TBAUQYVKcQAPsjFvgcYruXxCdsOr3LfFPx51ty0i0ey7xyQ0JnjtJE268qqjI9jOefNAgLgT6/Equity+Token+Website+Wave.png?format=2500w');
@@ -21,7 +22,7 @@
                     <hr class="my-4">
                     <p>
                         Este sistema se ha desarrollado con la finalidad de simplificar la tarea de creación pedidos y
-                        organización de horarios por parte de la tienda en line TWOC.
+                        organización de horarios por parte de la tienda online TWOC.
                     </p>
                     <br>
                     <p>
@@ -30,6 +31,104 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 </div>
 {{>footer}}
+<template id="my-template">
+    <swal-title>
+        Información importante!
+    </swal-title>
+    <swal-icon type="warning" color="red"></swal-icon>
+    <swal-html>
+        <p>Para poder hacer uso de este sitio debes aceptar las <a href="/politics" target="_blank">Politicas de Uso</a> y
+            el <a href="/privacy" target="_blank">Aviso de privacidad</a> que la empresa Pentech ha desarrollado con el
+            fin de brindarte una mejor experiencia</p>
+    </swal-html>    
+    <swal-button type="confirm" color="green">
+        Aceptar y continuar
+    </swal-button>   
+    <swal-param name="allowEscapeKey" value="false" />
+    <swal-param name="allowOutsideClick" value="false" />
+    <swal-param name="showCloseButton" value="false" />
+    <swal-param name="customClass" value='{ "popup": "my-popup" }' />
+</template>
+<script type="text/javascript">
+    var expDays = 1;
+    function GetCookie(name) {
+        var arg = name + "=";
+        var alen = arg.length;
+        var clen = document.cookie.length;
+        var i = 0;
+        while (i < clen) {
+            var j = i + alen;
+            if (document.cookie.substring(i, j) == arg)
+                return getCookieVal(j);
+            i = document.cookie.indexOf(" ", i) + 1;
+            if (i == 0)
+                break;
+        }
+        return null;
+    }
+    function SetCookie(name, value) {
+        var argv = SetCookie.arguments;
+        var argc = SetCookie.arguments.length;
+        var expires = (argc > 2) ? argv[2] : null;
+        var path = (argc > 3) ? argv[3] : null;
+        var domain = (argc > 4) ? argv[4] : null;
+        var secure = (argc > 5) ? argv[5] : false;
+        document.cookie = name + "=" + escape(value) +
+            ((expires == null) ? "" : ("; expires=" + expires.toGMTString())) +
+            ((path == null) ? "" : ("; path=" + path)) +
+            ((domain == null) ? "" : ("; domain=" + domain)) +
+            ((secure == true) ? "; secure" : "");
+    }
+    function DeleteCookie(name) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var cval = GetCookie(name);
+        document.cookie = name + "=" + cval + "; expires=" + exp.toGMTString();
+    }
+    var exp = new Date();
+    //expira en 10 meses 
+    exp.setTime(exp.getTime() + (expDays * 24 * 60 * 100 * 180000));
+    function amt() {
+        var count = GetCookie('count')
+        if (count == null) {
+            SetCookie('count', '1')
+            return 1
+        } else {
+            var newcount = parseInt(count) + 1;
+            DeleteCookie('count')
+            SetCookie('count', newcount, exp)
+            return count
+        }
+    }
+    function getCookieVal(offset) {
+        var endstr = document.cookie.indexOf(";", offset);
+        if (endstr == -1)
+            endstr = document.cookie.length;
+        return unescape(document.cookie.substring(offset, endstr));
+    }
+    function checkCount() {
+        var shwc = document.getElementById('cookie');
+        var count = GetCookie('count');
+        if (count == null) {
+            count = 1;
+            SetCookie('count', count, exp);
+            Swal.fire({
+                template: '#my-template'
+            });
+        } else {
+            count++;
+            SetCookie('count', count, exp);
+        }
+    }
+</script>
+<script type="text/javascript">
+    function info() {
+        setTimeout(function () {
+            checkCount();
+        }, 2700);
+    }
+    window.onload = info;
+</script>

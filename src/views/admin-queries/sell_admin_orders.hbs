@@ -22,8 +22,8 @@
         <thead class="thead-dark">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripción</th>
             <th scope="col">Imagen</th>           
             <th scope="col">Fecha</th>
             <th scope="col">Status</th>
@@ -46,8 +46,8 @@
             </td>
             <td>{{date}}</td>            
             <td>
-              <input type="hidden" id="state" value="Todos">
-              <a class="btn btn-{{status}} btn-sm" href="/orders/edit/{{_id}}"><i class="fas fa-edit"></i></a>
+              <input type="hidden" id="state" value="Solicitante">
+              <a class="btn btn-{{status}} btn-sm" href="/admin/order/update/status/{{_id}}"><i class="fas fa-edit"></i></a>
             </td>
           </tr>
           {{else}}

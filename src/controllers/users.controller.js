@@ -35,30 +35,103 @@ usersCtrl.singup = async (req, res) => {
   const { name, lastname, username, phone, email, password, confirm_password } = req.body;
 
   // -------VALIDACIIÓN POR PARTE DE SERVIDOR------
+  
   //valdando nombre
-  if (name.length < 4) {
-    errors.push({ text: "Ingresa un nombre con longitud mayor a 4 caracteres" });
+  if (!name) {
+    errors.push({ text: "Agrega un nombre para poder continuar" });
   }
-  //validando apelllido
-  if (lastname.length < 6) {
-    errors.push({ text: "Ingresa un apellido válido. La longitud mimina es de 5 caracteres" });
+  if(name){
+    if (name.length < 4) {
+      errors.push({ text: "Ingresa un nombre con longitud mayor a 4 caracteres" });
+    }
+    for (i = 0; i < name.length; i++) {
+      if (name.charAt(i) == ' ' && name.charAt(i + 1) == ' ') {
+        errors.push({ text: "Ingresa un nombre válido" });
+        break;
+      }
+    }
   }
-  //validando username
-  if (password.length < 8) {
-    errors.push({ text: "La longitud minima de la contraseña es de 8 caracteres" });
+  if (!lastname) {
+    errors.push({ text: "Agrega un nombre para poder continuar" });
   }
-  var valphone = (/([a-zA-Z])/ig);
-  //validar numero telefonico
-  if (phone.match(valphone)) {
-    errors.push({ text: "Numero telefonico inválido" });
+  if(lastname){  
+    if (lastname.length < 6) {
+      errors.push({ text: "Ingresa un apellido válido. La longitud mimina es de 5 caracteres" });
+    }
+    for (i = 0; i < lastname.length; i++) {
+      if (lastname.charAt(i) == ' ' && lastname.charAt(i + 1) == ' ') {
+        errors.push({ text: "Ingresa un apellido válida" });
+        break;
+      }
+    }
   }
-  //validar coincidencia de contraseña y su confirmación
-  if (password != confirm_password) {
-    errors.push({ text: "Las contraseña no coinciden, verificalas" });
+  if (!username) {
+    errors.push({ text: "Agrega un nombre de usuario para poder continuar" });
   }
-  //validar longitud de la contraseña
-  if (password.length < 8) {
-    errors.push({ text: "La longitud minima de la contraseña es de 8 caracteres" });
+  if(username){
+    if(username.length<6){
+      errors.push({ text: "Ingresa un nombre de usuario válido. La longitud mimina es de 6 caracteres" });
+    }
+    for (i = 0; i < username.length; i++) {
+      if (username.charAt(i) == ' ' && username.charAt(i + 1) == ' ') {
+        errors.push({ text: "Ingresa una nombre de usuario válido valida" });
+        break;
+      }
+    }
+  }
+  if (!phone) {
+    errors.push({ text: "Agrega un telefono para poder continuar" });
+  }
+  if(phone){
+    var valphone = (/([a-zA-Z])/ig);
+    if (phone.match(valphone)) {
+      errors.push({ text: "Numero telefonico inválido. No puedes ingresar letras" });
+    }
+    for (i = 0; i < phone.length; i++) {
+      if (phone.charAt(i) == ' ' && phone.charAt(i + 1) == ' ') {
+        errors.push({ text: "Ingresa un numero telefónico válido" });
+        break;
+      }
+    }
+  }
+  if (!email) {
+    errors.push({ text: "Agrega un email para poder continuar" });
+  }
+  if(email){
+    for (i = 0; i < email.length; i++) {
+      if (email.charAt(i) == ' ' && email.charAt(i + 1) == ' ') {
+        errors.push({ text: "Ingresa un email válido" });
+        break;
+      }
+    }
+  }
+  if (!password) {
+    errors.push({ text: "Agrega una contraseña para poder continuar" });
+  }
+  if(password){
+    if (password.length < 8) {
+      errors.push({ text: "La longitud minima de la contraseña es de 8 caracteres" });
+    }    
+    for (i = 0; i < password.length; i++) {
+      if (password.charAt(i) == ' ' && password.charAt(i + 1) == ' ') {
+        errors.push({ text: "Ingresa una contraseña válida" });
+        break;
+      }
+    }
+  }
+  if (!confirm_password) {
+    errors.push({ text: "Agrega un la confirmación de la contraseña para poder continuar" });
+  }
+  if (confirm_password) {
+    if (password != confirm_password) {
+      errors.push({ text: "Las contraseña no coinciden, verificalas" });
+    }
+    for (i = 0; i < confirm_password.length; i++) {
+      if (confirm_password.charAt(i) == ' ' && confirm_password.charAt(i + 1) == ' ') {
+        errors.push({ text: "Ingresa una confirmación de contraseña válida" });
+        break;
+      }
+    }
   }
 
   //en caso de que SI existan errores
