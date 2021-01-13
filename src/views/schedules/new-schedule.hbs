@@ -25,14 +25,24 @@
                     <div class="form-group">
                         <small class="text-muted">Selecciona los pedidos que desees agregar a este pendiente</small><br>
                         <div class="form-check form-check-inline">
-                            {{#each orders}}
-                            <div class="mr-2 mb-2">
-                            <input class="form-check-input" type="checkbox" value="{{product}}" name="product" id="defaultCheck">
-                            <label class="form-check-label" for="defaultCheck">
-                                {{product}}
-                            </label>                                      
-                            </div>                                              
-                            {{/each}}
+                            {{#if orders}}
+                                {{#each orders}}
+                                <div class="mr-2 mb-2">
+                                <input class="form-check-input" type="checkbox" value="{{product}}" name="product" id="defaultCheck">
+                                <label class="form-check-label" for="defaultCheck">
+                                    {{product}}
+                                </label>                                      
+                                </div>                                              
+                                {{/each}}
+                            {{else}}
+                                <div class="mr-2 mb-2">
+                                <input class="form-check-input" type="checkbox" value="{{product}}" name="product" id="defaultCheck">
+                                <label class="form-check-label" for="defaultCheck">
+                                    {{product}}
+                                </label>                                      
+                                </div>   
+                            {{/else}}
+                            
                         </div>
                     </div>
                     <hr class="mb-4">

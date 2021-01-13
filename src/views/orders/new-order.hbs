@@ -64,14 +64,14 @@
               Selecciona el producto del que desees generar el pedido
             </div>
           </div>  
-          <input type="hidden" value="" name="tag" id="type">        
+          <input type="hidden" value="" name="tag" id="typep">        
           {{!-- Para ingresar la descripción del producto --}}
           <div class="form-group">
             <label for="product">Descripción</label>
             <textarea class="form-control" name="description" aria-describedby="helpdescription" rows="4" required
               maxlength="200"></textarea>
             <div class="invalid-feedback">
-              Descripción no válida
+              Descripción no válida! ingresa por lo menos una descripción de 5 caracteres
             </div>
             <small id="helpdescription" class="form-text text-muted">
               Agrega la descripción del producto. En caso de que sea un producto personalizable indica las
@@ -115,7 +115,7 @@
     }else{
       stype="noncustomizable";
     }
-    document.getElementById("type").value = stype;    
+    document.getElementById("typep").value = stype;    
   }
 </script>
 <script>

@@ -44,6 +44,15 @@ schedulesCtrl.createNewSchedule = async (req, res) => {
   if (comments.length<5) {
     errors.push({ text: "Ingresa un comentario con longitud minima de 5 carateres" });
   }
+  if(comments){
+    for (i = 0; i < comments.length; i++) {
+      if (comments.charAt(i) == ' ' && comments.charAt(i + 1) == ' ') {        
+        errors.push({ text: "Ingresa un comentario valido" });   
+        break;   
+      }
+    }
+  }
+
   if (errors.length > 0) {
     res.render("schedules/new-schedule", {
       errors,

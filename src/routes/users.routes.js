@@ -54,9 +54,9 @@ router.post("/admin/signinad", signinad);
 router.get("/users/logout", logout);
 
 //renderizar bienvenida normal usr
-router.get("/users/welcome", requireRole("sell"), welcome);
+router.get("/users/welcome", checkSession, requireRole("sell"), welcome);
 
 //renderizar bienvenida admin
-router.get("/admin/welcome", requireRole("admin"), welcomeAd);
+router.get("/admin/welcome", checkSession, requireRole("admin"), welcomeAd);
 
 module.exports = router;

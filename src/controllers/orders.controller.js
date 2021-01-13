@@ -22,6 +22,14 @@ ordersCtrl.createNewOrder = async (req, res) => {
   if (!description) {
     errors.push({ text: "Ingresa una descripción" });
   }
+  if(description){
+    for (i = 0; i < description.length; i++) {
+      if (description.charAt(i) == ' ' && description.charAt(i + 1) == ' ') {        
+        errors.push({ text: "Ingresa una descripción valida" });   
+        break;   
+      }
+    }
+  }
   if (!status) {
     errors.push({ text: "Por favor no modifique el status" });
   }
@@ -31,11 +39,11 @@ ordersCtrl.createNewOrder = async (req, res) => {
   if (!tag) {
     errors.push({ text: "No elimines el tipo de producto" });
   }
-/*
-  if (tag != "customizable" || tag != "noncustomizable") {
-    errors.push({ text: "Por favor NO modifique el tipo de producto" });
-  }
-*/
+  /*
+    if (tag != "customizable" || tag != "noncustomizable") {
+      errors.push({ text: "Por favor NO modifique el tipo de producto" });
+    }
+  */
   var base64data = "";
   //revisa si en la peticion hay archivos y los escribe en base64
   if (req.file) {
@@ -95,9 +103,9 @@ ordersCtrl.updateOrder = async (req, res) => {
   var image = "";
   if (req.file) {
     image = req.file.buffer.toString('base64');
-  }else{
+  } else {
     console.log(req.params.id);
-    const ord = await Order.findById({_id: req.params.id}).lean();
+    const ord = await Order.findById({ _id: req.params.id }).lean();
     image = ord.image;
   }
   //actualizamos los datos en la base de datos    
@@ -130,7 +138,7 @@ ordersCtrl.deleteAdminOrder = async (req, res) => {
 
 //formulario mostrando los datos para reemplaxar
 ordersCtrl.renderChangeStatus = async (req, res) => {
-  const order = await Order.findById(req.params.id).lean();  
+  const order = await Order.findById(req.params.id).lean();
   res.render("admin/change-status", { order });
 };
 
