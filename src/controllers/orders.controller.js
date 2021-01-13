@@ -10,6 +10,7 @@ ordersCtrl.renderOrderForm = (req, res) => {
 
 //crando un nuedo pedido
 ordersCtrl.createNewOrder = async (req, res) => {
+  console.log(req.user.privilege);
   //obtenemos los datos desde unr request body
   const { product, description, status, tag } = req.body;
   //inicializamos un arreglo de errores en caso de que se presenten 

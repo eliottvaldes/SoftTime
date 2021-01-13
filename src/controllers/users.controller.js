@@ -103,23 +103,13 @@ usersCtrl.renderSigninForm = (req, res) => {
 };
 
 //funcion para iniciar sesion
-usersCtrl.signin = passport.authenticate("local", {
-  //en caso de que sea un usuario existente lo redirige a las ordenes
-  successRedirect: "/users/welcome",
-  //en caso erroneo, recarga la pagina mostrando los mensajes de error
-  failureRedirect: "/users/signin",
-  failureFlash: true
-});
-/*async (req, res) => {
-  const { username, password } = req.body;
-  const usr = await User.findOne({username: username});
-  console.log(usr.privilege);
-  if (usr.privilege.trim() === "sell") {
-    res.render("users/welcome");
-  } else {
-    res.render("admin/welcome");
+usersCtrl.signin = (req, res) => {
+  if (req.user.privilege.trim() == "admin") {
+    res.redirect("/admin/welcome");
+  } else if (req.user.privilege.trim() == "sell") {
+    res.redirect("/users/welcome");
   }
-}*/
+};
 
 //-------------------ADMINISTRADOR -----------------
 //formulario inicio de sesion admin
