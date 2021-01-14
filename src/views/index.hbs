@@ -1,4 +1,8 @@
 {{> navigation }}
+<div class="container mx-auto">
+    {{> messages }}
+    {{> errors }}
+  </div>
 <style>
     body {
         background-image: url('https://images.squarespace-cdn.com/content/v1/5c64519cd7819e5a4b62a726/1551987835069-0ZJUWDSA5H569F220335/ke17ZwdGBToddI8pDm48kBOQXxG3HoTMk1mFu8bffrMUqsxRUqqbr1mOJYKfIPR7LoDQ9mXPOjoJoqy81S2I8N_N4V1vUb5AoIIIbLZhVYxCRW4BPu10St3TBAUQYVKcQAPsjFvgcYruXxCdsOr3LfFPx51ty0i0ey7xyQ0JnjtJE268qqjI9jOefNAgLgT6/Equity+Token+Website+Wave.png?format=2500w');
@@ -22,7 +26,7 @@
                     <hr class="my-4">
                     <p>
                         Este sistema se ha desarrollado con la finalidad de simplificar la tarea de creación pedidos y
-                        organización de horarios por parte de la tienda online TWOC.
+                        organización de horarios de entrega por parte del comercio electrónico TWOC.
                     </p>
                     <br>
                     <p>
@@ -36,13 +40,13 @@
 {{>footer}}
 <template id="my-template">
     <swal-title>
-        Información importante!
+        ¡Información importante!
     </swal-title>
     <swal-icon type="warning" color="red"></swal-icon>
     <swal-html>
-        <p>Para poder hacer uso de este sitio debes aceptar las <a href="/politics" target="_blank">Politicas de Uso</a> y
+        <p>Al hacer uso de este sitio estás aceptando las <a href="/politics" target="_blank">Políticas de Uso</a> y
             el <a href="/privacy" target="_blank">Aviso de privacidad</a> que la empresa Pentech ha desarrollado con el
-            fin de brindarte una mejor experiencia</p>
+            fin de brindarte información sobre los elementos que usamos para ofrecerte una mejor experiencia!</p>
     </swal-html>    
     <swal-button type="confirm" color="green">
         Aceptar y continuar

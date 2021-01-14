@@ -14,6 +14,7 @@ schedulesCtrl.renderScheduleForm = async (req, res) => {
 schedulesCtrl.createNewSchedule = async (req, res) => {
   //obtenemos los datos del formulario
   const {product, date, time, amount, line, station, comments } = req.body;
+  console.log(date);
   //creamos una lista de errores
   const errors = [];
   //iniicamos las validadciones por parte del servidor
@@ -27,6 +28,9 @@ schedulesCtrl.createNewSchedule = async (req, res) => {
     var non = (/([a-zA-Z])/ig);
     if(date.match(non)){
       errors.push({ text: "No debes ingresar letras al campo para la fecha" });
+    }
+    if(date.length>8){
+      errors.push({ text: "INgresa una fecha válida" });
     }
   }
   if (!time) {

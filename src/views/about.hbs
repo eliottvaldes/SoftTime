@@ -1,4 +1,8 @@
 {{> navigation }}
+<div class="container mx-auto">
+    {{> messages }}
+    {{> errors }}
+  </div>
 <style>
   body {
     background-color: #FF9A8B;
@@ -9,8 +13,23 @@
 <div class="container mx-auto mt-5">
   <section class="card shadow mb-3 bg-white rounded">
     <div class="card-body">
-      <h1>Conócenos <i class="fas fa-users"></i></h1>
-      <img src="https://wannathis.one/static/img_main/img_purchase.png" width="100%">
+      <div class="row">
+        <div class="col-8">
+          <img src="https://wannathis.one/static/img_main/img_purchase.png" width="100%">
+        </div>
+        <div class="col-4">
+          <div class="card-title">
+            <div class="align-middle mx-auto">
+              <br>
+              <br>
+              <br>
+              <br>
+              <h1><i class="fas fa-users mr-2"></i>Conócenos </h1>  
+            </div>
+                 
+          </div>           
+        </div>
+      </div>            
     </div>
   </section>
   <br>
@@ -24,31 +43,123 @@
         <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list"
           href="#list-messages" role="tab" aria-controls="messages">Acciones</a>
         <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list"
-          href="#list-settings" role="tab" aria-controls="settings">Conoce a Pentech</a>
+          href="#list-settings" role="tab" aria-controls="settings">Conóce a Pentech</a>
       </div>
     </div>
     <div class="col-8">
       <div class="tab-content" id="nav-tabContent">
-        {{!-- texto de primeros ¿que es softtime? --}}
         <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
-          Describe el sistema así como su funcionalidad
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic voluptate ipsam, sequi adipisci incidunt voluptas. Est necessitatibus voluptates ducimus illum nesciunt ipsum libero totam asperiores esse natus, officia nulla eius vero odit incidunt ratione fuga inventore sit eum ipsa at aliquam! Repellat, officiis deleniti consectetur cum aspernatur odit tenetur non sint voluptatem nesciunt autem facilis error eveniet atque sit, dolorem hic officia debitis facere, impedit deserunt quisquam ad! Doloribus quasi quod quam. Delectus amet cum placeat sapiente iure ullam fuga aut adipisci id? Nihil, officia ullam quos aliquam saepe, ab at harum et quaerat molestias cumque blanditiis fugit autem magni?
-          
+          <div class="card shadow p-3 mb-3 bg-white rounded">
+            Es un sistema de gestión de pedidos y horarios de entrega desarrollado para el comercio electrónico The
+            World Of Creations.
+            <br>
+            El objetivo de este sistema es agilizar el proceso de generación y manejo de pedidos entre la administración
+            y los trabajadores de la empresa.
+            <br>
+            El desarrollo de este sistema tiene orígen en el gran aumento de ventas del comercio en los ultimos 5 meses
+            lo cual deriva en un aumento en la gestión de pedidos que se necesitan procesar, dejando el sistema anterior
+            deficiente.
+            <hr class="my-3">
+            Softtime ofrece acciones posibles a realizar por parte del usuario entre las que se encuentran:
+            <ul>
+              <li>
+                Control sobre pedidos.
+              </li>
+              <li>
+                Organización de ingresos y egresos.
+              </li>
+              <li>
+                Gestión de horarios de entrega.
+              </li>
+              <li>
+                Implementación de gráficos interactivos para ver tendencias sobre el numero de ventas y el monto total
+                de ingresos sobre los pedidos agendados.
+              </li>
+            </ul>
+          </div>
         </div>
-        {{!-- texto de primeros pasos --}}
         <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
-          inventate un parrafo donde digas un resumen sobre la siguiente idea principal: <br>
-          "para poder usar el sistema el administrador debe de haber creado tu cuenta con los datos que le proporcionaste"
+          <div class="card shadow p-3 mb-3 bg-white rounded">
+            El primer paso para poder usar nuestro sistema son: <br><br>
+            Si eres un trabajador, o administrador de ventas:
+            <br>
+            -Para poder usar el sistema el administrador debe de haber creado tu cuenta con los datos que le
+            proporcionaste
+            <br>
+            <br>
+            Si eres el administrador general:
+            <br>
+            -Para poder usar el sistema nosotros (como empresa) te debemos de haber dado acceso al sistema con una
+            cuenta.
+          </div>
         </div>
-        {{!-- texto de acciones--}}
         <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">
-          pon una introduccion de que una vez creada la cuenta vas a poder hacer...
-          aqui haz un lsitado de las acciones que puede hacer cada usuario xd
+          <div class="card shadow p-3 mb-3 bg-white rounded">
+            Una vez creada ru cuenta podrás realizar alguna de las siguientes opciones;
+            <br>
+            <strong>Si eres un trabajador, o administrador de ventas </strong>puedes realizar:
+            <ol>
+              <li>
+                Crear pedidos
+              </li>
+              <li>
+                Modificar pedidos
+              </li>
+              <li>
+                Consultar pedidos
+              </li>
+              <li>
+                Eliminar pedidos
+              </li>
+            </ol>
+            <br>
+            <strong>Si eres el administrador general </strong> puedes realizar:
+            <ol>
+              <li>
+                Crear cuentas de administradores de ventas
+              </li>
+              <li>
+                Eliminar las cuentas de administradores de ventas
+              </li>
+              <li>
+                Consultar pedidos realizador por los administradores de ventas
+              </li>
+              <li>
+                Modificar el estatus de dichos pedidos
+              </li>
+              <li>
+                Ver el historial de todos los pedidos
+              </li>
+              <li>
+                Eliminar el historial
+              </li>
+              <li>
+                Consultar los horarios de entregas
+              </li>
+              <li>
+                Eliminar los horarios, o modificarlos
+              </li>
+              <li>
+                Consultar ingresos y egresos
+              </li>
+            </ol>
+          <br>
+          <p>
+            En adición a las acciones posibles a realizar de acuerdo al provilegio de cada usuario, se le proporcionara un apartado de Consultas
+            donde puede filtrar los resultados para una mayor comodidad y organización
+          </p>
+          </div>
         </div>
-        {{!-- texto de conoce a pentech--}}
         <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
-          aqui pon un pequeño resumen de lo que somos como empresa uwu
-          y nuestro contacto que en este caso es el correo de pentech xd
+          <div class="card shadow p-3 mb-3 bg-white rounded">
+            Pentech una empresa mexicana, que a través del desarrollo de software y servicios web propone soluciones
+            que
+            atiendan a las problemáticas de los clientes para poder mejorar la vida de las personas brindando un
+            servicio de calidad gracias a el arduo trabajo y amor por lo que hacen, utilizando las Tecnologías de
+            la Información para su desarrollo.
+            <br><br>
+            Contacto: <a href="mailto:pentech9n@gmail.com">pentech9n@gmail.com</a>
+          </div>
         </div>
       </div>
     </div>

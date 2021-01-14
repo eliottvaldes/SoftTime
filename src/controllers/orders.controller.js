@@ -19,10 +19,7 @@ ordersCtrl.createNewOrder = async (req, res) => {
 
   if (!product) {
     errors.push({ text: "Selecciona un producto para poder continuar" });
-  }
-  if (!description) {
-    errors.push({ text: "Agrega una descripción" });
-  }  
+  }    
   if(description){
     if (description.length<5) {
       errors.push({ text: "Agrega una descripción con longitud minima de 5 carateres" });
@@ -33,6 +30,9 @@ ordersCtrl.createNewOrder = async (req, res) => {
         break;   
       }
     }
+  }
+  if (!description) {
+    description="No se necesita descripción debido a que es un producto de venta general no personalizable";
   }
   if (!status) {
     errors.push({ text: "Por favor no modifique el status" });

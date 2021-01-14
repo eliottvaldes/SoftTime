@@ -5,6 +5,10 @@
     }
 </style>
 {{>nav-admin}}
+<div class="container mx-auto">
+    {{> messages }}
+    {{> errors }}
+  </div>
 <div class="container mx-auto my-4">
     {{!-- menu de filtros --}}
     {{#if typeOrder}}
