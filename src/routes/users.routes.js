@@ -22,19 +22,27 @@ const { checkSession } = require("../helpers/auth");
 //funcion para checar el privilegio del usuario
 function requireRole(role) {
   return function (req, res, next) {
-    if (req.user.privilege.trim() == role) {
+    var privilege = req.user.privilege.trim() == role ? true : false;
+    var admin = req.user.privilege.trim() == "admin" ? true : false;
+    var manager = admin == true ? false : true;
+    if (privilege) {
       next();
     } else {
-      res.send(403);
+      res.render("error", {
+        admin: admin,
+        //manager: manager,
+        httperr: "Sin autorizacion",
+        descripcion: "Usted no tiene acceso a esta pagina."
+      });
     }
   }
 }
 
 //renderizar formulario
-router.get("/admin/signup", checkSession, renderSignUpForm);
+router.get("/admin/signup", checkSession, requireRole("admin"), renderSignUpForm);
 
 // guardar los datos del formulario
-router.post("/admin/signup", checkSession, singup);
+router.post("/admin/signup", checkSession, requireRole("admin"), singup);
 
 //login usuario
 router.get("/users/signin", renderSigninForm);
@@ -51,10 +59,10 @@ router.get("/admin/signinad", renderSigninadForm);
 router.post("/admin/signinad", signinad);
 
 
-router.get("/users/logout", logout);
+router.get("/users/logout", checkSession, logout);
 
 //renderizar bienvenida normal usr
-router.get("/users/welcome", checkSession, requireRole("sell"), welcome);
+router.get("/users/welcome", checkSession, requireRole("manager"), welcome);
 
 //renderizar bienvenida admin
 router.get("/admin/welcome", checkSession, requireRole("admin"), welcomeAd);

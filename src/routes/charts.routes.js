@@ -12,10 +12,18 @@ const { checkSession } = require("../helpers/auth");
 //funcion para checar el privilegio del usuario
 function requireRole(role) {
   return function (req, res, next) {
-    if (req.user.privilege.trim() == role) {
+    var privilege = req.user.privilege.trim() == role ? true : false;
+    var admin = req.user.privilege.trim() == "admin" ? true : false;
+    var manager = admin == true ? false : true;
+    if (privilege) {
       next();
     } else {
-      res.send(403);
+      res.render("error", {
+        admin: admin,
+        //manager: manager,
+        httperr: "Sin autorizacion",
+        descripcion: "Usted no tiene acceso a esta pagina."
+      });
     }
   }
 }

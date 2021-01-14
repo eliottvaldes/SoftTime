@@ -2,8 +2,8 @@
   <div class="row">
     <div class="col-md-12 offset-md-12">
       <div class="card card-body">
-        <h1>Recurso no encontrado</h1>
-        <p>La pagina que estás buscando no existe</p>
+        <h1>{{httperr}}</h1>
+        <p>{{descripcion}}</p>
         <div class="row">
           <div class="col-8">
             <div class="text-center">
@@ -11,7 +11,7 @@
             </div>
           </div>
           <div class="col-4">
-            <a class="btn btn-primary" href="/">Regresar a inicio</a>
+            <a class="btn btn-primary" href="javascript:history.back()">Regresar</a>
           </div>
         </div>
       </div>

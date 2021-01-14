@@ -32,13 +32,21 @@ const { checkSession } = require("../helpers/auth");
 
 //funcion para checar el privilegio del usuario
 function requireRole(role) {
-    return function (req, res, next) {
-        if (req.user.privilege.trim() == role) {
-            next();
-        } else {
-            res.send(403);
-        }
+  return function (req, res, next) {
+    var privilege = req.user.privilege.trim() == role ? true : false;
+    var admin = req.user.privilege.trim() == "admin" ? true : false;
+    var manager = admin == true ? false : true;
+    if (privilege) {
+      next();
+    } else {
+      res.render("error", {
+        admin: admin,
+        //manager: manager,
+        httperr: "Sin autorizacion",
+        descripcion: "Usted no tiene acceso a esta pagina."
+      });
     }
+  }
 }
 
 //----------------------ADMIN USER---------------------
@@ -86,31 +94,31 @@ router.get("/query/filter/orders-type-non-customizable", checkSession, requireRo
 
 //---------------------NORMAL USER-------------------------- 
 // pedidos creados
-router.get("/query/filter/orders-all", checkSession, requireRole("sell"), renderAllOrders);
+router.get("/query/filter/orders-all", checkSession, requireRole("manager"), renderAllOrders);
 
 // pedidos pendientes
-router.get("/user/query/filter/orders-status-pending", checkSession, requireRole("sell"), renderPendinguser);
+router.get("/user/query/filter/orders-status-pending", checkSession, requireRole("manager"), renderPendinguser);
 
 // pedidos aceptados
-router.get("/user/query/filter/orders-status-validated", checkSession, requireRole("sell"), renderValidateduser);
+router.get("/user/query/filter/orders-status-validated", checkSession, requireRole("manager"), renderValidateduser);
 
 // pedidos rechazados
-router.get("/user/query/filter/orders-status-rejected", checkSession, requireRole("sell"), renderRejecteduser);
+router.get("/user/query/filter/orders-status-rejected", checkSession, requireRole("manager"), renderRejecteduser);
 
 // pedidos recientes (solo muestra 10)
-router.get("/user/query/filter/orders-date-recently", checkSession, requireRole("sell"), renderRecentlyuser);
+router.get("/user/query/filter/orders-date-recently", checkSession, requireRole("manager"), renderRecentlyuser);
 
 // pedidos antiguos (solo muestra 10)
-router.get("/user/query/filter/orders-date-Long-Ago", checkSession, requireRole("sell"), renderLongAgouser);
+router.get("/user/query/filter/orders-date-Long-Ago", checkSession, requireRole("manager"), renderLongAgouser);
 
 //Muestra los detalles de el producto
-router.get("/user/query/filter/datails-order/:id", checkSession, requireRole("sell"), renderDetailsuser);
+router.get("/user/query/filter/datails-order/:id", checkSession, requireRole("manager"), renderDetailsuser);
 
 //pedidos personalizables
-router.get("/user/query/filter/orders-type-customizable", checkSession, requireRole("sell"), renderCustomizableuser);
+router.get("/user/query/filter/orders-type-customizable", checkSession, requireRole("manager"), renderCustomizableuser);
 
 //pedidos no personalizables (generales)
-router.get("/user/query/filter/orders-type-non-customizable", checkSession, requireRole("sell"), renderNonCustomizableuser);
+router.get("/user/query/filter/orders-type-non-customizable", checkSession, requireRole("manager"), renderNonCustomizableuser);
 
 
 //exportamos modulo para acceso global a las rutas

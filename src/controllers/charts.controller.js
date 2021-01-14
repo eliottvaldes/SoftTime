@@ -10,7 +10,22 @@ chartsCtrl.renderCharts = async (req, res) => {
 
 
     //ORDERS
-    const orders = await Order.find({}).sort({ date: "asc" }).lean();
+    const orders = await Order.find(
+        (err, pend) => {
+          if (err) {
+            res.status(500).render("error", {
+              admin: true,
+              httperr: "Problema interno",
+              descripcion: "Ha ocurrido un problema en el servidor"
+            });
+          } else if (!pend) {
+            res.status(404).render("error", {
+              admin: true,
+              httperr: "Recursos no encontrado",
+              descripcion: "La pagina que estas buscando no existe."
+            });
+          }
+        }).sort({ date: "asc" }).lean();
     //creamos un array con todas las fechas de orders
     var fechasOrders = [];
     var date;
@@ -40,11 +55,25 @@ chartsCtrl.renderCharts = async (req, res) => {
         bidim.pedidos = numeroDePedidos[i];
         ordersData.push(bidim);
     }
-    console.log(ordersData);
 
 
     //SCHEDULES
-    const schedules = await Schedule.find({}).lean();
+    const schedules = await Schedule.find(
+        (err, pend) => {
+          if (err) {
+            res.status(500).render("error", {
+              admin: true,
+              httperr: "Problema interno",
+              descripcion: "Ha ocurrido un problema en el servidor"
+            });
+          } else if (!pend) {
+            res.status(404).render("error", {
+              admin: true,
+              httperr: "Recursos no encontrado",
+              descripcion: "La pagina que estas buscando no existe."
+            });
+          }
+        }).lean();
     //creamos un array con todas las fechas de schedules
     var fechasSchedules = [];
     for (let i = 0; i < schedules.length; i++) {
@@ -73,9 +102,9 @@ chartsCtrl.renderCharts = async (req, res) => {
         bidim.dinero = cantidadDeDinero[i];
         schedulesData.push(bidim);
     }
-    console.log(schedulesData);
 
     res.render("admin/charts", {
+        admin: false,
         ordersData,
         schedulesData
     });
