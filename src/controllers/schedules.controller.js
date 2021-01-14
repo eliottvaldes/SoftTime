@@ -31,12 +31,7 @@ schedulesCtrl.renderScheduleForm = async (req, res) => {
 
 schedulesCtrl.createNewSchedule = async (req, res) => {
   //obtenemos los datos del formulario
-<<<<<<< HEAD
-  const {product, date, time, amount, line, station, comments } = req.body;
-  console.log(date);
-=======
   const { product, date, time, amount, line, station, comments } = req.body;
->>>>>>> b5c112e0ad662c2c3adcbba8f342acb2ac46d5b5
   //creamos una lista de errores
   const errors = [];
   //iniicamos las validadciones por parte del servidor
