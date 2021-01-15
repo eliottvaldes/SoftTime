@@ -39,7 +39,7 @@
           {{!-- Para elegir el tipo de producto dentro del catálogo ya establecido --}}
           <div class="form-group">
             <label class="my-1" for="product">Producto</label>
-            <select class="custom-select" name="product" id="product" required>
+            <select class="custom-select" name="product" id="product" required onchange="settype();">
               <option selected>{{order.product}}</option>
               <option disabled value="">Selecciona el tipo de producto</option>
               <option disabled>-----------------------------------</option>
@@ -80,18 +80,17 @@
               Selecciona el producto del que desees generar el pedido
             </div>
           </div>
+          <input type="hidden" value="{{order.tag}}" name="tag" id="typep">   
           {{!-- Para ingresar la descripción del producto --}}
           <div class="form-group">
-            <label for="product">Descripción</label>
-            <textarea class="form-control" name="description" aria-describedby="helpdescription" rows="4" required
-              maxlength="200">{{order.description}}</textarea>
-            <div class="invalid-feedback">
-              Descripción no válida
+             <label for="product">Descripción</label>
+            <textarea class="form-control" name="description" aria-describedby="helpdescription" rows="4" maxlength="200">{{order.description}}</textarea>
+            <div class="valid-feedback">
+              Descripción válida!
             </div>
             <small id="helpdescription" class="form-text text-muted">
-              Agrega la descripción del producto. En caso de que sea un producto personalizable indica las
-              caracteristicas
-              que debe tener
+              Agrega la descripción del producto solamente en caso de que sea un producto personalizable, si es el caso, indica las caracteristicas
+              que debe tener decho producto.
             </small>
           </div>
           <div class="custom-file mb-5">
@@ -109,8 +108,10 @@
               Guardar Cambios <i class="fas fa-save"></i>
             </button>
           </div>
-
         </form>
+        <button class="btn btn-danger btn-block" onclick="javascript:window.history.go(-1);">
+            <i class="mr-2 fas fa-arrow-alt-circle-left"></i> Cancelar
+        </button>
       </div>
     </div>
     <br>
@@ -118,8 +119,18 @@
 
 </div>
 
-
-{{!-- FUncion para validar los campos con bootstrap --}}
+<script>
+  function settype(){
+    var selection= document.getElementById("product").value;
+    let stype;
+    if(selection=="Papel Picado" || selection=="Figura de Animal"  || selection=="Libreta Profesional"  || selection=="Libreta Francesa"  || selection=="Libreta Italiana" || selection=="Libreta Pasta Impresa" || selection=="Rompecabezas" || selection=="Llavero" ){
+      stype="customizable";
+    }else{
+      stype="noncustomizable";
+    }
+    document.getElementById("typep").value = stype;    
+  }
+</script>
 <script>
   (function () {
     'use strict';

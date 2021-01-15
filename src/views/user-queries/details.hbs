@@ -19,50 +19,97 @@
 </div>
 {{/each}}
 
-<div class="container mx-auto mt-5 mb-3">
+<div class="container mx-auto my-5">
     <div class="row">
         <div class="col-5">
             <div class="card">
                 <div class="card-header">
-                    <h3>DETALLES DE LA ORDEN</h3>
+                    <h3><i class="mr-2 fas fa-shopping-bag"></i>DETALLES DEL PEDIDO</h3>
                 </div>
                 <div class="card-body">
-                    <p>PRODUCTO</p>
+                    <input type="hidden" id="tpi" value="{{order.tag}}">
+                    <input type="hidden" id="si" value="{{order.status}}">
+                    <p><strong><i class="mr-2 fas fa-clipboard-check"></i>PRODUCTO</strong></p>
                     <p>{{order.product}}</p>
                     <hr>
-                    <p>DESCRIPCIÓN</p>
-                    <p>{{order.description}}</p>
+                    <p><strong><i class="mr-2 fas fa-align-justify"></i>DESCRIPCIÓN</strong></p>
+                    <p>
+                        {{#if order.description}}
+                            {{order.description}}
+                        {{else}}
+                            <p>Producto de venta general.</p>
+                        {{/if}}
+                    </p>
                     <hr>
-                    <p>FECHA DE CREACIÓN</p>
-                    <p>{{order.date}}</p>
+                    <p><strong><i class="mr-2 fas fa-clock"></i> FECHA DE CREACIÓN</strong></p>
+                    <p>{{order.date}}</p>                    
                     <hr>
-                    <p>TIPO DE PRODUCTO</p>
-                    <p>{{order.tag}}</p>
+                    <p><strong><i class="text-{{order.status}} mr-2 fas fa-info-circle"></i>Estatus</strong></p>
+                    <span id="state"></span>
                     <hr>
+                    <p><strong><i class="mr-2 fas fa-hand-pointer"></i>TIPO DE PRODUCTO</strong></p>
+                    <span id="tp"></span>
                 </div>
             </div>
         </div>
         <div class="col-7">
-            <div class="row">
+            <div class="row" style="height:87%;">
                 <div class="col-12">
-                    <div class="card" style="height:450px;">
-                        <div class="card-body">
-                            <div class="container">
+                    <div class="card" style="height:98%;">
+                        <div class="card-body text-center">
                             {{#if order.image}}
-                                <img src="data:image/png;base64,{{order.image}}" alt="" style="width:100%;" class="mx-auto">
+                                <img class="rounded mx-auto d-block" src="data:image/png;base64,{{order.image}}" alt="" style="width:100%; height:470px;" >
                             {{else}}
-                                <img src="/img/icon.png" alt="imagen no personalizable" style="height:420px" class="mx-auto">
+                                <img class="rounded mx-auto d-block" src="/img/icon.png" alt="imagen no personalizable" style="height:470px;">
                             {{/if}}
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row float-right">
-                <button class="btn btn-primary btn-block mr-4 mt-4">
-                    <a  class="text-white" href="/user/query/filter/orders-date-recently"><i class="fas fa-arrow-alt-circle-left"></i> REGRESAR</a>
-                </button>
+            <div class="col-12 mt-3">
+                <div class="float-right">
+                    <button class="btn btn-primary btn-block" onclick="javascript:window.history.go(-1);">
+                        <i class="mr-2 fas fa-arrow-alt-circle-left"></i> Regresar
+                    </button>               
+                </div>
+                <div class="float-right mx-4">
+                    <button class="btn btn-primary" onclick="window.location.href='/orders/edit/{{order._id}}'">
+                        <i class="mr-2 fas fa-edit"></i>Editar
+                    </button>
+                </div>
             </div>
+            
         </div>
     </div>
 </div>
+<script>
+    function filterInfo() {
+        var filter = document.getElementById("tpi").value;
+        var sfilter;
+        var disfil = document.getElementById('tp');
+        if (filter == "customizable") {
+            sfilter = "Personalizable"
+            disfil.innerHTML = `<p>${sfilter}</p>`;
+        }
+        if (filter == "noncustomizable") {
+            sfilter = "De venta general"
+            disfil.innerHTML = `<p>${sfilter}</p>`;
+        }
+        var filtere = document.getElementById("si").value;
+        var sfiltere;
+        var disfile = document.getElementById('state');
+        if (filtere == "warning") {
+            sfiltere = "Pendiente"
+            disfile.innerHTML = `<p>${sfiltere}</p>`;
+        }
+        if (filtere == "success") {
+            sfiltere = "Aprobado"
+            disfile.innerHTML = `<p>${sfiltere}</p>`;
+        }
+        if (filtere == "danger") {
+            sfiltere = "Rechazado"
+            disfile.innerHTML = `<p>${sfiltere}</p>`;;
+        }
+    }    
+    window.onload = filterInfo;
+</script>

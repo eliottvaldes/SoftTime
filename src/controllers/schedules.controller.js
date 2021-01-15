@@ -7,7 +7,7 @@ const Order = require("../models/Orders");
 
 //metodo encargado de consulta para la base de datos
 schedulesCtrl.renderScheduleForm = async (req, res) => {
-  /*const orders = await Order.find({ user: req.user.id },
+  const orders = await Order.find({ user: req.user.id },
     (err, order) => {
       if (err) {
         res.status(500).render("error", {
@@ -23,15 +23,17 @@ schedulesCtrl.renderScheduleForm = async (req, res) => {
         });
       }
     }
-  ).sort({ date: "asc" }).lean();*/
+  ).sort({ date: "asc" }).lean();
   res.render("schedules/new-schedule", {
-    admin: false
+    admin: false,
+    orders
   });
 };
 
 schedulesCtrl.createNewSchedule = async (req, res) => {
   //obtenemos los datos del formulario
   const { product, date, time, amount, line, station, comments } = req.body;
+  console.log(date);
   //creamos una lista de errores
   const errors = [];
   //iniicamos las validadciones por parte del servidor
@@ -46,9 +48,19 @@ schedulesCtrl.createNewSchedule = async (req, res) => {
     if (date.match(non)) {
       errors.push({ text: "No debes ingresar letras al campo para la fecha" });
     }
-    if(date.length>8){
-      errors.push({ text: "INgresa una fecha válida" });
+    if(date.length>10){
+      errors.push({ text: "Ingresa una fecha válida" });
     }
+    vdate = date.split("-");    
+    if(vdate[0]!=2021){
+      errors.push({ text: "Ingresa un año válido" });
+    }
+    if(vdate[1]<1 || vdate[1]>12){
+      errors.push({ text: "Ingresa un mes válido" });
+    }
+    if(vdate[2]<1 || vdate[2]>31){
+      errors.push({ text: "Ingresa un día válido" });
+    }    
   }
   if (!time) {
     errors.push({ text: "Selecciona un horario de entrega" });
@@ -78,7 +90,7 @@ schedulesCtrl.createNewSchedule = async (req, res) => {
     errors.push({ text: "Selecciona una estación del metro válida para la entrega" });
   }
   if (station) {
-    var non = (/([0-9])/ig);
+    var non = (/([<°!"#$%&/()=?¡'¿/*,.-{}[]´~>])/ig);
     if (station.match(non)) {
       errors.push({ text: "No debes cambiar las estaciones" });
     }
@@ -98,7 +110,6 @@ schedulesCtrl.createNewSchedule = async (req, res) => {
       }
     }
   }
-
   if (errors.length > 0) {
     res.render("schedules/new-schedule", {
       admin: false,
@@ -112,7 +123,6 @@ schedulesCtrl.createNewSchedule = async (req, res) => {
       comments,
     });
   } else {
-
     const newSchedule = new Schedule({ product, date, time, amount, line, station, comments });
     newSchedule.user = req.user.id;
     await newSchedule.save(

@@ -1,12 +1,8 @@
-<<<<<<< HEAD
 {{> navigation }}
 <div class="container mx-auto">
     {{> messages }}
     {{> errors }}
   </div>
-=======
-{{>navigation}}
->>>>>>> b5c112e0ad662c2c3adcbba8f342acb2ac46d5b5
 <style>
     body {
         background-color: #0093E9;
@@ -28,29 +24,38 @@
                 <form action="/schedules/new-schedule" method="POST" class="needs-validation" novalidate>
                     <div class="mb-2">
                         <h5>DATOS DE LA ENTREGA</h5>
-                    </div>
-
+                    </div>                                             
                     <div class="form-group">
                         <small class="text-muted">Selecciona los pedidos que desees agregar a este pendiente</small><br>
                         <div class="form-check form-check-inline">
                             {{#if orders}}
-                                {{#each orders}}
-                                <div class="mr-2 mb-2">
-                                <input class="form-check-input" type="checkbox" value="{{product}}" name="product" id="defaultCheck">
-                                <label class="form-check-label" for="defaultCheck">
-                                    {{product}}
-                                </label>                                      
-                                </div>                                              
-                                {{/each}}
+                                {{#if product}}
+                                    {{#each orders}}
+                                        <div class="col-3 mb-1">
+                                            <input class="form-check-input" type="checkbox" value="{{product}}" name="product" id="defaultCheck">
+                                            <label class="form-check-label" for="defaultCheck">
+                                                {{product}}
+                                            </label>                                      
+                                        </div>
+                                    {{/each}}                                
+                                {{/if}}
+                                <div class="row">                            
+                                    {{#each orders}}
+                                    <div class="col-3 mb-1">
+                                        <input class="form-check-input" type="checkbox" value="{{product}}" name="product" id="defaultCheck">
+                                        <label class="form-check-label" for="defaultCheck">
+                                            {{product}}
+                                        </label>                                      
+                                    </div>                                                              
+                                    {{/each}}    
+                                </div>
                             {{else}}
-                                <div class="mr-2 mb-2">
-                                <input class="form-check-input" type="checkbox" value="{{product}}" name="product" id="defaultCheck">
+                                <div class="mr-2 mb-2">                                
                                 <label class="form-check-label" for="defaultCheck">
-                                    {{product}}
+                                    <p>Actualemte no tienes ningun pedido, crea uno para poder continuar. <a href="/orders/add">Crealo ahora</a></p>
                                 </label>                                      
                                 </div>   
-                            {{/if}}
-                            
+                            {{/if}}                            
                         </div>
                     </div>
                     <hr class="mb-4">
@@ -98,8 +103,11 @@
                         <div class="form-group col-auto">
                             <label for="line">Línea</label>
                             <select class="custom-select" name="line" id="line" required onchange="Stations();">
-                                <option>{{line}}</option>
+                                {{#if line}}
+                                <option selected value="{{line}}">{{line}}</option>
+                                {{else}}
                                 <option selected disabled value="">Líneas del metro de la CDMX</option>
+                                {{/if}}
                                 <option value="A">Línea A</option>
                                 <option value="B">Línea B</option>
                                 <option value="1">Línea 1</option>
@@ -121,8 +129,11 @@
                         <div class="form-group col-auto">
                             <label for="station">Estación</label>
                             <select class="custom-select" name="station" id="station" required>
-                                <option selected>{{station}}</option>
+                                {{#if station}}
+                                <option selected value="{{station}}">{{station}}</option>
+                                {{else}}
                                 <option disabled value="">Estación del metro de la CDMX</option>
+                                {{/if}}
                                 {{!-- se van a insertar los datos segun sea la linea elegida --}}
                             </select>
                             <div class="invalid-feedback">

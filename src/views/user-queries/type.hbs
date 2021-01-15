@@ -23,11 +23,11 @@
             <table class="table table-hover table-striped bg-white table-responsive rounded">
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Producto</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Imagen</th>
-                        <th scope="col">Fecha</th>
+                        <th scope="col" style="width:7.5%;">#</th>
+                        <th scope="col" style="width: 25%;">Producto</th>
+                        <th scope="col" style="width: 30%;">Descripción</th>
+                        <th scope="col" style="width: 30%;">Imagen</th>
+                        <th scope="col" style="width:7.5%;">Detalles</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,15 +37,25 @@
                         <th scope="row">{{@index}}</th>
                         <td>{{product}}</td>
                         <input type="hidden" id="state" value="{{tag}}">
-                        <td>{{description}}</td>                        
+                        <td>
+                            {{#if description}}
+                                {{description}}
+                            {{else}}
+                                <p>Producto de venta general.</p>
+                            {{/if}}   
+                        </td>                     
                         <td>                            
                             {{#if image}}
-                                <img src="data:image/png;base64,{{image}}" alt="" style=" height:100px ">
+                                <img src="data:image/png;base64,{{image}}" alt="Imagen de producto" style=" height:120px ">
                             {{else}}
-                                <img src="/img/icon.png" alt="imagen no personalizable" style=" height:100px ">
+                                <img src="/img/icon.png" alt="imagen no personalizable" style=" height:120px ">
                             {{/if}}
                         </td>
-                        <td>{{date}}</td>                        
+                        <td class="text-center">
+                            <button onclick="window.location.href='/user/query/filter/datails-order/{{_id}}'" class="btn btn-{{status}} btn-sm" title="El color representa el estatus de tu pedido" data-toggle="popover" data-trigger="hover" data-content="Amarillo: En proceso  |  Verde: Aceptado  |  Rojo: Rechazado">                                
+                               <i class="fas fa-eye"></i>                             
+                            </button>
+                        </td>                        
                     </tr>
                     {{else}}
                     <div class="card mx-auto">

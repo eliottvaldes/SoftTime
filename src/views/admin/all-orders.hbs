@@ -5,7 +5,7 @@
     }
 </style>
 {{>nav-admin}}
-<div class="container mx-auto">
+<div class="container mx-auto mt-5">
     {{> messages }}
     {{> errors }}
   </div>
@@ -19,8 +19,8 @@
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col" style="width: 7.5%;" class="text-center">#</th>
-                        <th scope="col" style="width: 10%;">Name</th>
-                        <th scope="col" style="width: 20%;">Description</th>
+                        <th scope="col" style="width: 10%;">Nombre</th>
+                        <th scope="col" style="width: 20%;">Descripción</th>
                         <th scope="col" style="width: 30%;" class="text-center">Imagen</th>
                         <th scope="col" style="width: 27.5%;">Fecha</th>
                         <th scope="col" style="width: 7.5%;">Status</th>
@@ -34,7 +34,13 @@
                     <tr>
                         <th scope="row" class="text-center align-middle">{{@index}}</th>
                         <td class="align-middle">{{product}}</td>
-                        <td class="align-middle">{{description}}</td>
+                        <td class="align-middle">
+                            {{#if description}}
+                            {{description}}
+                            {{else}}
+                            <p class="font-italic">Producto de venta general. <br>No requiere descripción</p>
+                            {{/if}}
+                        </td>
                         <td class="text-center align-middle">
                             {{#if image}}
                             <img src="data:image/png;base64,{{image}}" alt="" height="160px">

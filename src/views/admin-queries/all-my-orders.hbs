@@ -6,11 +6,11 @@
   }
 </style>
 {{>nav-admin}}
-<div class="container mx-auto">
+<div class="container mx-auto mt-5">
     {{> messages }}
     {{> errors }}
   </div>
-<div class="container mx-auto my-4">
+<div class="container mx-auto my-5">
   {{!-- menu de filtros --}}
   {{#if orders}}
   <div class="row row-cols-2 my-5">
@@ -19,17 +19,17 @@
     {{>filters-orders sellers=sellers}}
     </div>
     {{!-- Tabla de datos --}}
-    <div class="col-8">
+    <div class="col-8 mt-5">
       <br>
       <table class="table table-hover table-striped bg-white table-responsive rounded">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-            <th scope="col">Imagen</th>           
-            <th scope="col">Fecha</th>
-            <th scope="col">Status</th>
+            <th scope="col" style="width: 5%;">#</th>
+            <th scope="col" style="width: 15%;">Nombre</th>
+            <th scope="col" style="width: 25%;">Descripción</th>
+            <th scope="col" style="width: 25%;">Imagen</th>           
+            <th scope="col" style="width: 25%;">Fecha</th>
+            <th scope="col" style="width: 5%;">Status</th>
           </tr>
         </thead>
         <tbody>

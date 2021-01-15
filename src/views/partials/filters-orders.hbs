@@ -1,4 +1,4 @@
-<div class="col-12 bg-white mb-5 sticky-top shadow-sm pb-3 bg-white rounded">
+<div class="col-12 bg-white mb-5 sticky-top shadow-sm pb-3 mt-5 bg-white rounded">
     <h4 class="my-4">
         <i class="fas fa-filter mt-4 mx-2"></i>Filtros
     </h4>
@@ -64,7 +64,7 @@
                 var uwu = "{{sellers}}";
                 vendedores = uwu.split(",");
                 var text = "";
-                for (let i = 0; i < vendedores.length; i++) {
+                for (let i = 1; i < vendedores.length; i++) {
                     text += "<a class='dropdown-item' href='/query/filter/sell-admins-orders/"+vendedores[i]+"'>";
                     text += "<i class='fas fa-user mr-2'></i>" + vendedores[i] + "</a>";
                     text += "<div class='dropdown-divider'></div>";

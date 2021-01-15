@@ -648,7 +648,7 @@ QueriesCrtl.renderDetailsuser = async (req, res) => {
     req.flash("error_msg", "Por favor verifica tu inicio de sesión");
     return res.redirect("/user-queries/date");
   }
-  res.render("user-queries/details", { admin: false, order });  
+  res.render("user-queries/details", { admin: false, order });    
 };
 QueriesCrtl.renderCustomizableuser = async (req, res) => {
   const typeOrder = await Data.find({ user: req.user.id, tag: "customizable"},

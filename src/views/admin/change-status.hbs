@@ -21,33 +21,51 @@
 
 <div class="container mx-auto mt-5 mb-3">
     <div class="row">
-        <div class="col-5">
+        <div class="col-5 mt-5">
             <div class="card">
                 <div class="card-header">
-                    <h3>DETALLES DEL PEDIDO</h3>
+                    <h3><i class="mr-2 fas fa-shopping-bag"></i>DETALLES DEL PEDIDO</h3>
                 </div>
                 <div class="card-body">
-                    <p>PRODUCTO</p>
+                    <input type="hidden" id="tpi" value="{{order.tag}}">
+                    <input type="hidden" id="si" value="{{order.status}}">
+                    <p><strong><i class="mr-2 fas fa-clipboard-check"></i>PRODUCTO</strong></p>
                     <p>{{order.product}}</p>
                     <hr>
-                    <p>DESCRIPCIÓN</p>
-                    <p>{{order.description}}</p>
+                    <p><strong><i class="mr-2 fas fa-align-justify"></i>DESCRIPCIÓN</strong></p>
+                    <p>
+                        {{#if order.description}}
+                            {{order.description}}
+                        {{else}}
+                            <p>Producto de venta general.</p>
+                        {{/if}}
+                    </p>
                     <hr>
-                    <p>FECHA DE CREACIÓN</p>
-                    <p>{{order.date}}</p>
-
+                    <p><strong><i class="mr-2 fas fa-clock"></i> FECHA DE CREACIÓN</strong></p>
+                    <p>{{order.date}}</p>                    
+                    <hr>
+                    <p><strong><i class="text-{{order.status}} mr-2 fas fa-info-circle"></i>Estatus Actual</strong></p>
+                    <span id="state"></span>
+                    <hr>
+                    <p><strong><i class="mr-2 fas fa-hand-pointer"></i>TIPO DE PRODUCTO</strong></p>
+                    <span id="tp"></span>    
                     <div class="float-left">
                         <form action="/admin/order/updated/status/{{order._id}}?_method=PUT" method="POST"
                             class="needs-validation mt-3" novalidate>
                             <input type="hidden" name="_method" value="PUT">
-                            <input type="hidden" name="product" value="{{order.product}}" required>
+                            <input type="hidden" name="product" value="{{order.product}}">
                             <input type="hidden" name="desciption" {{order.desciption}}>
+                            <input type="hidden" id="si" value="{{order.status}}">
                             <div class="form-group">
                                 <select class="custom-select" name="status" required>
-                                    <option selected value="{{order.status}}">Cambiar Status</option>
-                                    <option value="warning">Pendiente</option>
-                                    <option value="success">Aceptado</option>
+                                    {{#if order.status}}                                
+                                    <option value="{{order.status}}" selected>Elige el nuevo status</option>                                                                       
+                                    {{else}}
+                                    <option value="{{order.status}}" disabled selected>Elige el nuevo status</option>
+                                    {{/if}}                                    
+                                    <option value="success">Aprobado</option>
                                     <option value="danger">Rechazado</option>
+                                    <option value="warning">Pendiente</option>
                                     <option disabled></option>
                                 </select>
                                 <div class="invalid-feedback">
@@ -56,39 +74,86 @@
                             </div>
                             <div class="form-group mt-3">
                                 <button class="btn btn-primary btn-block" type="submit">
-                                    Guardar Cambios <i class="fas fa-save"></i>
+                                    <i class="fas fa-save mr-2"></i>Cambiar Status 
                                 </button>
                             </div>
                         </form>
+                        <hr>                    
                     </div>
                     <hr>
                 </div>
             </div>
         </div>
-        <div class="col-7">
-            <div class="row">
+        <div class="col-7 mt-5">
+            <div class="row" style="height:87%;">
                 <div class="col-12">
-                    <div class="card" style="height:450px;">
-                        <div class="card-body">
-                            <div class="container">
-                                {{#if order.image}}
-                                <img src="data:image/png;base64,{{order.image}}" alt="" style="width:100%; height:420px;"
-                                    class="mx-auto">
-                                {{else}}
-                                <img src="/img/icon.png" alt="imagen no personalizable" style="height:420px;"
-                                    class="mx-auto">
-                                {{/if}}
-                            </div>
+                    <div class="card" style="height:98%;">
+                        <div class="card-body text-center">
+                            {{#if order.image}}
+                                <img class="rounded mx-auto d-block" src="data:image/png;base64,{{order.image}}" alt="" style="width:100%; height:500px;" >
+                            {{else}}
+                                <img class="rounded mx-auto d-block" src="/img/icon.png" alt="imagen no personalizable" style="height:490px;">
+                            {{/if}}
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row float-right">
-                <button class="btn btn-primary btn-block mr-4 mt-4">
-                    <a class="text-white" href="/query/filter/all-orders"><i class="fas fa-arrow-alt-circle-left"></i>
-                        REGRESAR</a>
-                </button>
-            </div>
+            <div class="col-12 mt-4">
+                <div class="float-right">
+                    <button class="btn btn-primary btn-block" onclick="javascript:window.history.go(-1);">
+                        <i class="mr-2 fas fa-arrow-alt-circle-left"></i> Regrear
+                    </button>               
+                </div>
+                
+            </div>  
         </div>
     </div>
 </div>
+<script>
+    function filterInfo() {
+        var filter = document.getElementById("tpi").value;
+        var sfilter;
+        var disfil = document.getElementById('tp');
+        if (filter == "customizable") {
+            sfilter = "Personalizable"
+            disfil.innerHTML = `<p>${sfilter}</p>`;
+        }
+        if (filter == "noncustomizable") {
+            sfilter = "De venta general"
+            disfil.innerHTML = `<p>${sfilter}</p>`;
+        }
+        var filtere = document.getElementById("si").value;
+        var sfiltere;
+        var disfile = document.getElementById('state');
+        if (filtere == "warning") {
+            sfiltere = "Pendiente"
+            disfile.innerHTML = `<p>${sfiltere}</p>`;
+        }
+        if (filtere == "success") {
+            sfiltere = "Aprobado"
+            disfile.innerHTML = `<p>${sfiltere}</p>`;
+        }
+        if (filtere == "danger") {
+            sfiltere = "Rechazado"
+            disfile.innerHTML = `<p>${sfiltere}</p>`;;
+        }
+    }      
+    window.onload = filterInfo;
+</script>
+<script>
+  (function () {
+    'use strict';   
+    window.addEventListener('load', function () {
+      var forms = document.getElementsByClassName('needs-validation');
+      var validation = Array.prototype.filter.call(forms, function (form) {
+        form.addEventListener('submit', function (event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>

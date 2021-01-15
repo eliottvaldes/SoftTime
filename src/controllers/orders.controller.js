@@ -12,13 +12,19 @@ ordersCtrl.renderOrderForm = (req, res) => {
 ordersCtrl.createNewOrder = async (req, res) => {
   //obtenemos los datos desde unr request body
   const { product, description, status, tag } = req.body;
+  
   //inicializamos un arreglo de errores en caso de que se presenten 
   const errors = [];
   //hacemos las validaciones
 
   if (!product) {
     errors.push({ text: "Selecciona un producto para poder continuar" });
-  }    
+  }
+  if(product){
+    if (product.length<5) {
+      errors.push({ text: "No modifique los productos" });
+    }
+  }
   if(description){
     if (description.length<5) {
       errors.push({ text: "Agrega una descripción con longitud minima de 5 carateres" });
@@ -29,9 +35,6 @@ ordersCtrl.createNewOrder = async (req, res) => {
         break;   
       }
     }
-  }
-  if (!description) {
-    description="No se necesita descripción debido a que es un producto de venta general no personalizable";
   }
   if (!status) {
     errors.push({ text: "Por favor no modifique el status" });
@@ -47,12 +50,17 @@ ordersCtrl.createNewOrder = async (req, res) => {
   }
 
   /*
-  if(tag{
-    if (tag != "customizable" || tag != "noncustomizable") {
+  if(tag){
+    console.log(tag);
+    if (tag != 'customizable'){
+      errors.push({ text: "Por favor NO modifique el tipo de producto" });
+    }
+    if (tag != 'customizable'){
       errors.push({ text: "Por favor NO modifique el tipo de producto" });
     }
   }    
   */
+  
   var base64data = "";
   //revisa si en la peticion hay archivos y los escribe en base64
   if (req.file) {
@@ -140,7 +148,7 @@ ordersCtrl.renderEditForm = async (req, res) => {
     req.flash("error_msg", "Por favor inicia sesión desde tu cuenta");
     return res.redirect("/orders");
   }
-  res.render("orders/edit-order", { admin: false, order });
+  res.render("orders/edit-order", { admin: false, order });  
 };
 
 //obtener los datos para actualizar
@@ -148,6 +156,7 @@ ordersCtrl.updateOrder = async (req, res) => {
   //otenemos el arreglo de datos del request body  
   const product = req.body.product;
   const description = req.body.description;
+  const tag = req.body.tag;
   var image = "";
   if (req.file) {
     image = req.file.buffer.toString('base64');
@@ -172,7 +181,7 @@ ordersCtrl.updateOrder = async (req, res) => {
     image = ord.image;
   }
   //actualizamos los datos en la base de datos    
-  await Order.findByIdAndUpdate(req.params.id, { product, description, image },
+  await Order.findByIdAndUpdate(req.params.id, { product, description, image, tag},
     (err, pend) => {
       if (err) {
         res.status(500).render("error", {

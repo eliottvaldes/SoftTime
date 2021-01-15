@@ -38,13 +38,10 @@
                   </h5>
                 </div>
                 <div class="col-2 align-self-top">
-                  {{!-- para estatus --}}
-
                   <button class="btn btn-{{status}} btn-sm" title="El color representa el estatus de tu pedido"
                     data-toggle="popover" data-trigger="hover"
                     data-content="Amarillo: En proceso  |  Verde: Aceptado  |  Rojo: Rechazado"><i
                       class="fas fa-info-circle fa-spin"></i></button>
-
                 </div>
                 <div class="col-2 align-self-top">
                   {{!-- para editar --}}
@@ -59,10 +56,13 @@
                   </form>
                 </div>
               </div>
-              {{!-- fila de description --}}
               <div class="row mt-2">
                 <p class="text-break">
+                  {{#if description}}
                   {{description}}
+                  {{else}}
+                  <p class="font-italic">Producto de venta general. <br>No requiere descripción</p>
+                  {{/if}}
                 </p>
               </div>
             </div>

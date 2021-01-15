@@ -24,11 +24,11 @@
             <table class="table table-hover table-striped bg-white table-responsive rounded">
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nombreth>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Status</th>
+                        <th scope="col" style="width: 5%;">#</th>
+                        <th scope="col" style="width: 30%;">Nombre</th>
+                        <th scope="col" style="width: 30%;">Descripción</th>
+                        <th scope="col" style="width: 30%;">Imagen</th>
+                        <th scope="col" style="width: 5%;">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,12 +37,23 @@
                     <tr>
                         <th scope="row">{{@index}}</th>
                         <td>{{product}}</td>
-                        <td>{{description}}</td>
-                        <td>{{date}}</td>                                                
                         <td>
-                            <button class="btn btn-{{status}} btn-sm"
-                                title="El color representa el estatus de tu pedido" data-toggle="popover" data-trigger="hover" data-content="Amarillo: En proceso  |  Verde: Aceptado  |  Rojo: Rechazado">
-                                <i class="fas fa-info-circle fa-spin"></i>
+                            {{#if description}}
+                                {{description}}
+                            {{else}}
+                                <p class="font-italic">Producto de venta general. <br>No requiere descripción</p>
+                            {{/if}}
+                        </td>
+                        <td>
+                            {{#if image}}
+                                <img src="data:image/png;base64,{{image}}" alt="" style=" height:125px ">
+                            {{else}}
+                                <img src="/img/icon.png" alt="imagen no personalizable" style=" height:110px ">
+                            {{/if}}
+                        </td>                                                
+                        <td>
+                            <button onclick="window.location.href='/admin/query/filter/datails-order/{{_id}}'" class="btn btn-{{status}} btn-sm" title="El color representa el estatus de tu pedido" data-toggle="popover" data-trigger="hover" data-content="Amarillo: En proceso  |  Verde: Aceptado  |  Rojo: Rechazado">                                
+                                <i class="fas fa-eye"></i>                             
                             </button>
                         </td>
                         <input type="hidden" id="state" value="{{status}}">

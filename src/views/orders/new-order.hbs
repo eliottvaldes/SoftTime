@@ -51,8 +51,8 @@
               <option value="Plumones Tombow">Tombow Professionals</option>
               <option value="Plumones Artline">Artline Stix</option>
               <option disabled class="font-weight-bold">ORGANIZADORES PARA PLUMONES</option>
-              <option value="">Organizador Madera</option>
-              <option value="">Organizador Acrílico</option>
+              <option value="Organizador Madera">Organizador Madera</option>
+              <option value="Organizador Acrílico">Organizador Acrílico</option>
               <option disabled class="font-weight-bold">LIBRETAS</option>
               <option value="Libreta Profesional">Profesional</option>
               <option value="Libreta Francesa">Francesa</option>
@@ -67,14 +67,14 @@
             <div class="invalid-feedback">
               Selecciona el producto del que desees generar el pedido
             </div>
-          </div>  
-          <input type="hidden" value="" name="tag" id="typep">        
+            <input type="hidden" name="tag" id="typep"> 
+          </div>                                       
           {{!-- Para ingresar la descripción del producto --}}
           <div class="form-group">
             <label for="product">Descripción</label>
-            <textarea class="form-control" name="description" aria-describedby="helpdescription" rows="4" maxlength="200"></textarea>
+            <textarea class="form-control" name="description" aria-describedby="helpdescription" rows="4" maxlength="200">{{description}}</textarea>
             <div class="valid-feedback">
-              Descripción no válida! ingresa por lo menos una descripción de 5 caracteres
+              Descripción válida!
             </div>
             <small id="helpdescription" class="form-text text-muted">
               Agrega la descripción del producto solamente en caso de que sea un producto personalizable, si es el caso, indica las caracteristicas
@@ -86,7 +86,7 @@
             <label class="custom-file-label" for="img">Imagen del producto</label>
             <small id="helpimg" class="form-text text-muted">
               Solo debes subir la imagen en caso de que existan modelos preestablecidos del producto Ej: Papel picado,
-              Esferas, etc.
+              Libretas, etc.
             </small>
             <div class="invalid-feedback">No has seleccionado alguna imagen</div>
           </div>
@@ -110,9 +110,9 @@
 
 <script>
   function settype(){
-    var selection= document.getElementById('product').value;
+    var selection= document.getElementById("product").value;
     let stype;
-    if(selection=='Papel Picado' || selection=='Figura de Animal'  || selection=='Libreta Profesional'  || selection=='Libreta Francesa'  || selection=='Libreta Italiana' || selection=='Libreta Pasta Impresa' || selection=='Rompecabezas' || selection=='Llavero' ){
+    if(selection=="Papel Picado" || selection=="Figura de Animal"  || selection=="Libreta Profesional"  || selection=="Libreta Francesa"  || selection=="Libreta Italiana" || selection=="Libreta Pasta Impresa" || selection=="Rompecabezas" || selection=="Llavero" ){
       stype="customizable";
     }else{
       stype="noncustomizable";
